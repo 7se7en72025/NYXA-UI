@@ -26,7 +26,7 @@ export function Footer() {
 
   return (
     <footer
-      className="absolute bottom-0 left-[48px] right-[48px] flex items-center justify-between px-6 py-4 border-t"
+      className="absolute bottom-0 left-[48px] right-[48px] flex items-center justify-between px-6 py-4 border-t border-dotted"
       style={{
         borderColor: "var(--ruler-border)",
       }}
