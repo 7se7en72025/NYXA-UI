@@ -137,6 +137,10 @@ export function Navbar() {
   const [hovered, setHovered] = useState(false);
   const borderRef = useRef<SVGSVGElement>(null);
   const dotsRef = useRef<HTMLDivElement>(null);
+  const [searchHover, setSearchHover] = useState<{ x: number; y: number } | null>(null);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const [searchHasValue, setSearchHasValue] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -243,7 +247,13 @@ export function Navbar() {
         }}
       >
         <div
+          ref={searchRef}
           data-nav-search
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            setSearchHover({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+          }}
+          onMouseLeave={() => setSearchHover(null)}
           style={{
             display: "flex",
             alignItems: "center",
@@ -251,7 +261,9 @@ export function Navbar() {
             padding: "6px 12px",
             borderRadius: 8,
             border: `1px solid ${isDark ? "#333" : "#d4d4d4"}`,
-            background: isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
+            background: searchHover
+              ? `radial-gradient(circle 140px at ${searchHover.x}px ${searchHover.y}px, ${isDark ? "rgba(255,255,255,0.18)" : "rgba(200,200,200,0.25)"}, ${isDark ? "rgba(255,255,255,0.04)" : "rgba(240,240,240,0.08)"})`
+              : isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
             cursor: "text",
             height: 36,
             minWidth: 200,
@@ -274,6 +286,9 @@ export function Navbar() {
             data-nav-search-text
             type="text"
             placeholder="Search documentation..."
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
+            onInput={(e) => setSearchHasValue((e.target as HTMLInputElement).value.length > 0)}
             style={{
               border: "none",
               outline: "none",
@@ -293,8 +308,15 @@ export function Navbar() {
               gap: 2,
               fontSize: 11,
               fontFamily: "sans-serif",
-              color: isDark ? "#555" : "#aaa",
-              border: `1px solid ${isDark ? "#333" : "#d4d4d4"}`,
+              color: (searchHover || searchFocused || searchHasValue) ? (isDark ? "#ddd" : "#333") : (isDark ? "#555" : "#aaa"),
+              border: `1px solid ${isDark ? ((searchHover || searchFocused || searchHasValue) ? "#555" : "#333") : ((searchHover || searchFocused || searchHasValue) ? "#999" : "#d4d4d4")}`,
+              background: (searchHover || searchFocused || searchHasValue) ? (isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)") : "transparent",
+              boxShadow: (searchHover || searchFocused || searchHasValue)
+                ? isDark
+                  ? "0 0 8px rgba(255,255,255,0.12), 0 0 2px rgba(255,255,255,0.2)"
+                  : "0 0 8px rgba(0,0,0,0.08), 0 0 2px rgba(0,0,0,0.12)"
+                : "none",
+              transition: "all 0.2s ease",
               borderRadius: 4,
               padding: "2px 5px",
               lineHeight: 1,
