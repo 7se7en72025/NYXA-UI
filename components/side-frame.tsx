@@ -1,195 +1,119 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useCallback } from "react";
 
-const SCALE_VALUES = Array.from({ length: 18 }, (_, i) => i * 50);
+const TICK = 50;
+const VB_W = 48;
 
-const VB_W = 100;
-const VB_H = 1000;
-const PAD_TOP = 55;
-const PAD_BOT = 945;
-const Y_STEP = (PAD_BOT - PAD_TOP) / (SCALE_VALUES.length - 1);
-
-const Y_POSITIONS = SCALE_VALUES.map((_, i) => PAD_TOP + i * Y_STEP);
-
-const MICRO_DIVS = 4;
-const MICRO_TICKS = SCALE_VALUES.slice(0, -1).flatMap((_, i) =>
-  Array.from({ length: MICRO_DIVS }, (_, j) => ({
-    y: Y_POSITIONS[i] + ((j + 1) * Y_STEP) / (MICRO_DIVS + 1),
-  }))
-);
-
-function SideRail({ side }: { side: "left" | "right" }) {
+function Ruler({ side }: { side: "left" | "right" }) {
   const isLeft = side === "left";
+  const svgRef = useRef<SVGSVGElement>(null);
+  const mouseY = useRef(-1);
 
-  const m = (x: number) => (isLeft ? x : VB_W - x);
+  const render = useCallback(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
 
-  const cx = m(55);
-  const scaleLineX = m(26);
-  const tickOuter = m(46);
-  const tickInner = m(26);
-  const labelX = m(82);
-  const dotLineX = m(55);
+    const h = window.innerHeight;
+    const scrollY = window.scrollY;
+    const centerScreen = mouseY.current >= 0 ? mouseY.current : h / 2;
+    const centerVirtual = scrollY + centerScreen;
+    const centerVal = Math.round(centerVirtual / TICK) * TICK;
+    const totalTicks = Math.ceil(h / TICK) + 2;
+
+    const lines: string[] = [];
+    const texts: string[] = [];
+
+    for (let i = -totalTicks; i <= totalTicks; i++) {
+      const val = centerVal + i * TICK;
+      if (val < 50) continue;
+      const y = val - scrollY;
+      const isActive = val === centerVal;
+
+      const tickX1 = isLeft ? 48 : 0;
+      const tickX2 = isLeft ? 38 : 10;
+
+      lines.push(
+        `<line x1="${tickX1}" y1="${y}" x2="${tickX2}" y2="${y}" stroke="${isActive ? "#777" : "#333"}" stroke-width="${isActive ? 1.5 : 0.8}"/>`
+      );
+
+      const labelX = isLeft ? 22 : 26;
+      texts.push(
+        `<text x="${labelX}" y="${y}" text-anchor="middle" dominant-baseline="central" fill="${isActive ? "#999" : "#444"}" font-family="monospace" font-size="${isActive ? 14 : 11}" opacity="${isActive ? 0.9 : 0.5}" transform="rotate(-90 ${labelX} ${y})">${val}</text>`
+      );
+    }
+
+    svg.setAttribute("viewBox", `0 0 ${VB_W} ${h}`);
+    svg.innerHTML = `
+      <style>line, text { transition: all 0.15s ease-out; }</style>
+      <line x1="${isLeft ? 48 : 0}" y1="0" x2="${isLeft ? 48 : 0}" y2="${h}" stroke="#333" stroke-width="1"/>
+      ${lines.join("")}
+      ${texts.join("")}
+    `;
+  }, [isLeft]);
+
+  useEffect(() => {
+    render();
+
+    function onMouseMove(e: MouseEvent) {
+      mouseY.current = e.clientY;
+      render();
+    }
+
+    window.addEventListener("scroll", render, { passive: true });
+    window.addEventListener("resize", render);
+    window.addEventListener("mousemove", onMouseMove);
+
+    return () => {
+      window.removeEventListener("scroll", render);
+      window.removeEventListener("resize", render);
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+  }, [render]);
 
   return (
-    <motion.div
-      aria-hidden="true"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      className={`pointer-events-none fixed inset-y-0 z-40 ${isLeft ? "left-0" : "right-0"} w-[clamp(2.25rem,5vw,4.25rem)] select-none`}
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        height: "100vh",
+        width: 48,
+        zIndex: 50,
+        overflow: "hidden",
+        background: "#0d0d0d",
+        ...(isLeft
+          ? { left: 0, borderRight: "1px solid #333" }
+          : { right: 0, borderLeft: "1px solid #333" }),
+      }}
     >
-      <div
-        className={`absolute inset-y-0 ${isLeft ? "left-px" : "right-px"} w-px bg-gradient-to-b from-transparent via-white/[0.09] to-transparent`}
-      />
-      <div
-        className={`absolute inset-y-0 ${isLeft ? "right-px" : "left-px"} w-px bg-gradient-to-b from-transparent via-white/[0.035] to-transparent`}
-      />
-
       <svg
-        className="absolute inset-0 h-full w-full"
-        viewBox={`0 0 ${VB_W} ${VB_H}`}
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id={`fade-${side}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="white" stopOpacity="0" />
-            <stop offset="6%" stopColor="white" stopOpacity="0.06" />
-            <stop offset="50%" stopColor="white" stopOpacity="0.1" />
-            <stop offset="94%" stopColor="white" stopOpacity="0.06" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id={`glowEdge-${side}`} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.12)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.03)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-          <filter id={`softGlow-${side}`}>
-            <feGaussianBlur stdDeviation="0.6" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <line
-          x1={scaleLineX}
-          y1="0"
-          x2={scaleLineX}
-          y2={VB_H}
-          stroke={`url(#fade-${side})`}
-          strokeWidth="0.5"
-        />
-
-        <motion.g
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: [0.18, 0.45, 0.18] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <line
-            x1={dotLineX}
-            y1={0}
-            x2={dotLineX}
-            y2={VB_H}
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth="0.5"
-            strokeDasharray="1.5 5"
-          />
-        </motion.g>
-
-        {MICRO_TICKS.map((t, i) => (
-          <line
-            key={`mt-${i}`}
-            x1={tickOuter}
-            y1={t.y}
-            x2={tickInner}
-            y2={t.y}
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth="0.5"
-          />
-        ))}
-
-        {SCALE_VALUES.map((val, i) => {
-          const y = Y_POSITIONS[i];
-          return (
-            <motion.g
-              key={val}
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.025 * i,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <line
-                x1={tickOuter}
-                y1={y}
-                x2={tickInner}
-                y2={y}
-                stroke="rgba(255,255,255,0.14)"
-                strokeWidth="0.75"
-              />
-              <line
-                x1={tickOuter - 7}
-                y1={y}
-                x2={tickInner}
-                y2={y}
-                stroke="rgba(255,255,255,0.07)"
-                strokeWidth="0.5"
-              />
-
-              <circle
-                cx={cx}
-                cy={y}
-                r={6.5}
-                fill="none"
-                stroke="rgba(255,255,255,0.025)"
-                strokeWidth="1.5"
-              />
-              <circle
-                cx={cx}
-                cy={y}
-                r={4}
-                fill="none"
-                stroke="rgba(255,255,255,0.2)"
-                strokeWidth="0.75"
-                filter={`url(#softGlow-${side})`}
-              />
-              <circle
-                cx={cx}
-                cy={y}
-                r={1}
-                fill="rgba(255,255,255,0.08)"
-              />
-
-              <text
-                x={labelX}
-                y={y + 3}
-                textAnchor={isLeft ? "start" : "end"}
-                transform={`rotate(${isLeft ? -90 : 90} ${labelX} ${y + 3})`}
-                fill="rgba(255,255,255,0.18)"
-                fontSize="7.5"
-                letterSpacing="0.08em"
-                fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
-                fontWeight="300"
-              >
-                {val}
-              </text>
-            </motion.g>
-          );
-        })}
-      </svg>
-    </motion.div>
+        ref={svgRef}
+        style={{ position: "absolute", inset: 0, width: 48, height: "100vh" }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "auto",
+        }}
+        onMouseMove={(e) => {
+          mouseY.current = e.clientY;
+          render();
+        }}
+        onMouseLeave={() => {
+          mouseY.current = -1;
+          render();
+        }}
+      />
+    </div>
   );
 }
 
 export function SideFrame() {
   return (
     <>
-      <SideRail side="left" />
-      <SideRail side="right" />
+      <Ruler side="left" />
+      <Ruler side="right" />
     </>
   );
 }
