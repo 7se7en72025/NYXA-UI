@@ -3,9 +3,9 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 
-function SunIcon({ style }: { style?: React.CSSProperties }) {
+function SunIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="5" />
       <line x1="12" y1="1" x2="12" y2="3" />
       <line x1="12" y1="21" x2="12" y2="23" />
@@ -19,9 +19,9 @@ function SunIcon({ style }: { style?: React.CSSProperties }) {
   );
 }
 
-function MoonIcon({ style }: { style?: React.CSSProperties }) {
+function MoonIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -121,6 +121,9 @@ function triggerTriangleTransition(
 export function Navbar() {
   const [isDark, setIsDark] = useState(true);
   const navRef = useRef<HTMLElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const borderRef = useRef<SVGSVGElement>(null);
+  const dotsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -129,6 +132,19 @@ export function Navbar() {
       document.documentElement.setAttribute("data-theme", stored);
     }
   }, []);
+
+  useEffect(() => {
+    if (!borderRef.current) return;
+    const path = borderRef.current.querySelector("rect");
+    if (!path) return;
+    if (hovered) {
+      path.style.animation = "none";
+      path.getBoundingClientRect();
+      path.style.animation = "trace-border 300ms linear forwards";
+    } else {
+      path.style.animation = "trace-border-reverse 200ms linear forwards";
+    }
+  }, [hovered]);
 
   const toggleTheme = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -211,10 +227,12 @@ export function Navbar() {
           pointerEvents: "auto",
         }}
       >
-        <button
+        <div
           data-nav-toggle
+          className="theme-toggle-wrap"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
           onClick={toggleTheme}
-          className="theme-toggle-btn"
           style={{
             width: 36,
             height: 36,
@@ -223,23 +241,54 @@ export function Navbar() {
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            background: "transparent",
-            border: `1px solid ${isDark ? "#333" : "#d4d4d4"}`,
+            position: "relative",
             color: isDark ? "#aaa" : "#555",
-            transition: "background 0.15s",
           }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "rgba(128,128,128,0.1)")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = "transparent")
-          }
         >
-          <span className="icon-wrap">
+          <svg
+            ref={borderRef}
+            className="toggle-border-svg"
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+          >
+            <rect
+              x="0.5"
+              y="0.5"
+              width="35"
+              height="35"
+              rx="7.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              opacity="0.3"
+              strokeDasharray="140"
+              strokeDashoffset="140"
+            />
+          </svg>
+
+          <div
+            ref={dotsRef}
+            className={`orbit-dots ${hovered ? "active" : ""}`}
+            style={{
+              position: "absolute",
+              width: 36,
+              height: 36,
+              pointerEvents: "none",
+            }}
+          >
+            <span className="orbit-dot" style={{ top: -1, left: "50%", transform: "translateX(-50%)" }} />
+            <span className="orbit-dot" style={{ top: "50%", right: -1, transform: "translateY(-50%)" }} />
+            <span className="orbit-dot" style={{ bottom: -1, left: "50%", transform: "translateX(-50%)" }} />
+            <span className="orbit-dot" style={{ top: "50%", left: -1, transform: "translateY(-50%)" }} />
+          </div>
+
+          <span className="toggle-icon toggle-wrap">
             <span className="icon-a">{isDark ? <MoonIcon /> : <SunIcon />}</span>
             <span className="icon-b">{isDark ? <SunIcon /> : <MoonIcon />}</span>
           </span>
-        </button>
+        </div>
 
         <button
           data-nav-docs
