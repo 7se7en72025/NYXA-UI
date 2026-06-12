@@ -168,13 +168,14 @@ export function Navbar() {
   );
 
   return (
+    <>
     <nav
       ref={navRef}
       style={{
         position: "fixed",
         top: 0,
-        left: 0,
-        right: 0,
+        left: 48,
+        right: 48,
         height: 52,
         zIndex: 100,
         display: "flex",
@@ -317,5 +318,20 @@ export function Navbar() {
         </button>
       </div>
     </nav>
+    <div
+      style={{
+        position: "fixed",
+        top: 51,
+        left: 48,
+        right: 48,
+        height: 1,
+        zIndex: 100,
+        pointerEvents: "none",
+        backgroundImage: `radial-gradient(circle, ${isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"} 1.2px, transparent 1.2px)`,
+        backgroundSize: "6px 1px",
+        backgroundRepeat: "repeat-x",
+      }}
+    />
+    </>
   );
 }
