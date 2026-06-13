@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 function SunIcon() {
@@ -141,6 +142,8 @@ export function Navbar() {
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchHasValue, setSearchHasValue] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isDocs = pathname.startsWith("/docs");
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -192,14 +195,14 @@ export function Navbar() {
       style={{
         position: "fixed",
         top: 0,
-        left: 48,
-        right: 48,
+        left: isDocs ? 0 : 48,
+        right: isDocs ? 0 : 48,
         height: 52,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: "0 68px",
+        padding: isDocs ? "0 24px" : "0 68px",
         background: isDark ? "#000000" : "#ffffff",
         pointerEvents: "none",
       }}

@@ -119,7 +119,7 @@ export function Hero() {
           style={{
             fontSize: 16,
             lineHeight: 1.6,
-            color: theme === "dark" ? "#999" : "#666",
+            color: theme === "dark" ? "#9b8ec4" : "#7a6b9e",
             fontFamily: "inherit",
             marginTop: 24,
             maxWidth: 480,

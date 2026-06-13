@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { LiquidMetalBadge } from "./liquid-metal";
 import { AnimatedRays } from "./animated-rays";
 import AnimatedButton from "./animated-button";
@@ -9,6 +10,7 @@ import GlowButton from "./glow-button";
 export function Hero() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const containerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const updateTheme = () => {
@@ -119,7 +121,7 @@ export function Hero() {
           style={{
             fontSize: 16,
             lineHeight: 1.6,
-            color: theme === "dark" ? "#999" : "#666",
+            color: theme === "dark" ? "#9b8ec4" : "#7a6b9e",
             fontFamily: "inherit",
             marginTop: 24,
             maxWidth: 480,
@@ -137,7 +139,7 @@ export function Hero() {
             marginTop: 40,
           }}
         >
-          <GlowButton>
+          <GlowButton onClick={() => router.push("/docs")}>
             Explore components
           </GlowButton>
           <AnimatedButton
