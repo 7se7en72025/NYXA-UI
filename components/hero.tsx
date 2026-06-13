@@ -70,13 +70,14 @@ export function Hero() {
           <span style={{ color: theme === "dark" ? "#fff" : "#0d0d0d" }}>Form follows </span>
           <span
             style={{
-              color: "transparent",
-              WebkitTextStroke: `1.5px ${theme === "dark" ? "#444" : "#ccc"}`,
-              background: theme === "dark"
+              color: theme === "dark" ? "transparent" : "transparent",
+              WebkitTextStroke: theme === "dark" ? "1.5px #444" : "0px transparent",
+              backgroundImage: theme === "dark"
                 ? "linear-gradient(180deg, #555 0%, #222 100%)"
-                : "linear-gradient(180deg, #bbb 0%, #ddd 100%)",
+                : "linear-gradient(180deg, #888 0%, #bbb 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             force.
