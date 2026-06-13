@@ -200,7 +200,7 @@ export function Navbar() {
         alignItems: "center",
         justifyContent: "space-between",
         padding: "0 68px",
-        background: "transparent",
+        background: isDark ? "#000000" : "#ffffff",
         pointerEvents: "none",
       }}
     >
@@ -224,7 +224,7 @@ export function Navbar() {
         <span
           data-nav-text
           style={{
-            fontFamily: "sans-serif",
+            fontFamily: "inherit",
             fontSize: 15,
             fontWeight: 500,
             letterSpacing: "-0.01em",
@@ -296,10 +296,10 @@ export function Navbar() {
             style={{
               border: "none",
               outline: "none",
-              background: "transparent",
+        background: isDark ? "#000000" : "#ffffff",
               fontSize: 13,
               color: isDark ? "#fff" : "#0d0d0d",
-              fontFamily: "sans-serif",
+              fontFamily: "inherit",
               flex: 1,
               minWidth: 0,
               caretColor: isDark ? "#fff" : "#000",
@@ -312,7 +312,7 @@ export function Navbar() {
               alignItems: "center",
               gap: 2,
               fontSize: 11,
-              fontFamily: "sans-serif",
+              fontFamily: "inherit",
               color: (searchHover || searchFocused || searchHasValue) ? (isDark ? "#eee" : "#222") : (isDark ? "#555" : "#aaa"),
               border: `1px solid ${isDark ? ((searchHover || searchFocused || searchHasValue) ? "#666" : "#333") : ((searchHover || searchFocused || searchHasValue) ? "#999" : "#d4d4d4")}`,
               background: (searchHover || searchFocused || searchHasValue) ? (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)") : "transparent",
@@ -404,7 +404,7 @@ export function Navbar() {
             padding: "8px 18px",
             fontSize: 14,
             fontWeight: 500,
-            fontFamily: "sans-serif",
+            fontFamily: "inherit",
             letterSpacing: 0,
             cursor: "pointer",
             height: 36,
@@ -421,20 +421,6 @@ export function Navbar() {
         </button>
       </div>
     </nav>
-    <div
-      style={{
-        position: "fixed",
-        top: 51,
-        left: 48,
-        right: 48,
-        height: 1,
-        zIndex: 100,
-        pointerEvents: "none",
-        backgroundImage: `radial-gradient(circle, ${isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"} 1.2px, transparent 1.2px)`,
-        backgroundSize: "6px 1px",
-        backgroundRepeat: "repeat-x",
-      }}
-    />
     </>
   );
 }

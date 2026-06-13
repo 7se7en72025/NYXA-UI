@@ -13,7 +13,7 @@ export default function NotFound() {
         minHeight: "100vh",
         background: "var(--bg)",
         color: "var(--fg)",
-        fontFamily: "sans-serif",
+        fontFamily: "inherit",
       }}
     >
       <h2 style={{ fontSize: 20, marginBottom: 16 }}>404 — Page Not Found</h2>

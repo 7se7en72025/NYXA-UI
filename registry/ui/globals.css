@@ -134,3 +134,19 @@ body {
 [data-nav-search]:hover input::placeholder {
   color: var(--search-placeholder-hover, #999);
 }
+
+@keyframes aurora-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-aurora-bg {
+  animation: aurora-bg 8s ease-in-out infinite;
+}

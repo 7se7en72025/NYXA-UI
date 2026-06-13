@@ -4,10 +4,37 @@
   "homepage": "https://github.com/razi-ai/kata-ui",
   "items": [
     {
+      "name": "utils",
+      "type": "registry:ui",
+      "title": "Utils",
+      "description": "Utility functions including cn for class merging.",
+      "files": [
+        {
+          "path": "registry/ui/utils.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "liquid-metal",
+      "type": "registry:ui",
+      "title": "Liquid Metal",
+      "description": "Animated liquid metal shader component and badge with chrome border effect.",
+      "dependencies": ["@paper-design/shaders-react", "clsx", "tailwind-merge"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "registry/ui/liquid-metal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "hero",
       "type": "registry:ui",
       "title": "Hero",
-      "description": "Hero section with large typography, gradient text, and animated CTA buttons.",
+      "description": "Hero section with large typography, gradient text, and liquid metal badge.",
+      "registryDependencies": ["liquid-metal"],
       "files": [
         {
           "path": "registry/ui/hero.tsx",

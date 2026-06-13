@@ -17,7 +17,7 @@ export default function Error({
         minHeight: "100vh",
         background: "var(--bg)",
         color: "var(--fg)",
-        fontFamily: "sans-serif",
+        fontFamily: "inherit",
       }}
     >
       <h2 style={{ fontSize: 20, marginBottom: 16 }}>Something went wrong</h2>
