@@ -1,105 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-function CodeBlock({ code, filename, tabs }: { code: string; filename?: string; tabs?: string[] }) {
-  const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        borderRadius: 8,
-        border: "1px solid #222",
-        overflow: "hidden",
-        marginBottom: 20,
-      }}
-    >
-      {filename && (
-        <div
-          style={{
-            padding: "8px 16px",
-            background: "#111",
-            borderBottom: "1px solid #222",
-            fontSize: 12,
-            fontFamily: "monospace",
-            color: "#888",
-          }}
-        >
-          {filename}
-        </div>
-      )}
-      {tabs && (
-        <div
-          style={{
-            display: "flex",
-            borderBottom: "1px solid #222",
-            background: "#0d0d0d",
-          }}
-        >
-          {tabs.map((tab, i) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(i)}
-              style={{
-                padding: "8px 16px",
-                fontSize: 12,
-                fontFamily: "monospace",
-                border: "none",
-                background: activeTab === i ? "#1a1a1a" : "transparent",
-                color: activeTab === i ? "#ccc" : "#666",
-                cursor: "pointer",
-                borderBottom: activeTab === i ? "1px solid #444" : "1px solid transparent",
-              }}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-      )}
-      <button
-        onClick={handleCopy}
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 8,
-          background: "none",
-          border: "1px solid #333",
-          borderRadius: 6,
-          color: "#888",
-          cursor: "pointer",
-          fontSize: 11,
-          padding: "4px 10px",
-          fontFamily: "inherit",
-          zIndex: 1,
-        }}
-      >
-        {copied ? "Copied!" : "Copy"}
-      </button>
-      <div
-        style={{
-          padding: "14px 16px",
-          background: "#0d0d0d",
-          fontFamily: "monospace",
-          fontSize: 13,
-          color: "#aaa",
-          lineHeight: 1.7,
-          whiteSpace: "pre-wrap",
-          overflowX: "auto",
-        }}
-      >
-        {code}
-      </div>
-    </div>
-  );
-}
+import { CodeBlock } from "@/components/code-block";
 
 export default function CliPage() {
   return (
@@ -129,7 +30,6 @@ export default function CliPage() {
         Installing Kata UI with the shadcn CLI
       </p>
 
-      {/* Initialization */}
       <h2
         style={{
           fontSize: 18,
@@ -162,7 +62,6 @@ Which color would you like to use as base color? Zinc
 Do you want to use CSS variables for colors? yes`}
       />
 
-      {/* Add components */}
       <h2
         style={{
           fontSize: 18,
@@ -209,7 +108,6 @@ Options:
   -h, --help        display help for command`}
       />
 
-      {/* Monorepo */}
       <h2
         style={{
           fontSize: 18,
@@ -240,7 +138,6 @@ Options:
         tabs={["npm", "pnpm", "yarn", "bun"]}
       />
 
-      {/* Namespaced registry */}
       <h2
         style={{
           fontSize: 18,

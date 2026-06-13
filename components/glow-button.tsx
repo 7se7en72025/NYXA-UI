@@ -18,7 +18,7 @@ const GlowButton = memo(function GlowButton({
       className={cn(
         "group inline-flex items-center justify-center px-6 py-2 rounded-md relative overflow-hidden font-medium transition-colors",
         "focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50",
-        "bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 border-0",
+        "bg-neutral-900 dark:bg-white text-white dark:text-black border-0",
         "[--shine-glow:rgba(255,255,255,.5)] dark:[--shine-glow:rgba(0,0,0,.5)]",
         "hover:scale-[1.01] active:scale-[0.97] transition-transform duration-150",
         className,

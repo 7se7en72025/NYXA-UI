@@ -1,62 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-function CodeBlock({ code }: { code: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        borderRadius: 8,
-        border: "1px solid #222",
-        overflow: "hidden",
-        marginBottom: 20,
-      }}
-    >
-      <button
-        onClick={handleCopy}
-        style={{
-          position: "absolute",
-          top: 8,
-          right: 8,
-          background: "none",
-          border: "1px solid #333",
-          borderRadius: 6,
-          color: "#888",
-          cursor: "pointer",
-          fontSize: 11,
-          padding: "4px 10px",
-          fontFamily: "inherit",
-          zIndex: 1,
-        }}
-      >
-        {copied ? "Copied!" : "Copy"}
-      </button>
-      <div
-        style={{
-          padding: "14px 16px",
-          background: "#0d0d0d",
-          fontFamily: "monospace",
-          fontSize: 13,
-          color: "#aaa",
-          lineHeight: 1.7,
-          whiteSpace: "pre-wrap",
-          overflowX: "auto",
-        }}
-      >
-        {code}
-      </div>
-    </div>
-  );
-}
+import { CodeBlock } from "@/components/code-block";
 
 export default function InstallNextjsPage() {
   return (
@@ -86,7 +30,6 @@ export default function InstallNextjsPage() {
         Install Next.js with Create Next App
       </p>
 
-      {/* Create a new project */}
       <h2
         style={{
           fontSize: 18,
@@ -143,7 +86,6 @@ Would you like to use App Router? (recommended) No / Yes
 Would you like to customize the import alias (@/* by default)? No / Yes`}
       />
 
-      {/* Start the app */}
       <h2
         style={{
           fontSize: 18,
@@ -159,7 +101,6 @@ Would you like to customize the import alias (@/* by default)? No / Yes`}
 
       <CodeBlock code={`cd my-app\nnpm run dev`} />
 
-      {/* Recommended project shape */}
       <h2
         style={{
           fontSize: 18,

@@ -147,6 +147,27 @@ body {
   color: var(--search-placeholder-hover, #999);
 }
 
+/* Stacked Logos */
+.stacked-logos__glow:hover,
+.stacked-logos__border-glow:hover {
+  opacity: 1;
+}
+
+.stacked-logos:hover .stacked-logos__glow,
+.stacked-logos:hover .stacked-logos__border-glow {
+  opacity: 1;
+}
+
+.stacked-logos__item {
+  opacity: 0;
+  animation: stacked-logos-fade-in 0.6s ease forwards;
+}
+
+@keyframes stacked-logos-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes aurora-bg {
   0% {
     background-position: 0% 50%;

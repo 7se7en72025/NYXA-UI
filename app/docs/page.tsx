@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CodeBlock } from "@/components/code-block";
 
 export default function DocsPage() {
   const [activeTab, setActiveTab] = useState<"preview" | "code">("preview");
@@ -214,19 +215,7 @@ export default function DocsPage() {
         >
           Installation
         </h2>
-        <div
-          style={{
-            padding: "12px 16px",
-            borderRadius: 8,
-            background: "#111",
-            border: "1px solid #222",
-            fontFamily: "monospace",
-            fontSize: 13,
-            color: "#aaa",
-          }}
-        >
-          {installCmd}
-        </div>
+        <CodeBlock code={installCmd} />
       </section>
 
       <section id="usage" style={{ marginTop: 40 }}>
@@ -241,20 +230,9 @@ export default function DocsPage() {
         >
           Usage
         </h2>
-        <div
-          style={{
-            padding: "16px 20px",
-            borderRadius: 8,
-            background: "#111",
-            border: "1px solid #222",
-            fontFamily: "monospace",
-            fontSize: 13,
-            color: "#aaa",
-            lineHeight: 1.7,
-            whiteSpace: "pre-wrap",
-          }}
-        >
-{`import { LiquidMetal } from "@/components/liquid-metal";
+        <CodeBlock
+          filename="app/page.tsx"
+          code={`import { LiquidMetal } from "@/components/liquid-metal";
 
 export default function App() {
   return (
@@ -267,7 +245,7 @@ export default function App() {
     </LiquidMetal>
   );
 }`}
-        </div>
+        />
       </section>
 
       <section id="props" style={{ marginTop: 40, marginBottom: 80 }}>

@@ -1,76 +1,6 @@
 "use client";
 
-import { useState } from "react";
-
-function CodeBlock({ code, filename }: { code: string; filename?: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        borderRadius: 8,
-        border: "1px solid #222",
-        overflow: "hidden",
-        marginBottom: 20,
-      }}
-    >
-      {filename && (
-        <div
-          style={{
-            padding: "8px 16px",
-            background: "#111",
-            borderBottom: "1px solid #222",
-            fontSize: 12,
-            fontFamily: "monospace",
-            color: "#888",
-          }}
-        >
-          {filename}
-        </div>
-      )}
-      <button
-        onClick={handleCopy}
-        style={{
-          position: "absolute",
-          top: filename ? 8 : 8,
-          right: 8,
-          background: "none",
-          border: "1px solid #333",
-          borderRadius: 6,
-          color: "#888",
-          cursor: "pointer",
-          fontSize: 11,
-          padding: "4px 10px",
-          fontFamily: "inherit",
-          zIndex: 1,
-        }}
-      >
-        {copied ? "Copied!" : "Copy"}
-      </button>
-      <div
-        style={{
-          padding: "14px 16px",
-          background: "#0d0d0d",
-          fontFamily: "monospace",
-          fontSize: 13,
-          color: "#aaa",
-          lineHeight: 1.7,
-          whiteSpace: "pre-wrap",
-          overflowX: "auto",
-        }}
-      >
-        {code}
-      </div>
-    </div>
-  );
-}
+import { CodeBlock } from "@/components/code-block";
 
 export default function UtilitiesPage() {
   return (
@@ -100,7 +30,6 @@ export default function UtilitiesPage() {
         Commonly used utilities for Kata UI
       </p>
 
-      {/* Install dependencies */}
       <h2
         style={{
           fontSize: 18,
@@ -115,7 +44,6 @@ export default function UtilitiesPage() {
 
       <CodeBlock code="npm install clsx tailwind-merge framer-motion" />
 
-      {/* Add util file */}
       <h2
         style={{
           fontSize: 18,
@@ -139,7 +67,6 @@ export function cn(...inputs: ClassValue[]) {
 }`}
       />
 
-      {/* Use the utility */}
       <h2
         style={{
           fontSize: 18,
@@ -183,7 +110,6 @@ export function Example({ active }: { active: boolean }) {
 }`}
       />
 
-      {/* Motion components */}
       <h2
         style={{
           fontSize: 18,
