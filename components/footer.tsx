@@ -43,13 +43,13 @@ export function Footer() {
           <span className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
             KataUI
           </span>
-          <span className="text-xs" style={{ color: "var(--ruler-text)" }}>
+          <span className="text-xs" style={{ color: theme === "dark" ? "#888" : "#777" }}>
             made with ❤ by 777
           </span>
         </div>
       </div>
 
-      <div className="text-sm" style={{ color: "var(--ruler-text)" }}>
+      <div className="text-sm" style={{ color: theme === "dark" ? "#888" : "#777" }}>
         © 2026 KataUI. MIT License.
       </div>
     </footer>

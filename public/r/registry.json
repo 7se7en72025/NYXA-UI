@@ -4,6 +4,18 @@
   "homepage": "https://github.com/razi-ai/kata-ui",
   "items": [
     {
+      "name": "hero",
+      "type": "registry:ui",
+      "title": "Hero",
+      "description": "Hero section with large typography, gradient text, and animated CTA buttons.",
+      "files": [
+        {
+          "path": "registry/ui/hero.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "side-frame",
       "type": "registry:ui",
       "title": "Side Frame",
@@ -19,7 +31,7 @@
       "name": "navbar",
       "type": "registry:ui",
       "title": "Navbar",
-      "description": "Fixed navbar with triangle wipe theme toggle, icon hover animation, and border trace effects.",
+      "description": "Fixed navbar with triangle wipe theme toggle, search bar with cursor spotlight, and border trace effects.",
       "registryDependencies": ["side-frame"],
       "files": [
         {

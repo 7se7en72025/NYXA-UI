@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "navbar",
   "title": "Navbar",
-  "description": "Fixed navbar with triangle wipe theme toggle, icon hover animation, and border trace effects.",
+  "description": "Fixed navbar with triangle wipe theme toggle, search bar with cursor spotlight, and border trace effects.",
   "registryDependencies": [
     "side-frame"
   ],
