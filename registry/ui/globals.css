@@ -128,4 +128,9 @@ body {
 
 [data-nav-search] input::placeholder {
   color: var(--search-placeholder, #666);
+  transition: color 0.15s ease;
+}
+
+[data-nav-search]:hover input::placeholder {
+  color: var(--search-placeholder-hover, #999);
 }

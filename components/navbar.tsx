@@ -260,21 +260,25 @@ export function Navbar() {
             gap: 8,
             padding: "6px 12px",
             borderRadius: 8,
-            border: `1px solid ${isDark ? "#333" : "#d4d4d4"}`,
-            background: searchHover
-              ? `radial-gradient(circle 140px at ${searchHover.x}px ${searchHover.y}px, ${isDark ? "rgba(255,255,255,0.18)" : "rgba(200,200,200,0.25)"}, ${isDark ? "rgba(255,255,255,0.04)" : "rgba(240,240,240,0.08)"})`
+            border: `1px solid ${isDark ? ((searchHover || searchFocused || searchHasValue) ? "#555" : "#333") : ((searchHover || searchFocused || searchHasValue) ? "#bbb" : "#d4d4d4")}`,
+            background: (searchHover || searchFocused || searchHasValue)
+              ? searchHover
+                ? `radial-gradient(circle 140px at ${searchHover.x}px ${searchHover.y}px, ${isDark ? "rgba(255,255,255,0.18)" : "rgba(200,200,200,0.25)"}, ${isDark ? "rgba(255,255,255,0.04)" : "rgba(240,240,240,0.08)"})`
+                : isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)"
               : isDark ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)",
             cursor: "text",
             height: 36,
             minWidth: 200,
-          }}
+            transition: "border-color 0.15s ease",
+            "--search-placeholder-hover": isDark ? "#bbb" : "#444",
+          } as React.CSSProperties}
         >
           <svg
             width="14"
             height="14"
             viewBox="0 0 24 24"
             fill="none"
-            style={{ stroke: isDark ? "#666" : "#999", flexShrink: 0 }}
+            style={{ stroke: (searchHover || searchFocused || searchHasValue) ? (isDark ? "#ccc" : "#555") : (isDark ? "#666" : "#999"), transition: "stroke 0.15s ease", flexShrink: 0 }}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -298,6 +302,7 @@ export function Navbar() {
               fontFamily: "sans-serif",
               flex: 1,
               minWidth: 0,
+              caretColor: isDark ? "#fff" : "#000",
             }}
           />
           <span
@@ -308,13 +313,13 @@ export function Navbar() {
               gap: 2,
               fontSize: 11,
               fontFamily: "sans-serif",
-              color: (searchHover || searchFocused || searchHasValue) ? (isDark ? "#ddd" : "#333") : (isDark ? "#555" : "#aaa"),
-              border: `1px solid ${isDark ? ((searchHover || searchFocused || searchHasValue) ? "#555" : "#333") : ((searchHover || searchFocused || searchHasValue) ? "#999" : "#d4d4d4")}`,
-              background: (searchHover || searchFocused || searchHasValue) ? (isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)") : "transparent",
+              color: (searchHover || searchFocused || searchHasValue) ? (isDark ? "#eee" : "#222") : (isDark ? "#555" : "#aaa"),
+              border: `1px solid ${isDark ? ((searchHover || searchFocused || searchHasValue) ? "#666" : "#333") : ((searchHover || searchFocused || searchHasValue) ? "#999" : "#d4d4d4")}`,
+              background: (searchHover || searchFocused || searchHasValue) ? (isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)") : "transparent",
               boxShadow: (searchHover || searchFocused || searchHasValue)
                 ? isDark
-                  ? "0 0 8px rgba(255,255,255,0.12), 0 0 2px rgba(255,255,255,0.2)"
-                  : "0 0 8px rgba(0,0,0,0.08), 0 0 2px rgba(0,0,0,0.12)"
+                  ? "0 0 10px rgba(255,255,255,0.15), inset 0 0 6px rgba(255,255,255,0.05)"
+                  : "0 0 10px rgba(0,0,0,0.1), inset 0 0 6px rgba(0,0,0,0.03)"
                 : "none",
               transition: "all 0.2s ease",
               borderRadius: 4,
