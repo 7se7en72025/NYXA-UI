@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "terminal-preloader",
+  "type": "registry:ui",
+  "title": "Terminal Preloader",
+  "description": "Full-screen cyberpunk terminal boot sequence preloader with typewriter effects, scan lines, and customizable content panels.",
+  "dependencies": [],
+  "files": [
+    {
+      "path": "registry/ui/terminal-preloader.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

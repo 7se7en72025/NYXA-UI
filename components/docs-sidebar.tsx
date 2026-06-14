@@ -28,6 +28,13 @@ const navigation: NavGroup[] = [
       { label: "Shrine Cards", href: "/docs/layout/shrine-cards" },
     ],
   },
+  {
+    title: "Preloader",
+    icon: "\u25B6",
+    items: [
+      { label: "Terminal Preloader", href: "/docs/preloader/terminal-preloader", isNew: true },
+    ],
+  },
 ];
 
 export function DocsSidebar() {
