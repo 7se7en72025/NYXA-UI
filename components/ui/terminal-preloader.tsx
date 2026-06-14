@@ -57,7 +57,6 @@ const D_SETTINGS: SettingsLine[] = [
   { key: "MODE", options: ["DARK", "LIGHT"], activeIndex: 0 },
   { key: "THEME", options: ["MINIMAL", "ANIME", "CYBER"], activeIndex: 2 },
   { key: "STACK", options: ["NEXT.JS", "VITE", "REMIX"], activeIndex: 0 },
-  { key: "LANG", options: ["TYPESCRIPT", "JAVASCRIPT"], activeIndex: 0 },
 ];
 
 const D_WHOAMI = [
@@ -119,7 +118,7 @@ function ELine({ line, vis, accent }: { line: string; vis: boolean; accent: stri
   const m = line.match(/^(>> )\[(.+?)\]\s+(.+)$/);
   if (!m) return null;
   return (
-    <div style={{ fontSize: 11, lineHeight: 1.9, fontFamily: FONT, color: "#fff", opacity: vis ? 1 : 0, transition: "opacity 0.25s ease" }}>
+    <div style={{ fontSize: 11, lineHeight: 2.4, fontFamily: FONT, color: "#fff", opacity: vis ? 1 : 0, transition: "opacity 0.25s ease" }}>
       <span style={{ color: accent, textShadow: `0 0 4px ${accent}` }}>{m[1]}</span>
       <span>[{m[2]}]</span>
       <span>{` ${m[3]}`}</span>
@@ -129,12 +128,12 @@ function ELine({ line, vis, accent }: { line: string; vis: boolean; accent: stri
 
 function SRow({ line, vis, accent }: { line: SettingsLine; vis: boolean; accent: string }) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "2px 0", fontSize: 11, lineHeight: 2.2, fontFamily: FONT, color: "#fff", opacity: vis ? 1 : 0, transition: "opacity 0.25s ease" }}>
+    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px 8px", fontSize: 11, lineHeight: 2.4, fontFamily: FONT, color: "#fff", opacity: vis ? 1 : 0, transition: "opacity 0.25s ease" }}>
       <span style={{ marginRight: 4 }}>{line.key}:</span>
       {line.options.map((o, i) => {
         const active = i === line.activeIndex;
         return (
-          <span key={o} style={{ background: active ? `${accent}30` : "transparent", color: active ? accent : "#fff", padding: "1px 6px", fontSize: 11, fontFamily: FONT, border: `1px solid ${active ? accent : "#444"}`, marginRight: 4 }}>
+          <span key={o} style={{ background: active ? `${accent}30` : "transparent", color: active ? accent : "#fff", padding: "2px 8px", fontSize: 11, fontFamily: FONT, border: `1px solid ${active ? accent : "#444"}` }}>
             [{o}]
           </span>
         );
@@ -149,7 +148,7 @@ function PanelBox({ border, shadow, label, accent, children }: {
   return (
     <div style={{ flex: 1, border, borderRadius: 1, boxShadow: shadow, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <Hdr label={label} c={accent} />
-      <div className="tp" style={{ flex: 1, padding: "6px 10px", overflowY: "auto" }}>
+      <div className="tp" style={{ flex: 1, padding: "10px 14px", overflowY: "auto" }}>
         {children}
       </div>
     </div>
