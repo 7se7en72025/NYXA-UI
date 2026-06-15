@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.76",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.11.17",
     "next": "^14.2.22",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,7 +36,7 @@ export default function RootLayout({
       <head>
         <link rel="preload" as="image" href="/dashboard-mockup.png" fetchPriority="high" />
       </head>
-      <body style={{ fontFamily: "var(--font-sans), system-ui, sans-serif" }} suppressHydrationWarning>{children}</body>
+      <body style={{ fontFamily: "var(--font-sans), system-ui, sans-serif" }} suppressHydrationWarning>{children}<Analytics /></body>
     </html>
   );
 }
