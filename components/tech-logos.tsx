@@ -148,7 +148,8 @@ export function TechLogos() {
         .tech-marquee {
           display: flex;
           width: max-content;
-          animation: marquee 30s linear infinite;
+          animation: marquee 25s linear infinite;
+          will-change: transform;
         }
         .tech-marquee:hover {
           animation-play-state: paused;
@@ -162,14 +163,12 @@ export function TechLogos() {
           border-radius: 9999px;
           border: 1px solid rgba(255,255,255,0.06);
           background: rgba(255,255,255,0.02);
-          transition: all 0.25s ease;
+          transition: border-color 0.25s ease, background 0.25s ease;
           white-space: nowrap;
         }
         .tech-item:hover {
           border-color: rgba(255,255,255,0.15);
           background: rgba(255,255,255,0.06);
-          transform: translateY(-2px);
-          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .tech-icon {
           display: flex;
@@ -195,7 +194,7 @@ export function TechLogos() {
 
       <div style={{ overflow: "hidden" }}>
         <div className="tech-marquee">
-          {[...tools, ...tools, ...tools, ...tools].map((tool, i) => (
+          {[...tools, ...tools].map((tool, i) => (
             <div key={i} className="tech-item">
               <div className="tech-icon">{tool.icon}</div>
               <span className="tech-name">{tool.name}</span>

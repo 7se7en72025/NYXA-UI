@@ -23,6 +23,7 @@ const features = [
 export function ImpressionSection() {
   return (
     <section
+      className="impression-section"
       style={{
         position: "relative",
         zIndex: 10,
@@ -62,6 +63,7 @@ export function ImpressionSection() {
       </p>
 
       <div
+        className="impression-layout"
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -74,6 +76,7 @@ export function ImpressionSection() {
       >
         {/* Left: Feature tabs */}
         <div
+          className="impression-tabs"
           style={{
             display: "flex",
             flexDirection: "column",
@@ -158,6 +161,7 @@ export function ImpressionSection() {
 
         {/* Right: Dashboard mockup with orange glow */}
         <div
+          className="impression-dashboard"
           style={{
             flex: "1 0 0",
             minWidth: 240,

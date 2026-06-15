@@ -6,8 +6,19 @@ import Image from "next/image";
 export const Footer = memo(function Footer() {
   return (
     <footer
-      className="absolute bottom-0 left-[48px] right-[48px] flex items-center justify-between px-6 py-4 border-t border-dotted"
-      style={{ borderColor: "var(--ruler-border)" }}
+      className="footer-bar"
+      style={{
+        position: "absolute",
+        bottom: 0,
+        left: 48,
+        right: 48,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "16px 24px",
+        borderTop: "1px dashed",
+        borderColor: "var(--ruler-border)",
+      }}
     >
       <div className="flex items-center gap-3">
         <Image

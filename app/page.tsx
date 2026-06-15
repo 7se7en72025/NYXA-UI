@@ -1,7 +1,4 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+import Image from "next/image";
 import { EmberParticles } from "@/components/ember-particles";
 import { TechLogos } from "@/components/tech-logos";
 import { ComponentShowcase } from "@/components/component-showcase";
@@ -9,14 +6,15 @@ import { ImpressionSection } from "@/components/impression-section";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { FaqSection } from "@/components/faq-section";
 import { SideFrame } from "@/components/side-frame";
-
-const Navbar = dynamic(() => import("@/components/navbar").then(m => ({ default: m.Navbar })), { ssr: false });
-const Hero = dynamic(() => import("@/components/hero").then(m => ({ default: m.Hero })), { ssr: false });
-const Footer = dynamic(() => import("@/components/footer").then(m => ({ default: m.Footer })), { ssr: false });
+import { LazySection } from "@/components/lazy-section";
+import { Navbar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
+import { Footer } from "@/components/footer";
 
 function DashboardPreview() {
   return (
     <div
+      className="dashboard-preview"
       style={{
         position: "relative",
         zIndex: 10,
@@ -45,9 +43,13 @@ function DashboardPreview() {
             border: "1px solid rgba(255,255,255,0.1)",
           }}
         >
-          <img
+          <Image
             src="/dashboard-mockup.png"
             alt="Dashboard preview"
+            width={1232}
+            height={753}
+            priority
+            sizes="(max-width: 768px) 100vw, 1200px"
             style={{
               width: "100.16%",
               height: "100.21%",
@@ -56,8 +58,6 @@ function DashboardPreview() {
               top: "-0.1%",
               left: "-0.08%",
             }}
-            loading="lazy"
-            decoding="async"
           />
         </div>
       </div>
@@ -66,22 +66,13 @@ function DashboardPreview() {
 }
 
 export default function Home() {
-  const [stars, setStars] = useState(3);
-
-  useEffect(() => {
-    fetch("https://api.github.com/repos/7se7en72025/kata-ui")
-      .then((r) => r.json())
-      .then((d) => { if (d.stargazers_count) setStars(d.stargazers_count); })
-      .catch(() => {});
-  }, []);
-
   return (
-    <main className="theme-bg relative" style={{ overflow: "hidden" }}>
+    <main className="theme-bg relative" style={{ overflow: "hidden", overflowX: "hidden" }}>
       <Navbar />
       <SideFrame />
 
       {/* Hero */}
-      <div style={{ position: "relative" }}>
+      <div className="hero-section" style={{ position: "relative", minHeight: "85vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <EmberParticles />
         <Hero />
       </div>
@@ -91,19 +82,28 @@ export default function Home() {
 
       {/* Built with the best tools */}
       <TechLogos />
-      <ComponentShowcase />
+      <LazySection minHeight={500}>
+        <ComponentShowcase />
+      </LazySection>
 
       {/* Make the right impression */}
-      <ImpressionSection />
+      <LazySection minHeight={600}>
+        <ImpressionSection />
+      </LazySection>
 
       {/* Loved by designers and developers */}
-      <TestimonialsSection />
+      <LazySection minHeight={500}>
+        <TestimonialsSection />
+      </LazySection>
 
       {/* Questions and Answers */}
-      <FaqSection />
+      <LazySection minHeight={400}>
+        <FaqSection />
+      </LazySection>
 
       {/* Start building CTA */}
       <section
+        className="cta-section"
         style={{
           position: "relative",
           zIndex: 10,
@@ -116,71 +116,9 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <style>{`
-          @keyframes cta-pulse {
-            0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.15); }
-          }
-          @keyframes cta-pulse-2 {
-            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.2); }
-          }
-          @keyframes cta-float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
-          }
-          @keyframes cta-grid-fade {
-            0%, 100% { opacity: 0.03; }
-            50% { opacity: 0.06; }
-          }
-          .cta-get-started {
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-          }
-          .cta-get-started::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s ease;
-          }
-          .cta-get-started:hover::before {
-            left: 100%;
-          }
-          .cta-get-started:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(251,146,60,0.3), 0 8px 24px rgba(0,0,0,0.4);
-          }
-          .cta-get-started:active {
-            transform: translateY(0);
-          }
-          .cta-github {
-            transition: all 0.3s ease;
-          }
-          .cta-github:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255,255,255,0.25);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-          }
-          .cta-github:active {
-            transform: translateY(0);
-          }
-          .cta-star-badge {
-            transition: all 0.2s ease;
-          }
-          .cta-star-badge:hover {
-            border-color: rgba(251,146,60,0.4);
-            background: rgba(251,146,60,0.08);
-          }
-        `}</style>
-
         {/* Background grid pattern */}
         <div
+          className="cta-grid-bg"
           style={{
             position: "absolute",
             inset: 0,
@@ -196,6 +134,7 @@ export default function Home() {
 
         {/* Floating orbs */}
         <div
+          className="cta-orb"
           style={{
             position: "absolute",
             width: 320,
@@ -210,6 +149,7 @@ export default function Home() {
           }}
         />
         <div
+          className="cta-orb"
           style={{
             position: "absolute",
             width: 240,
@@ -224,6 +164,7 @@ export default function Home() {
           }}
         />
         <div
+          className="cta-orb"
           style={{
             position: "absolute",
             width: 180,
@@ -299,7 +240,7 @@ export default function Home() {
           Open source and free forever.
         </p>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 16, position: "relative" }}>
+        <div className="cta-buttons" style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 16, position: "relative" }}>
           <a
             href="/docs"
             className="cta-get-started"
@@ -348,29 +289,13 @@ export default function Home() {
               <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
             </svg>
             Star on GitHub
-            <span
-              className="cta-star-badge"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "2px 8px",
-                borderRadius: 6,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                fontSize: 12,
-                fontWeight: 500,
-                color: "#a1a1aa",
-                marginLeft: 4,
-              }}
-            >
-              {stars}
-            </span>
           </a>
         </div>
       </section>
 
       {/* Bottom orange glow */}
       <div
+        className="bottom-glow"
         style={{
           position: "relative",
           width: "100%",

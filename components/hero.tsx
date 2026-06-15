@@ -1,9 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import AnimatedButton from "./animated-button";
 import GlowButton from "./glow-button";
-import { LiquidMetalBadge } from "./liquid-metal";
+
+const LiquidMetalBadge = dynamic(
+  () => import("./liquid-metal").then((m) => m.LiquidMetalBadge),
+  { ssr: false }
+);
 
 export function Hero() {
   const router = useRouter();
@@ -22,6 +27,7 @@ export function Hero() {
         zIndex: 10,
         textAlign: "center",
       }}
+      className="hero-inner"
     >
       <LiquidMetalBadge
         metalConfig={{
@@ -70,6 +76,7 @@ export function Hero() {
       </p>
 
       <div
+        className="hero-buttons"
         style={{
           display: "flex",
           alignItems: "center",

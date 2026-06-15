@@ -16,6 +16,7 @@ const components = [
 export function ComponentShowcase() {
   return (
     <section
+      className="component-showcase"
       style={{
         position: "relative",
         zIndex: 10,
@@ -44,6 +45,7 @@ export function ComponentShowcase() {
       </h2>
 
       <div
+        className="component-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",

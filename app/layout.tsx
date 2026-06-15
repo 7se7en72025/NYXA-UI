@@ -32,6 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="dark" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preload" as="image" href="/dashboard-mockup.png" fetchPriority="high" />
+      </head>
       <body style={{ fontFamily: "var(--font-sans), system-ui, sans-serif" }} suppressHydrationWarning>{children}</body>
     </html>
   );

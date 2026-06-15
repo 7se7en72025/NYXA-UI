@@ -44,7 +44,7 @@ const navigation: NavGroup[] = [
   },
 ];
 
-export function DocsSidebar() {
+export function DocsSidebar({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(
     Object.fromEntries(navigation.map((g) => [g.title, true]))
@@ -126,6 +126,7 @@ export function DocsSidebar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={onNavigate}
                     style={{
                       display: "flex",
                       alignItems: "center",

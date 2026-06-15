@@ -30,15 +30,7 @@ export const ShrineCards = memo(function ShrineCards({
   onCardHover,
 }: ShrineCardsProps) {
   const [activeIndex, setActiveIndex] = React.useState(defaultActiveIndex);
-  const [isMobile, setIsMobile] = React.useState(false);
-
-  React.useEffect(() => {
-    const mql = window.matchMedia("(max-width: 640px)");
-    const check = (e: MediaQueryListEvent | MediaQueryList) => setIsMobile(e.matches);
-    check(mql);
-    mql.addEventListener("change", check);
-    return () => mql.removeEventListener("change", check);
-  }, []);
+  const isMobile = false;
 
   const handleMouseEnter = React.useCallback(
     (index: number) => {

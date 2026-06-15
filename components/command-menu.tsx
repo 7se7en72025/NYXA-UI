@@ -89,6 +89,7 @@ export function CommandMenu({ open, onClose }: { open: boolean; onClose: () => v
   return (
     <div
       onClick={onClose}
+      className="command-menu-overlay"
       style={{
         position: "fixed",
         inset: 0,
@@ -103,6 +104,7 @@ export function CommandMenu({ open, onClose }: { open: boolean; onClose: () => v
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        className="command-menu"
         style={{
           width: 560,
           maxHeight: 480,

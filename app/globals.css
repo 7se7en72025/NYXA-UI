@@ -29,6 +29,11 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  html { overflow-x: hidden; }
 }
 
 body {
@@ -230,3 +235,309 @@ body {
 .animate-glow-pulse {
   animation: glow-pulse 4s ease-in-out infinite;
 }
+
+/* Responsive utilities — scale proportions only, never change layout */
+@media (max-width: 768px) {
+  /* Hide side rulers only */
+  .side-frame { display: none !important; }
+
+  /* Navbar: keep all items, make scrollable if needed */
+  nav { left: 0 !important; right: 0 !important; padding-left: 12px !important; padding-right: 12px !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+  .navbar-search { min-width: 120px !important; font-size: 11px !important; height: 30px !important; padding: 4px 8px !important; gap: 6px !important; }
+  .navbar-search span { font-size: 11px !important; }
+  .navbar-star { padding: 4px 8px !important; height: 30px !important; font-size: 11px !important; gap: 4px !important; }
+  .navbar-docs-btn { padding: 5px 12px !important; height: 30px !important; font-size: 11px !important; }
+  .navbar-mobile-toggle { display: none !important; }
+  .navbar-mobile-menu { display: none !important; }
+
+  /* Hero: scale down padding proportionally */
+  .hero-section { padding: 80px 20px 60px !important; }
+  .hero-inner { padding: 80px 20px 60px !important; }
+  /* Keep buttons horizontal, just scale them */
+  .hero-buttons { gap: 12px !important; }
+  .hero-buttons a { font-size: 13px !important; padding: 10px 18px !important; }
+
+  /* Dashboard preview: scale padding */
+  .dashboard-preview { padding: 0 20px !important; margin-top: -8px !important; }
+
+  /* Component showcase: keep 4-col grid, reduce card height */
+  .component-showcase { padding: 0 20px 80px !important; }
+  .component-grid { gap: 10px !important; }
+  .component-showcase .component-grid > a {
+    min-height: 160px !important;
+    padding: 16px 18px !important;
+  }
+  .component-showcase .component-grid > a > span:first-child { font-size: 10px !important; }
+  .component-showcase .component-grid > a > span:last-child { font-size: 16px !important; }
+
+  /* Impression section: keep side-by-side layout */
+  .impression-section { padding: 80px 20px 0 !important; }
+  .impression-layout { gap: 12px !important; }
+  .impression-tabs { width: 300px !important; min-width: 200px !important; }
+  .impression-dashboard { min-width: 200px !important; }
+  .impression-tabs > div { padding: 10px 16px 10px 10px !important; }
+  .impression-tabs > div > div:first-child { width: 14px !important; height: 14px !important; }
+  .impression-tabs > div > div:last-child > div:first-child { font-size: 13px !important; }
+  .impression-tabs > div > div:last-child > div:last-child { font-size: 11px !important; }
+
+  /* Testimonials: keep cards same size, they scroll */
+  .testimonials-section { padding: 80px 20px !important; gap: 20px !important; overflow: hidden !important; }
+  .testimonial-card { min-width: 320px !important; width: 400px !important; height: 176px !important; padding: 20px !important; }
+
+  /* FAQ: scale padding */
+  .faq-section { padding: 80px 20px !important; gap: 24px !important; }
+
+  /* CTA buttons: keep horizontal */
+  .cta-buttons { gap: 12px !important; padding: 0 20px !important; }
+  .cta-buttons a { font-size: 13px !important; padding: 10px 20px !important; }
+
+  /* CTA section */
+  .cta-section { padding-top: 80px !important; padding-bottom: 80px !important; gap: 16px !important; }
+
+  /* Bottom glow: scale down */
+  .bottom-glow { margin-top: -60px !important; height: 100px !important; }
+  .bottom-glow svg { width: 300px !important; height: 150px !important; }
+
+  /* Footer: keep horizontal */
+  .footer-bar { gap: 12px !important; padding: 12px 16px !important; left: 0 !important; right: 0 !important; }
+  .footer-bar > div:first-child { gap: 8px !important; }
+  .footer-bar > div:first-child > div > span:first-child { font-size: 16px !important; }
+  .footer-bar > div:last-child { font-size: 12px !important; }
+
+  /* Command menu: slightly smaller but keep centered */
+  .command-menu { width: calc(100vw - 24px) !important; margin: 0 12px !important; max-height: 75vh !important; }
+  .command-menu-overlay { padding-top: 8vh !important; }
+
+  /* Pricing grid: keep multi-col */
+  .pricing-grid { gap: 12px !important; }
+
+  /* Keep floating orbs visible */
+  .cta-orb { opacity: 0.5 !important; }
+  .cta-grid-bg { opacity: 0.03 !important; }
+}
+
+@media (min-width: 769px) {
+  .navbar-mobile-toggle { display: none !important; }
+  .navbar-mobile-menu { display: none !important; }
+}
+
+@media (max-width: 480px) {
+  /* Even tighter at very small sizes, but still same layout */
+  .hero-inner { padding: 60px 16px 48px !important; }
+  .hero-buttons { gap: 10px !important; }
+  .hero-buttons a { font-size: 12px !important; padding: 8px 14px !important; }
+  .component-grid { gap: 8px !important; }
+  .component-showcase .component-grid > a {
+    min-height: 130px !important;
+    padding: 12px 14px !important;
+  }
+  .impression-tabs { width: 240px !important; min-width: 180px !important; }
+  .testimonial-card { min-width: 280px !important; width: 340px !important; height: 160px !important; padding: 16px !important; }
+  .testimonial-card > div > div > div:first-child { font-size: 15px !important; }
+  .testimonial-card > div > div > div:last-child { font-size: 14px !important; }
+  .testimonial-card > p { font-size: 14px !important; line-height: 20px !important; }
+  .cta-buttons a { font-size: 12px !important; padding: 8px 16px !important; }
+  .impression-dashboard { min-width: 160px !important; }
+  .navbar-search { min-width: 120px !important; }
+}
+
+/* Performance: content-visibility for below-fold sections */
+.impression-section,
+.testimonials-section,
+.faq-section,
+.cta-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Performance: GPU hints for animated elements */
+.tech-marquee,
+.testimonial-scroll-track,
+.ember-dot {
+  will-change: transform;
+}
+
+/* CLS fixes: reserve space for fixed elements */
+.side-frame {
+  contain: strict;
+  contain: layout size;
+}
+
+/* CLS fixes: stable hero */
+.hero-section {
+  contain: layout style;
+}
+
+/* Performance: reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .ember-dot,
+  .tech-marquee,
+  .testimonial-scroll-track,
+  .scroll-row-left,
+  .scroll-row-right {
+    animation: none !important;
+  }
+  .tech-item,
+  .testimonial-card {
+    transition: none !important;
+  }
+}
+
+/* Mobile: ensure no horizontal overflow from any section */
+main { overflow-x: clip; }
+section { overflow: visible; }
+.impression-section,
+.testimonials-section { overflow: hidden !important; }
+
+/* Docs layout mobile — proper mobile docs experience */
+@media (max-width: 768px) {
+  .docs-sidebar-panel { display: none !important; }
+  .docs-resize-handle { display: none !important; }
+  .docs-toc-panel { display: none !important; }
+  .docs-content-area {
+    padding: 16px !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+  }
+  .docs-content-area h1 { font-size: 28px !important; margin-bottom: 12px !important; }
+  .docs-content-area h2 { font-size: 22px !important; margin-top: 32px !important; margin-bottom: 12px !important; }
+  .docs-content-area h3 { font-size: 18px !important; }
+  .docs-content-area p { font-size: 14px !important; line-height: 1.6 !important; }
+  .docs-content-area ul { font-size: 14px !important; }
+  .docs-content-area code:not(pre code):not(.docs-props-table code) {
+    font-size: 13px !important;
+    padding: 2px 5px !important;
+  }
+  .docs-mobile-toggle { display: flex !important; }
+  .docs-sidebar-overlay {
+    position: fixed !important;
+    top: 52px !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 260px !important;
+    z-index: 90 !important;
+    background: #000 !important;
+    border-right: 1px solid #1a1a1a !important;
+    transform: translateX(0) !important;
+    transition: transform 0.2s ease !important;
+  }
+  .docs-sidebar-overlay.hidden {
+    transform: translateX(-100%) !important;
+    pointer-events: none !important;
+  }
+  .docs-sidebar-backdrop {
+    position: fixed !important;
+    top: 52px !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0,0,0,0.6) !important;
+    z-index: 89 !important;
+  }
+
+  /* Install bar: wrap on narrow screens */
+  .docs-install-bar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .docs-install-bar > div:first-child {
+    flex-shrink: 0 !important;
+  }
+  .docs-install-bar > div:last-child {
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Props tables: horizontally scrollable */
+  .docs-props-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .docs-props-table {
+    font-size: 12px !important;
+    min-width: 480px !important;
+  }
+  .docs-props-table th,
+  .docs-props-table td {
+    padding: 8px 10px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Inline code blocks: scroll horizontally */
+  .docs-content-area pre {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100% !important;
+  }
+  .docs-content-area pre code {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Preview panels: scale height */
+  .docs-content-area [style*="min-height: 500"],
+  .docs-content-area [style*="minHeight: 500"] {
+    min-height: 300px !important;
+  }
+
+  /* CodeBlock tab headers: scrollable */
+  .docs-content-area [style*="overflow: hidden"] > div:first-child {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* Docs page: props tables base */
+.docs-props-table-wrap {
+  border: 1px solid #222;
+  border-radius: 8;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+/* CTA section animations (moved from inline) */
+@keyframes cta-pulse {
+  0%, 100% { opacity: 0.2; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.15); }
+}
+@keyframes cta-pulse-2 {
+  0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.2; transform: translate(-50%, -50%) scale(1.2); }
+}
+@keyframes cta-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+@keyframes cta-grid-fade {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
+}
+.cta-get-started {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.cta-get-started::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.5s ease;
+}
+.cta-get-started:hover::before { left: 100%; }
+.cta-get-started:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(251,146,60,0.3), 0 8px 24px rgba(0,0,0,0.4);
+}
+.cta-get-started:active { transform: translateY(0); }
+.cta-github { transition: all 0.3s ease; }
+.cta-github:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.cta-github:active { transform: translateY(0); }

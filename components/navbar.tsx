@@ -137,6 +137,7 @@ export function Navbar() {
   const [isDark, setIsDark] = useState(true);
   const [showComingSoon, setShowComingSoon] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const [hovered, setHovered] = useState(false);
   const borderRef = useRef<SVGSVGElement>(null);
@@ -193,18 +194,23 @@ export function Navbar() {
       style={{
         position: "fixed",
         top: 0,
-        left: isDocs ? 0 : 48,
-        right: isDocs ? 0 : 48,
+        left: 0,
+        right: 0,
         height: 52,
         zIndex: 100,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        padding: isDocs ? "0 24px" : "0 68px",
+        padding: isDocs ? "0 16px" : "0 16px",
         background: isDark ? "#000000" : "#ffffff",
         pointerEvents: "none",
       }}
     >
+      <style>{`
+        @media (min-width: 769px) {
+          nav { padding-left: ${isDocs ? "24px" : "68px"} !important; padding-right: ${isDocs ? "24px" : "68px"} !important; }
+        }
+      `}</style>
       <div
         data-nav-logo
         style={{
@@ -250,6 +256,7 @@ export function Navbar() {
         <div
           ref={searchRef}
           data-nav-search
+          className="navbar-search"
           onClick={() => setCmdOpen(true)}
           onMouseMove={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
@@ -322,6 +329,7 @@ export function Navbar() {
           href="https://github.com/7se7en72025/kata-ui"
           target="_blank"
           rel="noopener noreferrer"
+          className="navbar-star"
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -419,6 +427,7 @@ export function Navbar() {
 
         <button
           data-nav-docs
+          className="navbar-docs-btn"
           style={{
             background: isDark ? "#fff" : "#111",
             color: isDark ? "#000" : "#fff",
@@ -442,8 +451,49 @@ export function Navbar() {
         >
           View Docs
         </button>
+
+        {/* Mobile hamburger */}
+        <button
+          className="navbar-mobile-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          style={{
+            display: "none",
+            width: 36,
+            height: 36,
+            borderRadius: 8,
+            border: `1px solid ${isDark ? "#333" : "#d4d4d4"}`,
+            background: "transparent",
+            color: isDark ? "#ccc" : "#333",
+            cursor: "pointer",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+          }}
+        >
+          {mobileMenuOpen ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          )}
+        </button>
       </div>
     </nav>
+
+    {/* Mobile menu */}
+    {mobileMenuOpen && (
+      <div className="navbar-mobile-menu">
+        <a href="/docs" onClick={() => setMobileMenuOpen(false)}>Docs</a>
+        <a href="https://github.com/7se7en72025/kata-ui" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)}>GitHub</a>
+        <a href="/docs" onClick={() => setMobileMenuOpen(false)}>View Docs</a>
+      </div>
+    )}
     {showComingSoon && (
       <div
         style={{

@@ -38,6 +38,7 @@ export const LiquidMetal = memo(function LiquidMetal({
   }, []);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) return;
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -81,26 +82,6 @@ export const LiquidMetalBadge = forwardRef<
   HTMLDivElement,
   LiquidMetalBadgeProps
 >(({ children, metalConfig, className, ...props }, ref) => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    const updateTheme = () => {
-      const html = document.documentElement;
-      const currentTheme = html.getAttribute("data-theme") as "dark" | "light";
-      setTheme(currentTheme || "dark");
-    };
-
-    updateTheme();
-
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div
       ref={ref}
@@ -109,11 +90,11 @@ export const LiquidMetalBadge = forwardRef<
     >
       <div
         className="relative rounded-full overflow-hidden"
-        style={{ padding: 3, background: theme === "dark" ? "#1a1a1a" : "#e0e0e0" }}
+        style={{ padding: 3, background: "#1a1a1a" }}
       >
         <LiquidMetal
-          colorBack={metalConfig?.colorBack ?? (theme === "dark" ? "#1a1a1a" : "#e8e8e8")}
-          colorTint={metalConfig?.colorTint ?? (theme === "dark" ? "#444" : "#fff")}
+          colorBack={metalConfig?.colorBack ?? "#1a1a1a"}
+          colorTint={metalConfig?.colorTint ?? "#444"}
           speed={metalConfig?.speed ?? 0.3}
           repetition={metalConfig?.repetition ?? 3}
           distortion={metalConfig?.distortion ?? 0.1}
@@ -124,15 +105,14 @@ export const LiquidMetalBadge = forwardRef<
         <div
           className={cn(
             "relative z-10 rounded-full flex items-center gap-2 px-4 py-2",
-            "transition-colors duration-200",
-            theme === "dark" ? "bg-[#0a0a0a]" : "bg-[#f5f5f5]"
+            "transition-colors duration-200 bg-[#0a0a0a]"
           )}
         >
           <span
             className="text-sm font-medium"
             style={{
               fontFamily: "inherit",
-              color: theme === "dark" ? "#888" : "#666",
+              color: "#888",
             }}
           >
             {children}

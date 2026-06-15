@@ -53,12 +53,13 @@ export function ResizablePanels({
       }}
     >
       {/* Left Panel */}
-      <div style={{ width: leftWidth, flexShrink: 0, overflow: "auto", height: "100%" }}>
+      <div className="docs-sidebar-panel" style={{ width: leftWidth, flexShrink: 0, overflow: "auto", height: "100%" }}>
         {left}
       </div>
 
       {/* Left resize handle */}
       <div
+        className="docs-resize-handle"
         onMouseDown={onMouseDown}
         style={{
           width: 5,

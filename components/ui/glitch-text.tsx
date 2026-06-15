@@ -89,6 +89,7 @@ export function GlitchText({
   text-transform: uppercase;
   white-space: nowrap;
   animation: ${id} 3s infinite steps(1);
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

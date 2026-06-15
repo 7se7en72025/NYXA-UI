@@ -72,6 +72,7 @@ function FaqItem({ faq }: { faq: typeof faqs[0] }) {
 export function FaqSection() {
   return (
     <section
+      className="faq-section"
       style={{
         position: "relative",
         zIndex: 10,

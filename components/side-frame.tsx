@@ -96,6 +96,7 @@ const Ruler = memo(function Ruler({ side }: { side: "left" | "right" }) {
   return (
     <div
       ref={containerRef}
+      className="side-frame"
       style={{
         position: "fixed",
         top: 0,

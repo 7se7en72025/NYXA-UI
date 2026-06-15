@@ -89,6 +89,7 @@ export default function ShrineCardsPage() {
 
       {/* Preview/Code tabs + Install command on same row */}
       <div
+        className="docs-install-bar"
         style={{
           display: "flex",
           alignItems: "center",
@@ -254,10 +255,11 @@ export default function ShrineCardsPage() {
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: 13,
               lineHeight: 1.8,
+              overflowX: "auto",
             }}
           >
             {usageCode.split("\n").map((line, i) => (
-              <div key={i} style={{ display: "flex" }}>
+              <div key={i} style={{ display: "flex", whiteSpace: "nowrap" }}>
                 <span
                   style={{
                     width: 48,
@@ -504,10 +506,11 @@ export default function ShrineCardsPage() {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: 13,
             lineHeight: 1.8,
+            overflowX: "auto",
           }}
         >
           {usageCode.split("\n").map((line, i) => (
-            <div key={i} style={{ display: "flex" }}>
+            <div key={i} style={{ display: "flex", whiteSpace: "nowrap" }}>
               <span
                 style={{
                   width: 48,

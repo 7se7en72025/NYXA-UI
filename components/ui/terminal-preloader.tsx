@@ -330,6 +330,7 @@ export function TerminalPreloader({
       <style>{`.tp::-webkit-scrollbar{display:none}.tp{scrollbar-width:none}`}</style>
 
       <div
+        className="tp-panels"
         style={{
           display: "flex",
           alignItems: "stretch",

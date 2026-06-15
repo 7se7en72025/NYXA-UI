@@ -122,6 +122,7 @@ export default function TerminalPreloaderPage() {
 
       {/* Preview/Code tabs + Install command */}
       <div
+        className="docs-install-bar"
         style={{
           display: "flex",
           alignItems: "center",
@@ -290,6 +291,8 @@ export default function TerminalPreloaderPage() {
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: 13,
               lineHeight: 1.8,
+              overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
             }}
           >
             {usageCode.split("\n").map((line, i) => (
@@ -320,6 +323,7 @@ export default function TerminalPreloaderPage() {
                               ? "#C792EA"
                               : "#C3CEE3",
                     paddingLeft: 8,
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {line}
@@ -544,10 +548,11 @@ export default function TerminalPreloaderPage() {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: 13,
             lineHeight: 1.8,
+            overflowX: "auto",
           }}
         >
           {usageCode.split("\n").map((line, i) => (
-            <div key={i} style={{ display: "flex" }}>
+            <div key={i} style={{ display: "flex", whiteSpace: "nowrap" }}>
               <span
                 style={{
                   width: 48,
@@ -622,10 +627,11 @@ export default function TerminalPreloaderPage() {
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: 13,
             lineHeight: 1.8,
+            overflowX: "auto",
           }}
         >
           {customCode.split("\n").map((line, i) => (
-            <div key={i} style={{ display: "flex" }}>
+            <div key={i} style={{ display: "flex", whiteSpace: "nowrap" }}>
               <span
                 style={{
                   width: 48,
@@ -671,8 +677,9 @@ export default function TerminalPreloaderPage() {
         Props
       </h2>
 
-      <div style={{ border: "1px solid #222", borderRadius: 8, overflow: "hidden", marginBottom: 40 }}>
+      <div className="docs-props-table-wrap">
         <table
+          className="docs-props-table"
           style={{
             width: "100%",
             borderCollapse: "collapse",

@@ -52,7 +52,7 @@ export const CodeBlock = memo(function CodeBlock({
           }}
         >
           {tabs ? (
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
               {tabs.map((tab, i) => (
                 <button
                   key={tab}

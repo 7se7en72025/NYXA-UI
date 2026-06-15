@@ -47,6 +47,7 @@ export default function DocsPage() {
 
       {/* Tabs + Install */}
       <div
+        className="docs-install-bar"
         style={{
           display: "flex",
           alignItems: "center",
