@@ -29,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prettier formatting configuration
 - EditorConfig for consistent coding style
 - PR template and issue templates
+- GitHub Sponsors funding configuration
+- npm publish workflow for automated releases
+- Security vulnerability reporting policy
 
 ### Changed
 
