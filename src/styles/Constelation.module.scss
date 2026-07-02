@@ -1,0 +1,225 @@
+.constelationWrapper {
+  width: 500px;
+  aspect-ratio: 1/1;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%) scale(.75);
+
+  background-image: url("@assets/hamMenu/Constellation Background.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  * {
+    pointer-events: none;
+  }
+
+  @media screen and (max-height: 700px) {
+    top: 25%;
+    width: 400px;
+  }
+
+  @media screen and (max-height: 600px) {
+    // scale: 0.8;
+    top: 28%;
+  }
+
+  @media screen and (max-width: 700px) {
+    top: 25%;
+    width: 400px;
+    left: 52%;
+  }
+
+  @media screen and (max-width: 515px) {
+    top: 25%;
+    width: 300px;
+  }
+
+  @media screen and (max-width: 530px) {
+    top: 27%;
+    transform-origin: center;
+    transform: scale(0.8) translate(-65%, 0);
+  }
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  & > div {
+    position: absolute;
+    max-width: 120px;
+    width: fit-content;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+
+    transition: scale 0.2s ease-in-out;
+
+    span {
+      font-size: 1.2rem;
+      color: #c8f2f4;
+      text-shadow: 0px 0px 12.236px rgba(210, 198, 255, 0.4);
+      transition:
+        color 0.2s ease-in-out,
+        text-shadow 0.2s ease-in-out;
+      text-align: center;
+
+      @media screen and (max-height: 700px), screen and (max-width: 700px) {
+        font-size: 1rem;
+      }
+      @media screen and (max-width: 515px) {
+        font-size: 0.8rem;
+      }
+    }
+
+    svg {
+      overflow: visible;
+
+      @media screen and (max-width: 515px) {
+        scale: 0.6;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      scale: 1.1;
+      svg {
+        & > path[fill="url(#a)"] {
+          fill: url(#a1);
+        }
+        & > g[mask="url(#d)"] {
+          mask: url(#d1);
+        }
+        path[fill="url(#e)"] {
+          fill: url(#e1);
+        }
+      }
+      span {
+        color: #ef8f93;
+        text-shadow: 0px 0px 8px rgba(239, 143, 147, 0.7);
+      }
+    }
+  }
+}
+
+.home {
+  top: 46%;
+  left: 44%;
+  flex-direction: row-reverse;
+
+  svg {
+    & > path[fill="url(#a)"] {
+      fill: url(#a1);
+    }
+    & > g[mask="url(#d)"] {
+      mask: url(#d1);
+    }
+    path[fill="url(#e)"] {
+      fill: url(#e1);
+    }
+  }
+
+  span {
+    color: #ef8f93 !important;
+  }
+}
+
+.login {
+  top: 17%;
+  left: -4%;
+}
+
+.armageddon {
+  top: 55%;
+  left: -9%;
+}
+.eventsRule {
+  top: 85%;
+  left: 37%;
+  max-width: 150px !important;
+  flex-wrap: nowrap !important;
+}
+.sponsors {
+  top: 5%;
+  left: 27%;
+}
+.mediaPartners {
+  top: 21%;
+  left: 80%;
+  max-width: 150px !important;
+  flex-wrap: nowrap !important;
+}
+.developers {
+  top: 62%;
+  left: 79%;
+}
+
+@media screen and (max-height: 760px), screen and (max-width: 700px) {
+  .home {
+    top: 46%;
+    left: 43%;
+  }
+  .login {
+    top: 16%;
+    left: -6%;
+  }
+  .armageddon {
+    top: 53%;
+    left: -11%;
+  }
+  .eventsRule {
+    top: 83%;
+    left: 36%;
+  }
+  .sponsors {
+    top: 2%;
+    left: 24%;
+  }
+  .mediaPartners {
+    top: 19%;
+    left: 78%;
+  }
+  .developers {
+    top: 60%;
+    left: 77%;
+  }
+}
+
+@media screen and (max-width: 515px) {
+  .home {
+    top: 44%;
+    left: 41%;
+  }
+  .login {
+    top: 16%;
+    left: -9%;
+  }
+  .armageddon {
+    top: 52%;
+    left: -17%;
+  }
+  .eventsRule {
+    top: 80%;
+    left: 34%;
+    max-width: 120px !important;
+  }
+  .sponsors {
+    top: 2%;
+    left: 32%;
+  }
+  .mediaPartners {
+    top: 18%;
+    left: 79%;
+    max-width: 100px !important;
+  }
+  .developers {
+    top: 58%;
+    left: 72%;
+  }
+}
