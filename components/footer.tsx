@@ -22,7 +22,7 @@ export const Footer = memo(function Footer() {
     >
       <div className="flex items-center gap-3">
         <Image
-          src="/FalakLOGOWHITE.svg"
+          src="/falak-logo.svg"
           alt="Falak"
           width={40}
           height={40}

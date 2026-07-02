@@ -71,7 +71,7 @@ function applyColor(el: HTMLElement, type: string, theme: "light" | "dark") {
     el.style.color = theme === "dark" ? "#000" : "#fff";
   } else if (type === "logo") {
     const img = el.querySelector("img") as HTMLImageElement;
-    if (img) img.src = theme === "dark" ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg";
+    if (img) img.src = "/falak-logo.svg";
   } else if (type === "search") {
     el.style.borderColor = theme === "dark" ? "#333" : "#d4d4d4";
     el.style.background = theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)";
@@ -247,7 +247,7 @@ export function Navbar() {
           }}
         >
           <Image
-            src={isDark ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg"}
+            src="/falak-logo.svg"
             alt="Falak"
             width={28}
             height={18}

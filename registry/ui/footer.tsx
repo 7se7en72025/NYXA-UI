@@ -33,7 +33,7 @@ export function Footer() {
     >
       <div className="flex items-center gap-3">
         <Image
-          src={theme === "dark" ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg"}
+          src="/falak-logo.svg"
           alt="Falak"
           width={40}
           height={40}
