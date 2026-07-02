@@ -9,7 +9,7 @@ const testimonials = [
       handle: "@zaraprints",
       text: [
         "Playing around with ",
-        "@kataui",
+        "@Falak",
         " suddenly made me feeling inspired to launch that side project.",
       ],
     },
@@ -18,19 +18,19 @@ const testimonials = [
       handle: "@fab3304",
       text: [
         "Testing out ",
-        "@kataui",
+        "@Falak",
         "'s responsive design. That's the template we've all been waiting for.",
       ],
     },
     {
       name: "Felix Beaumont",
       handle: "@felixbs",
-      text: ["Digging into ", "@kataui", ". Those shadows are giving me serious design envy."],
+      text: ["Digging into ", "@Falak", ". Those shadows are giving me serious design envy."],
     },
     {
       name: "Olivia Blackwood",
       handle: "@olivia1992",
-      text: ["", "@kataui", " is not messing around with its component library game."],
+      text: ["", "@Falak", " is not messing around with its component library game."],
     },
   ],
   [
@@ -39,25 +39,21 @@ const testimonials = [
       handle: "@EsmeRothArt",
       text: [
         "",
-        "@kataui",
+        "@Falak",
         " is siiiiick. That globe graphic though. Making me feel like I'm building websites for a sci-fi movie.",
       ],
     },
     {
       name: "Darius Flynn",
       handle: "@flynnn",
-      text: [
-        "Exploring ",
-        "@kataui",
-        "'s sleek UI. It's like a dark mode enthusiast's playground.",
-      ],
+      text: ["Exploring ", "@Falak", "'s sleek UI. It's like a dark mode enthusiast's playground."],
     },
     {
       name: "Kai Nakamura",
       handle: "@KaiNakWaves",
       text: [
         "Just made my first website with ",
-        "@kataui",
+        "@Falak",
         ". Its flexibility is speaking my language.",
       ],
     },
@@ -195,7 +191,7 @@ export function TestimonialsSection() {
             maxWidth: 580,
           }}
         >
-          Here&apos;s what people are saying about Kata UI
+          Here&apos;s what people are saying about Falak
         </p>
       </div>
 

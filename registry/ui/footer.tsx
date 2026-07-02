@@ -33,15 +33,15 @@ export function Footer() {
     >
       <div className="flex items-center gap-3">
         <Image
-          src={theme === "dark" ? "/KATAUILOGOWHITE.svg" : "/KATAUILOGOBLACK.svg"}
-          alt="Kata UI"
+          src={theme === "dark" ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg"}
+          alt="Falak"
           width={40}
           height={40}
           className="h-10 w-auto"
         />
         <div className="flex flex-col">
           <span className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
-            KataUI
+            Falak
           </span>
           <span className="text-xs" style={{ color: theme === "dark" ? "#888" : "#777" }}>
             made with ❤ by 777
@@ -50,7 +50,7 @@ export function Footer() {
       </div>
 
       <div className="text-sm" style={{ color: theme === "dark" ? "#888" : "#777" }}>
-        © 2026 KataUI. MIT License.
+        © 2026 Falak. MIT License.
       </div>
     </footer>
   );

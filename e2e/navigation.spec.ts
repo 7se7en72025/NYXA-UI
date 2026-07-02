@@ -58,7 +58,7 @@ test.describe("Responsive Design", () => {
 test.describe("User Interactions", () => {
   test("FAQ accordion works", async ({ page }) => {
     await page.goto("/");
-    const faqSection = page.locator("text=Is Kata UI easy to customise?");
+    const faqSection = page.locator("text=Is Falak easy to customise?");
     if (await faqSection.isVisible()) {
       await faqSection.click();
       await page.waitForTimeout(300);

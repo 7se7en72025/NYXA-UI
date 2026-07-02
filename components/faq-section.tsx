@@ -4,20 +4,20 @@ import React, { useState } from "react";
 
 const faqs = [
   {
-    q: "Is Kata UI easy to customise?",
+    q: "Is Falak easy to customise?",
     a: "Yes, absolutely. All components use CSS variables and Tailwind classes, making it trivial to match your brand.",
   },
   {
-    q: "Is Kata UI optimized for search engines?",
+    q: "Is Falak optimized for search engines?",
     a: "Yes. The components are built with semantic HTML and follow accessibility best practices that search engines reward.",
   },
   {
-    q: "How does Kata UI compare to no-code tools?",
+    q: "How does Falak compare to no-code tools?",
     a: "You get full code ownership, no vendor lock-in, and the flexibility to build anything without limitations.",
   },
   {
     q: "Why not just coding a website yourself?",
-    a: "You can, but Kata UI saves you hundreds of hours with production-ready, tested components you can copy and paste.",
+    a: "You can, but Falak saves you hundreds of hours with production-ready, tested components you can copy and paste.",
   },
   {
     q: "Can I get a refund if I don't like it?",

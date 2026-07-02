@@ -9,9 +9,9 @@ describe("Footer", () => {
     expect(footer).toBeDefined();
   });
 
-  it("renders Kata UI logo", () => {
+  it("renders Falak logo", () => {
     render(<Footer />);
-    const logo = screen.getByAltText("Kata UI");
+    const logo = screen.getByAltText("Falak");
     expect(logo).toBeDefined();
   });
 });

@@ -16,7 +16,7 @@ let _id = 0;
 const uid = () => `glt-${++_id}`;
 
 export function GlitchText({
-  text = "KATA UI",
+  text = "Falak",
   as: Tag = "span",
   color = "#FFD700",
   size = "4rem",

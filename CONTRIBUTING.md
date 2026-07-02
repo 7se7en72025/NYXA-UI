@@ -1,13 +1,13 @@
-# Contributing to Kata UI
+# Contributing to Falak
 
-Thanks for your interest in contributing to Kata UI! Here's how to get started.
+Thanks for your interest in contributing to Falak! Here's how to get started.
 
 ## Development Setup
 
 ```bash
 # Clone the repo
 git clone https://github.com/7se7en72025/kata-ui.git
-cd kata-ui
+cd falak
 
 # Install dependencies
 npm install

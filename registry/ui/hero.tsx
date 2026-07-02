@@ -35,7 +35,7 @@ export function Hero() {
           distortion: 0.1,
         }}
       >
-        <span style={{ color: "#888" }}>Kata UI v0.1</span>
+        <span style={{ color: "#888" }}>Falak v0.1</span>
         <span style={{ display: "inline-block", width: 6 }} />
         <span style={{ color: "#fff", fontWeight: 500 }}>Now in Development</span>
       </LiquidMetalBadge>

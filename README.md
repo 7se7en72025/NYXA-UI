@@ -1,14 +1,14 @@
 <div align="center">
 
-![Kata UI Banner](https://raw.githubusercontent.com/7se7en72025/kata-ui/main/public/dashboard-mockup.png)
+![Falak Banner](https://raw.githubusercontent.com/7se7en72025/kata-ui/main/public/dashboard-mockup.png)
 
-# Kata UI
+# Falak
 
 **Motion-driven React components that feel alive.**
 
 Form follows force. Not just what things look like â€” how they feel.
 
-[![NPM Version](https://img.shields.io/npm/v/kata-ui.svg)](https://www.npmjs.com/package/kata-ui)
+[![NPM Version](https://img.shields.io/npm/v/falak.svg)](https://www.npmjs.com/package/falak)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/7se7en72025/kata-ui/pulls)
 [![Stars](https://img.shields.io/github/stars/7se7en72025/kata-ui?style=social)](https://github.com/7se7en72025/kata-ui)
@@ -23,13 +23,13 @@ Form follows force. Not just what things look like â€” how they feel.
 
 ---
 
-## What is Kata UI?
+## What is Falak?
 
-Most component libraries focus on how things look. **Kata UI focuses on how things feel.** Every component is built with physics-based animations, intention-driven interactions, and the sense that UI elements have mass and momentum.
+Most component libraries focus on how things look. **Falak focuses on how things feel.** Every component is built with physics-based animations, intention-driven interactions, and the sense that UI elements have mass and momentum.
 
 > **Form follows force.** Not just what things look like, how they feel.
 
-### Why Kata UI?
+### Why Falak?
 
 | Feature               | Description                                            |
 | --------------------- | ------------------------------------------------------ |
@@ -59,14 +59,14 @@ npx shadcn@latest add https://kata-ui-rho.vercel.app/r/hero
 ### Install via npm
 
 ```bash
-npm install kata-ui
+npm install falak
 ```
 
 ### Clone & Run Locally
 
 ```bash
 git clone https://github.com/7se7en72025/kata-ui.git
-cd kata-ui
+cd falak
 npm install
 npm run dev
 ```
@@ -176,7 +176,7 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ```bash
 # Fork & clone
 git clone https://github.com/YOUR_USERNAME/kata-ui.git
-cd kata-ui
+cd falak
 npm install
 git checkout -b feature/amazing-feature
 # Make changes, then...
@@ -216,7 +216,7 @@ Report vulnerabilities via [SECURITY.md](SECURITY.md).
 
 ### Why Vercel OSS?
 
-Kata UI fills a gap in the React ecosystem: **motion-driven, accessible components that feel alive**. Most libraries focus on how things look. Kata UI focuses on how things **feel** â€” physics-based animations, intention-driven interactions, and weight.
+Falak fills a gap in the React ecosystem: **motion-driven, accessible components that feel alive**. Most libraries focus on how things look. Falak focuses on how things **feel** â€” physics-based animations, intention-driven interactions, and weight.
 
 **What makes us different:**
 

@@ -21,13 +21,13 @@ const items: CommandItem[] = [
   },
   {
     title: "Installation (Next.js)",
-    desc: "Install Kata UI in a Next.js app.",
+    desc: "Install Falak in a Next.js app.",
     href: "/docs/installation/nextjs",
     category: "Docs",
   },
   {
     title: "Installation (Tailwind)",
-    desc: "Configure Tailwind CSS for Kata UI.",
+    desc: "Configure Tailwind CSS for Falak.",
     href: "/docs/installation/tailwind",
     category: "Docs",
   },
@@ -165,7 +165,7 @@ export function CommandMenu({ open, onClose }: { open: boolean; onClose: () => v
           }}
         >
           <span style={{ fontSize: 13, fontWeight: 600, color: "#a1a1aa", fontFamily: "inherit" }}>
-            Kata UI command menu
+            Falak command menu
           </span>
           <span
             style={{

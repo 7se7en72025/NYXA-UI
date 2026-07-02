@@ -71,7 +71,7 @@ function applyColor(el: HTMLElement, type: string, theme: "light" | "dark") {
     el.style.color = theme === "dark" ? "#000" : "#fff";
   } else if (type === "logo") {
     const img = el.querySelector("img") as HTMLImageElement;
-    if (img) img.src = theme === "dark" ? "/KATAUILOGOWHITE.svg" : "/KATAUILOGOBLACK.svg";
+    if (img) img.src = theme === "dark" ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg";
   } else if (type === "search") {
     el.style.borderColor = theme === "dark" ? "#333" : "#d4d4d4";
     el.style.background = theme === "dark" ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)";
@@ -247,8 +247,8 @@ export function Navbar() {
           }}
         >
           <Image
-            src={isDark ? "/KATAUILOGOWHITE.svg" : "/KATAUILOGOBLACK.svg"}
-            alt="Kata UI"
+            src={isDark ? "/FalakLOGOWHITE.svg" : "/FalakLOGOBLACK.svg"}
+            alt="Falak"
             width={28}
             height={18}
             style={{ height: 24, width: "auto" }}
@@ -264,7 +264,7 @@ export function Navbar() {
               color: isDark ? "#fff" : "#0d0d0d",
             }}
           >
-            KataUI
+            Falak
           </span>
         </div>
 

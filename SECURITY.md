@@ -9,7 +9,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within Kata UI, please send an email to [@7se7en72025](https://github.com/7se7en72025) on GitHub. All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Falak, please send an email to [@7se7en72025](https://github.com/7se7en72025) on GitHub. All security vulnerabilities will be promptly addressed.
 
 **Please do NOT report security vulnerabilities through public GitHub issues.**
 
@@ -28,7 +28,7 @@ If you discover a security vulnerability within Kata UI, please send an email to
 
 ## Security Best Practices
 
-When using Kata UI in your project:
+When using Falak in your project:
 
 - Always use the latest version
 - Keep dependencies updated (`npm update`)
@@ -55,4 +55,4 @@ We follow coordinated disclosure:
 4. We release the fix
 5. We publicly disclose the vulnerability
 
-Thank you for helping keep Kata UI and its users safe.
+Thank you for helping keep Falak and its users safe.

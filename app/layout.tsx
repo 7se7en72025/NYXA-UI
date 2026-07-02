@@ -30,8 +30,8 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Kata UI â€” Component Library",
-    template: "%s | Kata UI",
+    default: "Falak â€” Component Library",
+    template: "%s | Falak",
   },
   description:
     "Beautiful, accessible React components built with motion, intention, and weight. Open source and free forever.",
@@ -42,13 +42,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://kata-ui-rho.vercel.app",
-    title: "Kata UI â€” Component Library",
+    title: "Falak â€” Component Library",
     description: "Beautiful, accessible React components built with motion, intention, and weight.",
-    siteName: "Kata UI",
+    siteName: "Falak",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Kata UI â€” Component Library",
+    title: "Falak â€” Component Library",
     description: "Beautiful, accessible React components built with motion, intention, and weight.",
   },
   robots: {

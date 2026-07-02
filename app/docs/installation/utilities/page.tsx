@@ -27,7 +27,7 @@ export default function UtilitiesPage() {
           lineHeight: 1.6,
         }}
       >
-        Commonly used utilities for Kata UI
+        Commonly used utilities for Falak
       </p>
 
       <h2
@@ -116,7 +116,7 @@ export function Example({ active }: { active: boolean }) {
         active && "border-neutral-950 bg-neutral-950 text-white"
       )}
     >
-      Kata UI
+      Falak
     </div>
   );
 }`}

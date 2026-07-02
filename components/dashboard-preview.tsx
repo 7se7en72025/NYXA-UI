@@ -155,7 +155,7 @@ export function DashboardPreview() {
               }}
             />
             <span style={{ fontSize: 14, color: "#eee", fontFamily: "inherit", fontWeight: 500 }}>
-              Kata UI
+              Falak
             </span>
           </div>
           <div style={{ display: "flex", gap: 24 }}>

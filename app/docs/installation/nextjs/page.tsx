@@ -134,7 +134,7 @@ Would you like to customize the import alias (@/* by default)? No / Yes`}
         >
           @/*
         </code>{" "}
-        import alias. That matches how Kata UI examples and registry components are written.
+        import alias. That matches how Falak examples and registry components are written.
       </p>
     </div>
   );

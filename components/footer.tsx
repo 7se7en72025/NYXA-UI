@@ -22,15 +22,15 @@ export const Footer = memo(function Footer() {
     >
       <div className="flex items-center gap-3">
         <Image
-          src="/KATAUILOGOWHITE.svg"
-          alt="Kata UI"
+          src="/FalakLOGOWHITE.svg"
+          alt="Falak"
           width={40}
           height={40}
           className="h-10 w-auto"
         />
         <div className="flex flex-col">
           <span className="text-lg font-semibold" style={{ color: "var(--fg)" }}>
-            KataUI
+            Falak
           </span>
           <span className="text-xs" style={{ color: "#888" }}>
             made with ❤ by 7se7en72025
@@ -39,7 +39,7 @@ export const Footer = memo(function Footer() {
       </div>
 
       <div className="text-sm" style={{ color: "#888" }}>
-        © 2026 KataUI. MIT License.
+        © 2026 Falak. MIT License.
       </div>
     </footer>
   );

@@ -1,12 +1,12 @@
-# Vercel OSS Application â€” Kata UI
+# Vercel OSS Application â€” Falak
 
 ## Project Pitch
 
 ### Why should your project be accepted?
 
-**Kata UI fills a gap in the React component ecosystem: motion-driven, accessible components that feel alive.**
+**Falak fills a gap in the React component ecosystem: motion-driven, accessible components that feel alive.**
 
-Most component libraries focus on how things look. Kata UI focuses on how things **feel**. Every component is built around physics-based animations, intention-driven interactions, and weight â€” the sense that UI elements have mass and momentum.
+Most component libraries focus on how things look. Falak focuses on how things **feel**. Every component is built around physics-based animations, intention-driven interactions, and weight â€” the sense that UI elements have mass and momentum.
 
 ---
 
@@ -18,7 +18,7 @@ React developers building modern landing pages and marketing sites face a painfu
 2. **Build custom animations** â€” requires deep expertise in Framer Motion, GSAP, or WebGL
 3. **Use template sites** â€” locked into someone else's design, not customizable
 
-**There's no middle ground.** Kata UI is that middle ground â€” copy-paste components with built-in motion that work out of the box.
+**There's no middle ground.** Falak is that middle ground â€” copy-paste components with built-in motion that work out of the box.
 
 ---
 
@@ -34,17 +34,17 @@ React developers building modern landing pages and marketing sites face a painfu
 
 ### What Makes It Different
 
-| Feature               | Kata UI | shadcn/ui | Framer Templates |
-| --------------------- | ------- | --------- | ---------------- |
-| Motion built-in       | Yes     | No        | Yes              |
-| Accessible (axe-core) | Yes     | Partial   | No               |
-| Copy-paste ready      | Yes     | Yes       | No               |
-| shadcn registry       | Yes     | N/A       | No               |
-| Free forever (MIT)    | Yes     | Yes       | No               |
-| WebGL shaders         | Yes     | No        | No               |
-| E2E tested            | Yes     | No        | No               |
+| Feature               | Falak | shadcn/ui | Framer Templates |
+| --------------------- | ----- | --------- | ---------------- |
+| Motion built-in       | Yes   | No        | Yes              |
+| Accessible (axe-core) | Yes   | Partial   | No               |
+| Copy-paste ready      | Yes   | Yes       | No               |
+| shadcn registry       | Yes   | N/A       | No               |
+| Free forever (MIT)    | Yes   | Yes       | No               |
+| WebGL shaders         | Yes   | No        | No               |
+| E2E tested            | Yes   | No        | No               |
 
-**Key differentiator:** Kata UI is the only React component library that combines **motion-first design**, **accessibility testing**, and **shadcn registry compatibility** in a single package.
+**Key differentiator:** Falak is the only React component library that combines **motion-first design**, **accessibility testing**, and **shadcn registry compatibility** in a single package.
 
 ---
 
@@ -63,7 +63,7 @@ React developers building modern landing pages and marketing sites face a painfu
 
 ### Growth Potential
 
-The React ecosystem is moving toward motion. React 19, Next.js 14+, and the rise of AI-powered UI generation all favor dynamic, animated interfaces. Kata UI is positioned to be the go-to library for this shift.
+The React ecosystem is moving toward motion. React 19, Next.js 14+, and the rise of AI-powered UI generation all favor dynamic, animated interfaces. Falak is positioned to be the go-to library for this shift.
 
 **Current trajectory:**
 
@@ -96,9 +96,9 @@ The $3,600 in platform credits would be used for:
 
 ### The Bigger Picture
 
-Kata UI contributes to the open source ecosystem by making motion accessible. Instead of every developer reinventing animation patterns, they can install a component and get physics-based interactions for free.
+Falak contributes to the open source ecosystem by making motion accessible. Instead of every developer reinventing animation patterns, they can install a component and get physics-based interactions for free.
 
-This is exactly what shadcn/ui did for forms. **Kata UI does it for motion.**
+This is exactly what shadcn/ui did for forms. **Falak does it for motion.**
 
 ---
 
@@ -122,4 +122,4 @@ This is exactly what shadcn/ui did for forms. **Kata UI does it for motion.**
 _Applied: August 2026_
 _GitHub: https://github.com/7se7en72025/kata-ui_
 _Demo: https://kata-ui-rho.vercel.app_
-_npm: https://www.npmjs.com/package/kata-ui_
+_npm: https://www.npmjs.com/package/falak_

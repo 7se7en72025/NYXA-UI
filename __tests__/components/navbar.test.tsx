@@ -49,7 +49,7 @@ describe("Navbar", () => {
 
   it("renders logo", () => {
     render(<Navbar />);
-    expect(screen.getByAltText("Kata UI")).toBeDefined();
+    expect(screen.getByAltText("Falak")).toBeDefined();
   });
 
   it("renders docs link", () => {

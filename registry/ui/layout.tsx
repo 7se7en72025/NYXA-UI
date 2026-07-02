@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Kata UI",
+  title: "Falak",
   description: "Edge ruler frame",
   icons: {
     icon: "/favicon.svg",

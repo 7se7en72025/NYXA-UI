@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.describe("Homepage", () => {
   test("loads successfully", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle(/Kata UI/);
+    await expect(page).toHaveTitle(/Falak/);
   });
 
   test("has hero section", async ({ page }) => {

@@ -27,7 +27,7 @@ export default function CliPage() {
           lineHeight: 1.6,
         }}
       >
-        Installing Kata UI with the shadcn CLI
+        Installing Falak with the shadcn CLI
       </p>
 
       <h2
@@ -108,7 +108,7 @@ Do you want to use CSS variables for colors? yes`}
         >
           add
         </code>{" "}
-        command with the Kata UI registry URL from any component page.
+        command with the Falak registry URL from any component page.
       </p>
 
       <CodeBlock
@@ -227,13 +227,13 @@ Options:
         filename="components.json"
         code={`{
   "registries": {
-    "@kataui": "https://kata-ui-rho.vercel.app/r/{name}.json"
+    "@Falak": "https://kata-ui-rho.vercel.app/r/{name}.json"
   }
 }`}
       />
 
       <CodeBlock
-        code="npx shadcn@latest add @kataui/animated-rays"
+        code="npx shadcn@latest add @Falak/animated-rays"
         tabs={["npm", "pnpm", "yarn", "bun"]}
       />
     </div>

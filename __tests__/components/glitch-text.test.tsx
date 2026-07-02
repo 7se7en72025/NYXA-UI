@@ -5,7 +5,7 @@ import { GlitchText } from "@/components/ui/glitch-text";
 describe("GlitchText", () => {
   it("renders default text", () => {
     render(<GlitchText />);
-    expect(screen.getByText("KATA UI")).toBeDefined();
+    expect(screen.getByText("Falak")).toBeDefined();
   });
 
   it("renders custom text", () => {

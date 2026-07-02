@@ -59,7 +59,7 @@ export function ImpressionSection() {
           maxWidth: 578,
         }}
       >
-        Kata UI makes it easy to build an unforgettable website that resonates with professional
+        Falak makes it easy to build an unforgettable website that resonates with professional
         design-centric audiences.
       </p>
 

@@ -41,7 +41,7 @@ const customCode = `<GlitchText
 />`;
 
 const propsData = [
-  ["text", "string", "KATA UI", "Text to display"],
+  ["text", "string", "Falak", "Text to display"],
   ["as", "string", "span", "HTML tag (h1-h6, p, span, div)"],
   ["color", "string", "#FFD700", "Text color"],
   ["size", "string", "4rem", "Font size"],

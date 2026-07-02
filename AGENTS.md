@@ -1,8 +1,8 @@
-# AGENTS.md â€” Kata UI
+# AGENTS.md â€” Falak
 
 ## Project Overview
 
-Kata UI is a motion-driven React component library built with:
+Falak is a motion-driven React component library built with:
 
 - Next.js 14 (App Router)
 - TypeScript
