@@ -1,3 +1,17 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+dist-ssr
+*.local
+
+# Environment
+.env
+.env.local
+.env.*.local
+
 # Logs
 logs
 *.log
@@ -6,12 +20,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-.env
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +31,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Turbo
+.turbo
+
+# OS
+Thumbs.db
