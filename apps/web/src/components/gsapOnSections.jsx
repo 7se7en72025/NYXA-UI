@@ -8,7 +8,7 @@ const ARC = Math.PI * 1.5;
 export function getOrbit(section) {
   if (section === 0) return { pos: [0, 0, 0], rot: [0, 0, 0] };
 
-  const a = ((section - 1) / 6) * ARC;
+  const a = ((section - 1) / 5) * ARC;
   const x = PLANET[0] + RADIUS * Math.sin(a);
   const y = PLANET[1] + Math.sin(a * 0.5) * 1.5;
   const z = PLANET[2] + RADIUS * Math.cos(a);

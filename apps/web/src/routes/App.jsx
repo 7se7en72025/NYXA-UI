@@ -2,10 +2,11 @@ import { Suspense, useEffect, useRef, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import ErrorBoundary from "@components/ErrorBoundary";
 import Experience from "@components/Landing/Experience";
+import SideNav from "@components/SideNav";
 import state from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
-const SECTIONS = ["home", "about", "sponsors", "armageddon", "register", "developers", "contact"];
+const SECTIONS = ["nav1", "nav2", "nav3", "nav4", "nav5", "nav6"];
 const SECTION_INDEX = Object.fromEntries(SECTIONS.map((s, i) => [s, i]));
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
   const refs = useRef([]);
 
   useEffect(() => {
+    state.scrollContainer = root.current;
     state.isHamOpen = false;
     state.activeSection = 0;
     state.targetSection = 0;
@@ -48,7 +50,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={sc.scrollContainer} ref={root}>
+    <div className={sc.scrollContainer} ref={root} data-scroll-container>
       <ErrorBoundary>
         <Canvas style={{ position: "fixed", top: 0, left: 0, zIndex: 0, width: "100vw", height: "100vh" }}>
           <Suspense fallback={null}>
@@ -60,6 +62,8 @@ export default function App() {
 
       <img draggable={false} src="/images/Left%20helm.png" alt="" style={{ position: "fixed", top: 0, left: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
       <img draggable={false} src="/images/Right%20helm.png" alt="" style={{ position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
+
+      <SideNav />
 
       <div className={`${sc.section} ${sc.homeSection}`} data-section="home" ref={setRef(0)} />
 
