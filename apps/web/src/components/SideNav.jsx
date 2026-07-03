@@ -3,17 +3,13 @@ import state from "./state";
 
 const SECTIONS = ["nav1", "nav2", "nav3", "nav4", "nav5", "nav6"];
 
-export default function SideNav() {
+export default function SideNav({ containerRef }) {
   const snap = useSnapshot(state);
 
   const scrollTo = (i) => {
-    const c = state.scrollContainer;
+    const c = containerRef?.current;
     if (!c) return;
-    c.style.scrollSnapType = "none";
     c.scrollTop = i * window.innerHeight;
-    requestAnimationFrame(() => {
-      c.style.scrollSnapType = "";
-    });
   };
 
   return (
@@ -45,8 +41,8 @@ export default function SideNav() {
               fontFamily: "'Goldman', sans-serif",
               fontSize: active ? "1.5rem" : "1.15rem",
               fontWeight: active ? 700 : 400,
-                color: active ? "#9af0f4" : "#5a7a7e",
-                textShadow: active ? "0 0 14px rgba(154,240,244,0.7)" : "none",
+              color: active ? "#9af0f4" : "#5a7a7e",
+              textShadow: active ? "0 0 14px rgba(154,240,244,0.7)" : "none",
               transition: "all 0.35s ease",
               letterSpacing: "0.02em",
               lineHeight: 1,

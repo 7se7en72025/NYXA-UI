@@ -3,8 +3,6 @@
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar {
@@ -15,8 +13,6 @@
 .section {
   width: 100vw;
   height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   position: relative;
   display: flex;
   align-items: center;

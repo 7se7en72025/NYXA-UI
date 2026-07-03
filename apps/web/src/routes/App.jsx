@@ -15,14 +15,23 @@ export default function App() {
 
   useEffect(() => {
     state.scrollContainer = root.current;
-    state.isHamOpen = false;
-    state.activeSection = 0;
-    state.targetSection = 0;
+
+    const c = root.current;
+    let timeout;
+    const snapToNearest = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const idx = Math.round(c.scrollTop / window.innerHeight);
+        c.scrollTop = idx * window.innerHeight;
+      }, 150);
+    };
+    c.addEventListener("wheel", snapToNearest, { passive: true });
+    c.addEventListener("touchend", snapToNearest, { passive: true });
+
     return () => {
-      state.isHamOpen = false;
-      state.activeSection = 0;
-      state.isMoving = false;
-      state.targetSection = 0;
+      clearTimeout(timeout);
+      c.removeEventListener("wheel", snapToNearest);
+      c.removeEventListener("touchend", snapToNearest);
     };
   }, []);
 
@@ -50,7 +59,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={sc.scrollContainer} ref={root} data-scroll-container>
+    <div className={sc.scrollContainer} ref={root}>
       <ErrorBoundary>
         <Canvas style={{ position: "fixed", top: 0, left: 0, zIndex: 0, width: "100vw", height: "100vh" }}>
           <Suspense fallback={null}>
@@ -63,12 +72,10 @@ export default function App() {
       <img draggable={false} src="/images/Left%20helm.png" alt="" style={{ position: "fixed", top: 0, left: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
       <img draggable={false} src="/images/Right%20helm.png" alt="" style={{ position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
 
-      <SideNav />
+      <SideNav containerRef={root} />
 
-      <div className={`${sc.section} ${sc.homeSection}`} data-section="home" ref={setRef(0)} />
-
-      {SECTIONS.slice(1).map((name, i) => (
-          <div key={name} className={`${sc.section} ${sc.contentSection}`} data-section={name} ref={setRef(i + 1)} />
+      {SECTIONS.map((name, i) => (
+        <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)} />
       ))}
     </div>
   );
