@@ -5,12 +5,20 @@
   right: 10%;
   width: 280px;
   pointer-events: all;
-  transform: translateY(10%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0;
+}
+
+.animWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
 }
 
 .title {
@@ -38,10 +46,41 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 55% 45%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 15% 60%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 30% 75%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 50% 65%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 65% 80%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 80% 55%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 95% 70%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 5% 85%, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1.5px 1.5px at 20% 50%, rgba(154,240,244,0.5), transparent),
+      radial-gradient(1.5px 1.5px at 60% 30%, rgba(154,240,244,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 75% 65%, rgba(154,240,244,0.3), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
 
   & > img {
     width: 80%;
     height: auto;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -52,6 +91,8 @@
   flex-direction: row;
   margin-inline: 10%;
   justify-content: space-between;
+  position: relative;
+  z-index: 1;
 }
 
 .arrow {
@@ -126,6 +167,8 @@
   align-items: center;
   justify-content: center;
   gap: 1.5rem;
+  position: relative;
+  z-index: 1;
 
   h2 {
     font-size: 1.4rem;

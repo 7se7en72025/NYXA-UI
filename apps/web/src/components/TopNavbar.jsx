@@ -5,7 +5,6 @@ import ComingSoon from "./ComingSoon";
 export default function TopNavbar() {
   const [ready, setReady] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
-  const [ghHover, setGhHover] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 500);
@@ -89,8 +88,6 @@ export default function TopNavbar() {
           </button>
 
           <div
-            onMouseEnter={() => setGhHover(true)}
-            onMouseLeave={() => setGhHover(false)}
             onClick={() => window.open("https://github.com/7se7en72025/NYXA-UI", "_blank")}
             style={{
               position: "absolute",
@@ -110,8 +107,7 @@ export default function TopNavbar() {
               fontSize: "0.65rem",
               fontWeight: 600,
               letterSpacing: "1.5px",
-              color: ghHover ? "#D8575B" : "transparent",
-              transition: "color 0.2s ease",
+              color: "#9af0f4",
             }}>
               VIEW GITHUB
             </span>

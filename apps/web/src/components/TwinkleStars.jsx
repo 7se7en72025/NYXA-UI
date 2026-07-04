@@ -40,7 +40,7 @@ export default function TwinkleStars() {
       pos[i * 3 + 1] = r * Math.sin(φ) * Math.sin(θ);
       pos[i * 3 + 2] = r * Math.cos(φ);
       phase[i] = Math.random() * Math.PI * 2;
-      spd[i] = 1 + Math.random() * 4;
+      spd[i] = 5 + Math.random() * 20;
     }
     return { pos, phase, spd };
   }, []);
