@@ -5,6 +5,7 @@ import Experience from "@components/Landing/Experience";
 import TopNavbar from "@components/TopNavbar";
 import ComponentsSection from "@components/ComponentsSection";
 import LeftPanel from "@components/LeftPanel";
+import TechStack from "@components/TechStack";
 import state from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
@@ -75,6 +76,7 @@ export default function App() {
       <img draggable={false} src="/images/Right%20helm.png" alt="" style={{ position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
 
       <LeftPanel />
+      <TechStack />
 
       <TopNavbar />
 
