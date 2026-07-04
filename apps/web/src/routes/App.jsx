@@ -2,7 +2,7 @@ import { Suspense, useEffect, useRef, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import ErrorBoundary from "@components/ErrorBoundary";
 import Experience from "@components/Landing/Experience";
-import SideNav from "@components/SideNav";
+import TopNavbar from "@components/TopNavbar";
 import state from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
@@ -59,7 +59,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={sc.scrollContainer} ref={root}>
+    <>
       <ErrorBoundary>
         <Canvas style={{ position: "fixed", top: 0, left: 0, zIndex: 0, width: "100vw", height: "100vh" }}>
           <Suspense fallback={null}>
@@ -72,11 +72,13 @@ export default function App() {
       <img draggable={false} src="/images/Left%20helm.png" alt="" style={{ position: "fixed", top: 0, left: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
       <img draggable={false} src="/images/Right%20helm.png" alt="" style={{ position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
 
-      <SideNav containerRef={root} />
+      <TopNavbar />
 
-      {SECTIONS.map((name, i) => (
-        <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)} />
-      ))}
-    </div>
+      <div className={sc.scrollContainer} ref={root}>
+        {SECTIONS.map((name, i) => (
+          <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)} />
+        ))}
+      </div>
+    </>
   );
 }
