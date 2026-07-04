@@ -20,6 +20,7 @@ html {
   font-family: 'Space Grotesk', sans-serif;
   color: var(--primary);
   user-select: none;
+  cursor: url('/images/cursor.svg') 45 39, crosshair;
 }
 
 *::-webkit-scrollbar {
@@ -34,6 +35,15 @@ html {
 body {
   background-color: black;
   overscroll-behavior: none;
+  cursor: url('/images/cursor.svg') 45 39, crosshair;
+}
+
+button {
+  cursor: url('/images/cursor.svg') 45 39, pointer;
+}
+
+input {
+  cursor: text;
 }
 
 #root canvas {

@@ -5,6 +5,7 @@ import ComingSoon from "./ComingSoon";
 export default function TopNavbar() {
   const [ready, setReady] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
+  const [ghHover, setGhHover] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 500);
@@ -24,6 +25,7 @@ export default function TopNavbar() {
         width: "100%",
         maxWidth: "706px",
         pointerEvents: "none",
+        transform: "translateX(-50%) scale(0.9)",
         opacity: ready ? 1 : 0,
         animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
       }}>
@@ -86,25 +88,34 @@ export default function TopNavbar() {
             DOCS
           </button>
 
-          <button
+          <div
+            onMouseEnter={() => setGhHover(true)}
+            onMouseLeave={() => setGhHover(false)}
             onClick={() => window.open("https://github.com/7se7en72025/NYXA-UI", "_blank")}
             style={{
               position: "absolute",
-              left: "38.2%",
-              top: "80.9%",
-              width: "22.6%",
-              height: "12.2%",
+              left: "37.8%",
+              top: "80.5%",
+              width: "23.2%",
+              height: "12.5%",
               cursor: "pointer",
-              background: "transparent",
-              border: "none",
-              outline: "none",
               pointerEvents: "all",
-              color: "transparent",
-              fontSize: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            VIEW GITHUB
-          </button>
+            <span style={{
+              fontFamily: "Orbitron, monospace",
+              fontSize: "0.65rem",
+              fontWeight: 600,
+              letterSpacing: "1.5px",
+              color: ghHover ? "#D8575B" : "transparent",
+              transition: "color 0.2s ease",
+            }}>
+              VIEW GITHUB
+            </span>
+          </div>
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import ErrorBoundary from "@components/ErrorBoundary";
 import Experience from "@components/Landing/Experience";
 import TopNavbar from "@components/TopNavbar";
+import ComponentsSection from "@components/ComponentsSection";
 import state from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
@@ -76,7 +77,9 @@ export default function App() {
 
       <div className={sc.scrollContainer} ref={root}>
         {SECTIONS.map((name, i) => (
-          <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)} />
+          <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)}>
+            {i === 0 && <ComponentsSection />}
+          </div>
         ))}
       </div>
     </>
