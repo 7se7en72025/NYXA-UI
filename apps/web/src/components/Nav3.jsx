@@ -18,8 +18,12 @@ export default function Nav3() {
     return unsub;
   }, [show]);
 
+  const vis = show ? styles.visible : "";
+  const cmdV = show ? styles.cmdVisible : "";
+  const stV = show ? styles.statsVisible : "";
+
   return (
-    <div className={`${styles.nav3} ${show ? styles.visible : ""}`}>
+    <div className={`${styles.nav3} ${vis}`}>
       <img
         key={animKey}
         draggable={false}
@@ -27,6 +31,31 @@ export default function Nav3() {
         src="/images/nav31.svg"
         alt=""
       />
+
+      <div className={`${styles.commandRow} ${cmdV}`}>
+        <span className={styles.icon}>{"\u2318"}</span>
+        <code className={styles.command}>
+          npx shadcn@latest add @nyxaui/<span className={styles.placeholder}>[component]</span>
+        </code>
+        <span className={styles.cliBadge}>
+          CLI <span className={styles.arrow}>{"\u2197"}</span>
+        </span>
+      </div>
+
+      <div className={`${styles.stat1} ${stV}`}>
+        <span className={styles.statValue}>46</span>
+        <span className={styles.statLabel}>Components</span>
+      </div>
+
+      <div className={`${styles.stat2} ${stV}`}>
+        <span className={styles.statValue}>09</span>
+        <span className={styles.statLabel}>Families</span>
+      </div>
+
+      <div className={`${styles.stat3} ${stV}`}>
+        <span className={styles.statValue}>CLI</span>
+        <span className={styles.statLabel}>Ready</span>
+      </div>
     </div>
   );
 }
