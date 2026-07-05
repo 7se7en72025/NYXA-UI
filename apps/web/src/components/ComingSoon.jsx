@@ -17,6 +17,14 @@ function playTing() {
   } catch (e) {}
 }
 
+function isFullscreen() {
+  return !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement
+  );
+}
+
 export default function ComingSoon({ show, onClose }) {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
@@ -26,7 +34,7 @@ export default function ComingSoon({ show, onClose }) {
       setExiting(false);
       setVisible(true);
       playTing();
-      const t = setTimeout(() => handleClose(), 3330);
+      const t = setTimeout(() => handleClose(), 7700);
       return () => clearTimeout(t);
     }
   }, [show]);
@@ -58,8 +66,8 @@ export default function ComingSoon({ show, onClose }) {
       <div style={{ position: "relative", width: "320px" }}>
         <img
           draggable={false}
-          src="/images/comingsoonsvg.svg"
-          alt="Coming Soon"
+          src="/images/fullscreensvg.svg"
+          alt="Best viewed fullscreen"
           style={{ width: "100%", height: "auto", display: "block", pointerEvents: "none" }}
         />
 
@@ -80,7 +88,7 @@ export default function ComingSoon({ show, onClose }) {
             fontSize: "0.6rem",
           }}
         >
-          OK THANKS
+          GOT IT
         </button>
       </div>
     </div>

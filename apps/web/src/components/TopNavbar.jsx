@@ -1,6 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import SearchBar from "./SearchBar";
 import ComingSoon from "./ComingSoon";
+
+function isFullscreen() {
+  return !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement
+  );
+}
 
 export default function TopNavbar() {
   const [ready, setReady] = useState(false);
@@ -10,6 +18,26 @@ export default function TopNavbar() {
     const t = setTimeout(() => setReady(true), 500);
     return () => clearTimeout(t);
   }, []);
+
+  const handleFullscreenChange = useCallback(() => {
+    if (!isFullscreen()) {
+      setShowComingSoon(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isFullscreen()) {
+      const t = setTimeout(() => setShowComingSoon(true), 1500);
+      return () => clearTimeout(t);
+    }
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+    };
+  }, [handleFullscreenChange]);
 
   return (
     <>

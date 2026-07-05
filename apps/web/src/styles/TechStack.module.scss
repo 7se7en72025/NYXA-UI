@@ -104,36 +104,21 @@
   z-index: 11;
 }
 
-.rings {
-  position: absolute;
-  left: 50.2%;
-  top: 49.5%;
-  width: 0;
-  height: 0;
-  z-index: 5;
+.bottomBar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  width: 50vw;
+  max-width: 660px;
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out 2.4s;
 }
 
-.ring {
-  position: absolute;
-  left: 0;
-  top: 0;
-  object-fit: contain;
-  will-change: transform;
-}
-
-.innerRing {
-  width: 240px;
-  transform: translate(-50%, -50%);
-}
-
-.midRing {
-  width: 320px;
-  transform: translate(-50%, -50%);
-}
-
-.outerRing {
-  width: 400px;
-  transform: translate(-50%, -50%);
+.visible .bottomBar {
+  opacity: 1;
 }
 
 @keyframes drawStroke {
