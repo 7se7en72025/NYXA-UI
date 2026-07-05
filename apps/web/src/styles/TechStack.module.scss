@@ -2,7 +2,7 @@
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, calc(-50% + 50px));
+  transform: translate(-50%, calc(-50% + 100px));
   width: 64vw;
   max-width: 973px;
   pointer-events: none;
@@ -20,11 +20,16 @@
   height: auto;
   display: block;
   opacity: 0;
-  transition: opacity 0.8s ease-in-out 2.2s;
+  transition: opacity 0.8s ease-in-out 2.2s, filter 0.5s ease-in-out;
+  filter: drop-shadow(0 0 0px #4fcbe3) brightness(1);
 }
 
 .visible .background {
   opacity: 1;
+}
+
+.hovered .background {
+  filter: drop-shadow(0 0 30px #4fcbe3) brightness(1.15);
 }
 
 .strokes {
@@ -84,6 +89,51 @@
 
 .visible .centerCircle {
   animation: fadeIn 600ms ease-in 800ms forwards;
+}
+
+.hoverZone {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  pointer-events: all;
+  cursor: pointer;
+  z-index: 11;
+}
+
+.rings {
+  position: absolute;
+  left: 50.2%;
+  top: 49.5%;
+  width: 0;
+  height: 0;
+  z-index: 5;
+}
+
+.ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: contain;
+  will-change: transform;
+}
+
+.innerRing {
+  width: 240px;
+  transform: translate(-50%, -50%);
+}
+
+.midRing {
+  width: 320px;
+  transform: translate(-50%, -50%);
+}
+
+.outerRing {
+  width: 400px;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes drawStroke {

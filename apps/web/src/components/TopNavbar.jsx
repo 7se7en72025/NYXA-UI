@@ -19,12 +19,11 @@ export default function TopNavbar() {
         position: "fixed",
         top: 0,
         left: "50%",
-        transform: "translateX(-50%)",
+        transform: "translateX(-50%) scale(0.9)",
         zIndex: 20,
         width: "100%",
         maxWidth: "706px",
         pointerEvents: "none",
-        transform: "translateX(-50%) scale(0.9)",
         opacity: ready ? 1 : 0,
         animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
       }}>
@@ -97,21 +96,8 @@ export default function TopNavbar() {
               height: "12.5%",
               cursor: "pointer",
               pointerEvents: "all",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
-          >
-            <span style={{
-              fontFamily: "Orbitron, monospace",
-              fontSize: "0.65rem",
-              fontWeight: 600,
-              letterSpacing: "1.5px",
-              color: "#9af0f4",
-            }}>
-              VIEW GITHUB
-            </span>
-          </div>
+          />
         </div>
       </div>
     </>
