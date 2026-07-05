@@ -1,8 +1,8 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
 
-const COUNT = 500;
+const COUNT = 250;
 
 function circleTexture() {
   const s = 64;
@@ -16,7 +16,7 @@ function circleTexture() {
   g.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, s, s);
-  const t = new THREE.CanvasTexture(c);
+  const t = new CanvasTexture(c);
   t.needsUpdate = true;
   return t;
 }
@@ -40,8 +40,8 @@ export default function DustParticles() {
   }, []);
 
   const geo = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const g = new BufferGeometry();
+    g.setAttribute("position", new BufferAttribute(pos, 3));
     return g;
   }, [pos]);
 
@@ -68,7 +68,7 @@ export default function DustParticles() {
         opacity={0.4}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={AdditiveBlending}
       />
     </points>
   );

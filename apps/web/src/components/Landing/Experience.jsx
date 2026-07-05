@@ -5,13 +5,13 @@ import { Scene } from "./Scene";
 import { Speed } from "../Speed";
 import TwinkleStars from "../TwinkleStars";
 import DustParticles from "../DustParticles";
-import state from "../state";
+import { setCamera } from "../state";
 
 export default function Experience() {
   const cam = useRef();
 
   useEffect(() => {
-    state.camera = cam.current;
+    setCamera(cam.current);
   }, []);
 
   return (

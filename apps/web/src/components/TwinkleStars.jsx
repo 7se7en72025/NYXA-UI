@@ -1,11 +1,11 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
 
-const COUNT = 2000;
+const COUNT = 1000;
 
 function circleTexture() {
-  const s = 128;
+  const s = 64;
   const c = document.createElement("canvas");
   c.width = s;
   c.height = s;
@@ -18,7 +18,7 @@ function circleTexture() {
   g.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, s, s);
-  const t = new THREE.CanvasTexture(c);
+  const t = new CanvasTexture(c);
   t.needsUpdate = true;
   return t;
 }
@@ -33,12 +33,12 @@ export default function TwinkleStars() {
     const spd = new Float32Array(COUNT);
 
     for (let i = 0; i < COUNT; i++) {
-      const θ = Math.random() * Math.PI * 2;
-      const φ = Math.acos(2 * Math.random() - 1);
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
       const r = 15 + Math.random() * 75;
-      pos[i * 3] = r * Math.sin(φ) * Math.cos(θ);
-      pos[i * 3 + 1] = r * Math.sin(φ) * Math.sin(θ);
-      pos[i * 3 + 2] = r * Math.cos(φ);
+      pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      pos[i * 3 + 2] = r * Math.cos(phi);
       phase[i] = Math.random() * Math.PI * 2;
       spd[i] = 5 + Math.random() * 20;
     }
@@ -48,9 +48,9 @@ export default function TwinkleStars() {
   const colors = useMemo(() => new Float32Array(COUNT * 3).fill(1), []);
 
   const geo = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const g = new BufferGeometry();
+    g.setAttribute("position", new BufferAttribute(pos, 3));
+    g.setAttribute("color", new BufferAttribute(colors, 3));
     return g;
   }, [pos, colors]);
 
@@ -77,7 +77,7 @@ export default function TwinkleStars() {
         opacity={1}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={AdditiveBlending}
       />
     </points>
   );

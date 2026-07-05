@@ -1,6 +1,6 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
 
 const DEFAULT_COUNT = 500;
 
@@ -16,7 +16,7 @@ function circleTexture() {
   g.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, s, s);
-  const t = new THREE.CanvasTexture(c);
+  const t = new CanvasTexture(c);
   t.needsUpdate = true;
   return t;
 }
@@ -25,13 +25,16 @@ export function DustParticles({ count = DEFAULT_COUNT, size = 0.15, opacity = 0.
   const ref = useRef();
   const tex = useMemo(circleTexture, []);
 
+  const boundsRef = useRef(bounds);
+
   const { pos, vel } = useMemo(() => {
+    const b = boundsRef.current;
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * (bounds[0][1] - bounds[0][0]);
-      pos[i * 3 + 1] = (Math.random() - 0.5) * (bounds[1][1] - bounds[1][0]);
-      pos[i * 3 + 2] = (Math.random() - 0.5) * (bounds[2][1] - bounds[2][0]);
+      pos[i * 3] = (Math.random() - 0.5) * (b[0][1] - b[0][0]);
+      pos[i * 3 + 1] = (Math.random() - 0.5) * (b[1][1] - b[1][0]);
+      pos[i * 3 + 2] = (Math.random() - 0.5) * (b[2][1] - b[2][0]);
       vel[i * 3] = (Math.random() - 0.5) * 0.008;
       vel[i * 3 + 1] = (Math.random() - 0.5) * 0.004;
       vel[i * 3 + 2] = (Math.random() - 0.5) * 0.008;
@@ -40,21 +43,22 @@ export function DustParticles({ count = DEFAULT_COUNT, size = 0.15, opacity = 0.
   }, [count, bounds]);
 
   const geo = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const g = new BufferGeometry();
+    g.setAttribute("position", new BufferAttribute(pos, 3));
     return g;
   }, [pos]);
 
   useFrame(() => {
     if (!ref.current) return;
+    const b = boundsRef.current;
     const p = ref.current.geometry.attributes.position.array;
     for (let i = 0; i < count; i++) {
       p[i * 3] += vel[i * 3];
       p[i * 3 + 1] += vel[i * 3 + 1];
       p[i * 3 + 2] += vel[i * 3 + 2];
-      if (Math.abs(p[i * 3]) > bounds[0][1]) vel[i * 3] *= -1;
-      if (Math.abs(p[i * 3 + 1]) > bounds[1][1]) vel[i * 3 + 1] *= -1;
-      if (Math.abs(p[i * 3 + 2]) > bounds[2][1]) vel[i * 3 + 2] *= -1;
+      if (Math.abs(p[i * 3]) > b[0][1]) vel[i * 3] *= -1;
+      if (Math.abs(p[i * 3 + 1]) > b[1][1]) vel[i * 3 + 1] *= -1;
+      if (Math.abs(p[i * 3 + 2]) > b[2][1]) vel[i * 3 + 2] *= -1;
     }
     ref.current.geometry.attributes.position.needsUpdate = true;
   });
@@ -68,7 +72,7 @@ export function DustParticles({ count = DEFAULT_COUNT, size = 0.15, opacity = 0.
         opacity={opacity}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={AdditiveBlending}
       />
     </points>
   );

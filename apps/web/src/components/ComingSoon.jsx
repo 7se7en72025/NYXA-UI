@@ -1,95 +1,110 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import ScrambleText from "./ScrambleText";
 
+let _ctx = null;
 function playTing() {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    if (!_ctx) _ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = _ctx.createOscillator();
+    const gain = _ctx.createGain();
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(_ctx.destination);
     osc.type = "sine";
-    osc.frequency.setValueAtTime(2400, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.15);
-    gain.gain.setValueAtTime(0.3, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.4);
+    osc.frequency.setValueAtTime(2400, _ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, _ctx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.3, _ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, _ctx.currentTime + 0.4);
+    osc.start(_ctx.currentTime);
+    osc.stop(_ctx.currentTime + 0.4);
   } catch (e) {}
 }
 
-function isFullscreen() {
-  return !!(
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement
-  );
-}
+const overlayStyle = {
+  position: "fixed",
+  bottom: "40px",
+  left: "40px",
+  zIndex: 30,
+  pointerEvents: "all",
+};
+
+const imgWrapperStyle = { position: "relative", width: "320px" };
+
+const imgStyle = { width: "100%", height: "auto", display: "block", pointerEvents: "none" };
+
+const gotItBtnStyle = {
+  position: "absolute",
+  left: "63%",
+  top: "82%",
+  width: "26%",
+  height: "10%",
+  cursor: "pointer",
+  background: "transparent",
+  border: "none",
+  outline: "none",
+  pointerEvents: "all",
+  color: "transparent",
+  fontSize: "0.6rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 export default function ComingSoon({ show, onClose }) {
   const [visible, setVisible] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const innerTimeout = useRef(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
-    if (show) {
-      setExiting(false);
-      setVisible(true);
-      playTing();
-      const t = setTimeout(() => handleClose(), 7700);
-      return () => clearTimeout(t);
-    }
+    return () => {
+      if (innerTimeout.current) clearTimeout(innerTimeout.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!show) return;
+    setExiting(false);
+    setVisible(true);
+    playTing();
+    const t = setTimeout(() => {
+      setExiting(true);
+      innerTimeout.current = setTimeout(() => {
+        setVisible(false);
+        setExiting(false);
+        onCloseRef.current();
+      }, 300);
+    }, 7700);
+    return () => {
+      clearTimeout(t);
+      if (innerTimeout.current) clearTimeout(innerTimeout.current);
+    };
   }, [show]);
 
   const handleClose = useCallback(() => {
     setExiting(true);
-    setTimeout(() => {
+    if (innerTimeout.current) clearTimeout(innerTimeout.current);
+    innerTimeout.current = setTimeout(() => {
       setVisible(false);
       setExiting(false);
-      onClose();
+      onCloseRef.current();
     }, 300);
-  }, [onClose]);
+  }, []);
 
   if (!visible) return null;
 
   return (
     <div
       style={{
-        position: "fixed",
-        bottom: "40px",
-        left: "40px",
-        zIndex: 30,
-        pointerEvents: "all",
+        ...overlayStyle,
         opacity: exiting ? 0 : 1,
         transform: exiting ? "translateY(20px) scale(0.95)" : "translateY(0) scale(1)",
         transition: "opacity 0.3s ease, transform 0.3s ease",
       }}
     >
-      <div style={{ position: "relative", width: "320px" }}>
-        <img
-          draggable={false}
-          src="/images/fullscreensvg.svg"
-          alt="Best viewed fullscreen"
-          style={{ width: "100%", height: "auto", display: "block", pointerEvents: "none" }}
-        />
-
-        <button
-          onClick={handleClose}
-          style={{
-            position: "absolute",
-            left: "63%",
-            top: "82%",
-            width: "26%",
-            height: "10%",
-            cursor: "pointer",
-            background: "transparent",
-            border: "none",
-            outline: "none",
-            pointerEvents: "all",
-            color: "transparent",
-            fontSize: "0.6rem",
-          }}
-        >
-          GOT IT
-        </button>
+      <div style={imgWrapperStyle}>
+        <img draggable={false} src="/images/fullscreensvg.svg" alt="Best viewed fullscreen" style={imgStyle} loading="lazy" />
+        <ScrambleText as="div" text="GOT IT" onClick={handleClose} style={gotItBtnStyle} />
       </div>
     </div>
   );

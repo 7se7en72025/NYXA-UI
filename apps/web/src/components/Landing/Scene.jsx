@@ -1,6 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useThree } from "@react-three/fiber";
-import { useSnapshot } from "valtio";
 import gsap from "gsap/gsap-core";
 import state from "../state";
 import AlienPlanetGLTF from "../Models/AlienPlanetGLTF";
@@ -12,7 +11,6 @@ const PARALLAX_LIMIT = Math.PI / 16;
 
 export function Scene() {
   const { camera } = useThree();
-  const snap = useSnapshot(state);
   const baseRot = useRef({ x: 0, y: 0, z: 0 });
 
   const onMouseMove = useCallback(
@@ -24,6 +22,7 @@ export function Scene() {
         y: baseRot.current.y + nx * PARALLAX_LIMIT,
         z: 0,
         ease: "power2.out",
+        overwrite: true,
       });
     },
     [camera]
@@ -35,11 +34,11 @@ export function Scene() {
   }, [camera, onMouseMove]);
 
   useEffect(() => {
-    if (state.activeSection === snap.targetSection) return;
-    const orbit = getOrbit(snap.targetSection);
+    if (state.activeSection === state.targetSection) return;
+    const orbit = getOrbit(state.targetSection);
     baseRot.current = { x: orbit.rot[0], y: orbit.rot[1], z: orbit.rot[2] };
-    gsapOnSection(camera, snap.targetSection, onMouseMove);
-  }, [snap.targetSection, camera, onMouseMove]);
+    gsapOnSection(camera, state.targetSection, onMouseMove);
+  }, [state.targetSection, camera, onMouseMove]);
 
   return (
     <>

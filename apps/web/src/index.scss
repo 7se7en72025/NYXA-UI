@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
-
 *,
 *::before,
 *::after {
@@ -20,7 +17,6 @@ html {
   font-family: 'Space Grotesk', sans-serif;
   color: var(--primary);
   user-select: none;
-  cursor: url('/images/cursor.svg') 45 39, crosshair;
 }
 
 *::-webkit-scrollbar {
@@ -74,19 +70,19 @@ input:-webkit-autofill:active {
 @keyframes hudEntry {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(-30px);
-    filter: brightness(2.5) blur(3px);
+    transform: translateX(-50%) translateY(-30px) scale(1.05);
+    filter: brightness(2.5);
   }
   60% {
     opacity: 1;
-    filter: brightness(1.2) blur(0);
+    filter: brightness(1.2);
   }
   80% {
-    transform: translateX(-50%) translateY(2px);
+    transform: translateX(-50%) translateY(2px) scale(1);
   }
   100% {
-    transform: translateX(-50%) translateY(0);
-    filter: brightness(1) blur(0);
+    transform: translateX(-50%) translateY(0) scale(1);
+    filter: brightness(1);
   }
 }
 

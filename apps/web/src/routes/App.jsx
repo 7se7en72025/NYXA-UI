@@ -7,18 +7,22 @@ import ComponentsSection from "@components/ComponentsSection";
 import LeftPanel from "@components/LeftPanel";
 import TechStack from "@components/TechStack";
 import Nav3 from "@components/Nav3";
-import state from "@components/state";
+import state, { setScrollContainer } from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
 const SECTIONS = ["nav1", "nav2", "nav3", "nav4", "nav5", "nav6"];
 const SECTION_INDEX = Object.fromEntries(SECTIONS.map((s, i) => [s, i]));
+
+const canvasStyle = { position: "fixed", top: 0, left: 0, zIndex: 0, width: "100vw", height: "100vh" };
+const helmLStyle = { position: "fixed", top: 0, left: 0, height: "100vh", pointerEvents: "none", zIndex: 10 };
+const helmRStyle = { position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 };
 
 export default function App() {
   const root = useRef(null);
   const refs = useRef([]);
 
   useEffect(() => {
-    state.scrollContainer = root.current;
+    setScrollContainer(root.current);
 
     const c = root.current;
     let timeout;
@@ -65,7 +69,7 @@ export default function App() {
   return (
     <>
       <ErrorBoundary>
-        <Canvas style={{ position: "fixed", top: 0, left: 0, zIndex: 0, width: "100vw", height: "100vh" }}>
+        <Canvas style={canvasStyle}>
           <Suspense fallback={null}>
             <ambientLight intensity={1.5} />
             <Experience />
@@ -73,8 +77,8 @@ export default function App() {
         </Canvas>
       </ErrorBoundary>
 
-      <img draggable={false} src="/images/Left%20helm.png" alt="" style={{ position: "fixed", top: 0, left: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
-      <img draggable={false} src="/images/Right%20helm.png" alt="" style={{ position: "fixed", top: 0, right: 0, height: "100vh", pointerEvents: "none", zIndex: 10 }} />
+      <img draggable={false} src="/images/Left%20helm.png" alt="" style={helmLStyle} loading="eager" />
+      <img draggable={false} src="/images/Right%20helm.png" alt="" style={helmRStyle} loading="eager" />
 
       <LeftPanel />
       <TechStack />

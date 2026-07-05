@@ -1,21 +1,16 @@
-import { useState, useEffect } from "react";
-import state from "@components/state";
-import { subscribe } from "valtio";
+import { useState, useEffect, useRef } from "react";
+import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as styles from "@styles/Nav3.module.scss";
+import ScrambleText from "./ScrambleText";
 
 export default function Nav3() {
-  const [show, setShow] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const show = useSectionVisibility(2);
+  const prevShow = useRef(false);
 
   useEffect(() => {
-    const unsub = subscribe(state, () => {
-      const next = state.targetSection === 2;
-      if (next !== show) {
-        setShow(next);
-        if (next) setAnimKey((k) => k + 1);
-      }
-    });
-    return unsub;
+    if (show && !prevShow.current) setAnimKey((k) => k + 1);
+    prevShow.current = show;
   }, [show]);
 
   const vis = show ? styles.visible : "";
@@ -24,37 +19,32 @@ export default function Nav3() {
 
   return (
     <div className={`${styles.nav3} ${vis}`}>
-      <img
-        key={animKey}
-        draggable={false}
-        className={styles.background}
-        src="/images/nav31.svg"
-        alt=""
-      />
+      <img key={animKey} draggable={false} className={styles.background} src="/images/nav31.svg" alt="" />
 
       <div className={`${styles.commandRow} ${cmdV}`}>
         <span className={styles.icon}>{"\u2318"}</span>
         <code className={styles.command}>
-          npx shadcn@latest add @nyxaui/<span className={styles.placeholder}>[component]</span>
+          <ScrambleText as="span" text="npx shadcn@latest add @nyxaui/" />
+          <span className={styles.placeholder}>[component]</span>
         </code>
         <span className={styles.cliBadge}>
-          CLI <span className={styles.arrow}>{"\u2197"}</span>
+          <ScrambleText as="span" text="CLI" /> <span className={styles.arrow}>{"\u2197"}</span>
         </span>
       </div>
 
       <div className={`${styles.stat1} ${stV}`}>
-        <span className={styles.statValue}>46</span>
-        <span className={styles.statLabel}>Components</span>
+        <span className={styles.statValue}><ScrambleText as="span" text="46" /></span>
+        <span className={styles.statLabel}><ScrambleText as="span" text="Components" /></span>
       </div>
 
       <div className={`${styles.stat2} ${stV}`}>
-        <span className={styles.statValue}>09</span>
-        <span className={styles.statLabel}>Families</span>
+        <span className={styles.statValue}><ScrambleText as="span" text="09" /></span>
+        <span className={styles.statLabel}><ScrambleText as="span" text="Families" /></span>
       </div>
 
       <div className={`${styles.stat3} ${stV}`}>
-        <span className={styles.statValue}>CLI</span>
-        <span className={styles.statLabel}>Ready</span>
+        <span className={styles.statValue}><ScrambleText as="span" text="CLI" /></span>
+        <span className={styles.statLabel}><ScrambleText as="span" text="Ready" /></span>
       </div>
     </div>
   );

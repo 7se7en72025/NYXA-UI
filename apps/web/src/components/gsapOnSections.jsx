@@ -1,4 +1,4 @@
-import gsap from "gsap";
+import gsap from "gsap/gsap-core";
 import state from "./state";
 
 const PLANET = [0.75, -1.5, -2];
@@ -30,18 +30,21 @@ export function getInitialOrbit() {
 export function gsapOnSection(camera, target, onMove) {
   const { pos, rot } = getOrbit(target);
 
+  gsap.killTweensOf(camera.position);
+  gsap.killTweensOf(camera.rotation);
+
   const tl = gsap.timeline({
     onStart: () => {
-      window?.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", onMove);
       state.isMoving = true;
     },
     onComplete: () => {
       state.activeSection = target;
       state.isMoving = false;
-      if (target === 0) window?.addEventListener("mousemove", onMove);
+      if (target === 0) window.addEventListener("mousemove", onMove, { passive: true });
     },
   });
 
-  tl.to(camera.position, { x: pos[0], y: pos[1], z: pos[2], duration: 2, ease: "power2.inOut" })
-    .to(camera.rotation, { x: rot[0], y: rot[1], z: rot[2], duration: 2, ease: "power2.inOut" }, "<");
+  tl.to(camera.position, { x: pos[0], y: pos[1], z: pos[2], duration: 2, ease: "power2.inOut", overwrite: true })
+    .to(camera.rotation, { x: rot[0], y: rot[1], z: rot[2], duration: 2, ease: "power2.inOut", overwrite: true }, "<");
 }

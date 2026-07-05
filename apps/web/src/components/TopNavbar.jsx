@@ -1,14 +1,50 @@
 import { useState, useEffect, useCallback } from "react";
 import SearchBar from "./SearchBar";
 import ComingSoon from "./ComingSoon";
+import ScrambleText from "./ScrambleText";
+import { isFullscreen } from "@utils/isFullscreen";
 
-function isFullscreen() {
-  return !!(
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement
-  );
-}
+const navbarContainerStyle = {
+  position: "fixed",
+  top: 0,
+  left: "50%",
+  transform: "translateX(-50%) scale(0.9)",
+  zIndex: 20,
+  width: "100%",
+  maxWidth: "706px",
+  pointerEvents: "none",
+};
+
+const navbarInnerStyle = { position: "relative", width: "100%", aspectRatio: "882 / 292" };
+const navbarImgStyle = { width: "100%", height: "100%", display: "block", pointerEvents: "none" };
+
+const searchAreaStyle = {
+  position: "absolute",
+  left: "19.16%",
+  top: "24.66%",
+  width: "63.04%",
+  height: "28.77%",
+  pointerEvents: "all",
+};
+
+const scrambleBtnBase = {
+  position: "absolute",
+  cursor: "pointer",
+  background: "transparent",
+  border: "none",
+  outline: "none",
+  pointerEvents: "all",
+  fontFamily: "'Orbitron', sans-serif",
+  fontSize: "9px",
+  fontWeight: 500,
+  letterSpacing: "0.1em",
+  color: "transparent",
+  transition: "color 0.15s ease",
+};
+
+const templatesBtnStyle = { ...scrambleBtnBase, left: "21.9%", top: "3.1%", width: "18.7%", height: "11.3%" };
+const docsBtnStyle = { ...scrambleBtnBase, left: "64.6%", top: "3.1%", width: "9.6%", height: "11.3%" };
+const githubBtnStyle = { ...scrambleBtnBase, left: "37.8%", top: "80.5%", width: "23.2%", height: "12.5%", fontSize: "8px" };
 
 export default function TopNavbar() {
   const [ready, setReady] = useState(false);
@@ -20,9 +56,7 @@ export default function TopNavbar() {
   }, []);
 
   const handleFullscreenChange = useCallback(() => {
-    if (!isFullscreen()) {
-      setShowComingSoon(true);
-    }
+    if (!isFullscreen()) setShowComingSoon(true);
   }, []);
 
   useEffect(() => {
@@ -39,93 +73,31 @@ export default function TopNavbar() {
     };
   }, [handleFullscreenChange]);
 
+  const handleGithub = useCallback(() => {
+    window.open("https://github.com/7se7en72025/NYXA-UI", "_blank");
+  }, []);
+
+  const navStyle = {
+    ...navbarContainerStyle,
+    opacity: ready ? 1 : 0,
+    animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
+  };
+
   return (
     <>
       <ComingSoon show={showComingSoon} onClose={() => setShowComingSoon(false)} />
 
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: "50%",
-        transform: "translateX(-50%) scale(0.9)",
-        zIndex: 20,
-        width: "100%",
-        maxWidth: "706px",
-        pointerEvents: "none",
-        opacity: ready ? 1 : 0,
-        animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
-      }}>
-        <div style={{ position: "relative", width: "100%", aspectRatio: "882 / 292" }}>
-          <img
-            draggable={false}
-            src="/images/topnavbarhome.svg"
-            alt="NYXA UI Navigation"
-            style={{ width: "100%", height: "100%", display: "block", pointerEvents: "none" }}
-          />
+      <div style={navStyle}>
+        <div style={navbarInnerStyle}>
+          <img draggable={false} src="/images/topnavbarhome.svg" alt="NYXA UI Navigation" style={navbarImgStyle} />
 
-          <div style={{
-            position: "absolute",
-            left: "19.16%",
-            top: "24.66%",
-            width: "63.04%",
-            height: "28.77%",
-            pointerEvents: "all",
-          }}>
+          <div style={searchAreaStyle}>
             <SearchBar />
           </div>
 
-          <button
-            onClick={() => setShowComingSoon(true)}
-            style={{
-              position: "absolute",
-              left: "21.9%",
-              top: "3.1%",
-              width: "18.7%",
-              height: "11.3%",
-              cursor: "pointer",
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              pointerEvents: "all",
-              color: "transparent",
-              fontSize: "1rem",
-            }}
-          >
-            TEMPLATES
-          </button>
-
-          <button
-            onClick={() => setShowComingSoon(true)}
-            style={{
-              position: "absolute",
-              left: "64.6%",
-              top: "3.1%",
-              width: "9.6%",
-              height: "11.3%",
-              cursor: "pointer",
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              pointerEvents: "all",
-              color: "transparent",
-              fontSize: "1rem",
-            }}
-          >
-            DOCS
-          </button>
-
-          <div
-            onClick={() => window.open("https://github.com/7se7en72025/NYXA-UI", "_blank")}
-            style={{
-              position: "absolute",
-              left: "37.8%",
-              top: "80.5%",
-              width: "23.2%",
-              height: "12.5%",
-              cursor: "pointer",
-              pointerEvents: "all",
-            }}
-          />
+          <ScrambleText text="TEMPLATES" style={templatesBtnStyle} onClick={() => setShowComingSoon(true)} />
+          <ScrambleText text="DOCS" style={docsBtnStyle} onClick={() => setShowComingSoon(true)} />
+          <ScrambleText text="VIEW GITHUB" style={githubBtnStyle} onClick={handleGithub} />
         </div>
       </div>
     </>

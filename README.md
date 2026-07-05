@@ -1,56 +1,38 @@
 # NYXA UI
 
-A constellation-themed UI component library for React and React Three Fiber.
+A space-themed UI component library for React and React Three Fiber. Build immersive 3D landing pages with a cockpit-style HUD aesthetic.
+
+## Install
+
+```bash
+pnpm add @nyxa/ui
+```
+
+## Components
+
+| Component | Description |
+|-----------|-------------|
+| `TwinkleStars` | Animated 3D star field with point sprites |
+| `DustParticles` | Floating cosmic dust particles |
+| `SpeedLines` | Warp-speed velocity lines |
+| `Effects` | Bloom + tone mapping post-processing |
+| `ErrorBoundary` | Themed error boundary with retry |
 
 ## Tech Stack
 
-- React 18 — UI framework
-- Three.js / React Three Fiber — 3D rendering
-- @react-three/drei — Three.js helpers
-- @react-three/postprocessing — Visual effects
-- GSAP — Scroll & animation
-- Framer Motion — UI transitions
-- Valtio — State management
-- Vite — Build tool
-- Turborepo — Monorepo orchestration
-- Biome — Linting & formatting
+- React 18
+- Three.js / React Three Fiber / Drei
+- GSAP (scroll & animation)
+- Valtio (state management)
+- Vite + Turborepo (build)
+- Biome (lint & format)
 
-## Getting Started
+## Development
 
 ```bash
 pnpm install
 pnpm dev
 ```
-
-## Project Structure
-
-```
-nyxa-ui/
-├── apps/
-│   └── web/          # Landing page (Vite + React)
-├── packages/
-│   └── ui/           # Reusable component library
-├── registry.json     # shadcn registry manifest
-├── turbo.json
-├── pnpm-workspace.yaml
-└── package.json
-```
-
-## Packages
-
-### @nyxa/ui
-
-Reusable 3D and UI components:
-
-- `TwinkleStars` — 3D twinkling star field
-- `DustParticles` — Floating dust particles
-- `SpeedLines` — Warp speed effect
-- `Effects` — Post-processing bloom & tone mapping
-- `ErrorBoundary` — Themed error boundary
-
-### @nyxa/web
-
-The landing page application.
 
 ## Scripts
 
@@ -60,6 +42,17 @@ The landing page application.
 | `pnpm build` | Build all packages |
 | `pnpm lint` | Run Biome linter |
 | `pnpm format` | Format code |
+
+## Project Structure
+
+```
+nyxa-ui/
+├── apps/web/          # Landing page (Vite + React)
+├── packages/ui/       # Reusable component library
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
+```
 
 ## License
 

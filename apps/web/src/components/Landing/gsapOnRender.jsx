@@ -1,5 +1,7 @@
 import gsap from "gsap/gsap-core";
 
+let _bound = false;
+
 export function gsapOnRender(camera, onMove) {
   gsap.set(camera.position, { x: 0, y: 0, z: 0 });
   gsap.set(camera.rotation, { x: -Math.PI / 2, y: Math.PI / 2, z: 0 });
@@ -11,6 +13,11 @@ export function gsapOnRender(camera, onMove) {
     duration: 2,
     delay: 1.5,
     ease: "power2.inOut",
-    onComplete: () => window?.addEventListener("mousemove", onMove),
+    onComplete: () => {
+      if (!_bound) {
+        window.addEventListener("mousemove", onMove, { passive: true });
+        _bound = true;
+      }
+    },
   });
 }

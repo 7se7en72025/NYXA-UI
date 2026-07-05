@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 import { Sphere } from "@react-three/drei";
-import * as THREE from "three";
+import { TextureLoader, BackSide, CanvasTexture } from "three";
 import { useLoader } from "@react-three/fiber";
 import TextureMap from "/images/nebula-new.jpg";
 
-const SEGMENTS = 128;
+const SEGMENTS = 32;
 const RADIUS = 200;
 const BLEND_RATIO = 0.06;
 
@@ -33,20 +33,26 @@ function makeSeamless(img) {
   }
 
   ctx.putImageData(new ImageData(px, w, h), 0, 0);
-  const tex = new THREE.CanvasTexture(cvs);
+  const tex = new CanvasTexture(cvs);
   tex.needsUpdate = true;
   return tex;
 }
 
+let _cachedTex = null;
+
 export default function Background() {
-  const bg = useLoader(THREE.TextureLoader, TextureMap);
+  const bg = useLoader(TextureLoader, TextureMap);
   bg.anisotropy = 16;
 
-  const tex = useMemo(() => (bg.image ? makeSeamless(bg.image) : bg), [bg]);
+  const tex = useMemo(() => {
+    if (_cachedTex) return _cachedTex;
+    _cachedTex = bg.image ? makeSeamless(bg.image) : bg;
+    return _cachedTex;
+  }, [bg]);
 
   return (
     <Sphere args={[RADIUS, SEGMENTS, SEGMENTS]} rotation={[2, -1, 0]}>
-      <meshBasicMaterial attach="material" side={THREE.BackSide} map={tex} />
+      <meshBasicMaterial attach="material" side={BackSide} map={tex} />
     </Sphere>
   );
 }

@@ -1,56 +1,45 @@
-import { useState, useEffect } from "react";
-import state from "@components/state";
-import { subscribe } from "valtio";
+import { useState, useEffect, useRef } from "react";
+import { useSectionVisibility } from "@hooks/useSectionVisibility";
+import { isFullscreen } from "@utils/isFullscreen";
 import * as styles from "@styles/TechStack.module.scss";
 
-function isFullscreen() {
-  return !!(
-    document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.msFullscreenElement ||
-    window.innerHeight === screen.height
-  );
-}
-
 export default function TechStack() {
-  const [show, setShow] = useState(false);
   const [animKey, setAnimKey] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+  const show = useSectionVisibility(1);
+  const prevShow = useRef(false);
 
   useEffect(() => {
-    const unsub = subscribe(state, () => {
-      const next = state.targetSection === 1;
-      if (next !== show) {
-        setShow(next);
-        if (next) setAnimKey((k) => k + 1);
-      }
-    });
-    return unsub;
+    if (show && !prevShow.current) setAnimKey((k) => k + 1);
+    prevShow.current = show;
   }, [show]);
 
   useEffect(() => {
     setFullscreen(isFullscreen());
-    const onChange = () => setFullscreen(isFullscreen());
+    let resizeTimeout;
+    const onChange = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => setFullscreen(isFullscreen()), 100);
+    };
     document.addEventListener("fullscreenchange", onChange);
     document.addEventListener("webkitfullscreenchange", onChange);
-    window.addEventListener("resize", onChange);
+    window.addEventListener("resize", onChange, { passive: true });
     return () => {
+      clearTimeout(resizeTimeout);
       document.removeEventListener("fullscreenchange", onChange);
       document.removeEventListener("webkitfullscreenchange", onChange);
       window.removeEventListener("resize", onChange);
     };
   }, []);
 
+  const onEnter = useRef(() => setHovered(true));
+  const onLeave = useRef(() => setHovered(false));
+
   return (
     <>
       <div className={`${styles.techStack} ${show ? styles.visible : ""} ${hovered ? styles.hovered : ""}`}>
-        <img
-          draggable={false}
-          className={styles.background}
-          src="/images/nav22.svg"
-          alt=""
-        />
+        <img draggable={false} className={styles.background} src="/images/nav22.svg" alt="" />
 
         <svg
           key={animKey}
@@ -74,20 +63,11 @@ export default function TechStack() {
           <path className={styles.logoPath} d="M588.202 316.585L575.12 345.655H595.469C602.446 345.655 607.097 337.903 608.551 334.027C609.713 342.166 616.787 345.17 620.179 345.655H643.435L644.888 342.748H643.435H624.539C615.237 342.748 611.942 335.965 611.458 332.573V316.585H588.202Z" />
         </svg>
 
-        <div
-          className={styles.hoverZone}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        />
+        <div className={styles.hoverZone} onMouseEnter={onEnter.current} onMouseLeave={onLeave.current} />
       </div>
 
       {fullscreen && show && (
-        <img
-          draggable={false}
-          className={styles.bottomBar}
-          src="/images/nav24.svg"
-          alt=""
-        />
+        <img draggable={false} className={styles.bottomBar} src="/images/nav24.svg" alt="" loading="lazy" />
       )}
     </>
   );

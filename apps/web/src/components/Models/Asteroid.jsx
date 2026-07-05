@@ -1,6 +1,6 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useRef, useMemo, useCallback, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import * as THREE from "three";
+import { Color } from "three";
 import { useFrame } from "@react-three/fiber";
 
 const rand = (min, max) => Math.random() * (max - min) + min;
@@ -8,8 +8,9 @@ const rand = (min, max) => Math.random() * (max - min) + min;
 export function Asteroid({ ...props }) {
   const { nodes, materials } = useGLTF("/models/asteroid3.glb");
   const ref = useRef();
-  const dir = useRef(new THREE.Vector3());
+  const dir = useRef({ x: 0, y: 0, z: 0 });
   const [launched, setLaunched] = useState(false);
+  const timeoutRef = useRef(null);
 
   const osc = useMemo(
     () => ({
@@ -24,11 +25,17 @@ export function Asteroid({ ...props }) {
 
   const mat = useMemo(() => {
     const m = materials.Material.clone();
-    m.color = new THREE.Color("#cc7733");
+    m.color = new Color("#cc7733");
     m.roughness = 0.7;
     m.metalness = 0.1;
     return m;
   }, [materials]);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   useFrame((state, dt) => {
     if (!ref.current) return;
@@ -49,16 +56,14 @@ export function Asteroid({ ...props }) {
 
   const onClick = useCallback((e) => {
     setLaunched(true);
-    dir.current.copy(e.point);
-    setTimeout(() => setLaunched(false), 7000);
+    dir.current = { x: e.point.x, y: e.point.y, z: e.point.z };
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setLaunched(false), 7000);
   }, []);
 
-  const onHover = useCallback(() => {}, []);
-  const onUnhover = useCallback(() => {}, []);
-
   return (
-    <group ref={ref} {...props} dispose={null} onClick={onClick} onPointerEnter={onHover} onPointerLeave={onUnhover}>
-      <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={mat} scale={osc.scale} />
+    <group ref={ref} {...props} dispose={null} onClick={onClick}>
+      <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={mat} scale={osc.scale} frustumCulled={false} />
     </group>
   );
 }

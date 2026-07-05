@@ -29,14 +29,17 @@
     "@react-three/fiber": ">=8",
     "@react-three/drei": ">=9",
     "three": ">=0.160",
-    "framer-motion": ">=10",
-    "gsap": ">=3.12"
+    "gsap": ">=3.12",
+    "@react-three/postprocessing": ">=2",
+    "postprocessing": ">=6"
   },
   "peerDependenciesMeta": {
     "@react-three/fiber": { "optional": true },
     "@react-three/drei": { "optional": true },
     "three": { "optional": true },
-    "gsap": { "optional": true }
+    "gsap": { "optional": true },
+    "@react-three/postprocessing": { "optional": true },
+    "postprocessing": { "optional": true }
   },
   "devDependencies": {
     "react": "^18.2.0",
@@ -44,7 +47,8 @@
     "@react-three/fiber": "^8.15.16",
     "@react-three/drei": "^9.97.6",
     "three": "^0.160.1",
-    "framer-motion": "^10.18.0",
+    "@react-three/postprocessing": "^2.16.0",
+    "postprocessing": "^6.35.0",
     "gsap": "^3.12.5",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",

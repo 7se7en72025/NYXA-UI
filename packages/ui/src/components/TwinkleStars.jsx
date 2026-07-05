@@ -1,6 +1,6 @@
 import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
 
 const DEFAULT_COUNT = 2000;
 
@@ -18,7 +18,7 @@ function circleTexture() {
   g.addColorStop(1, "rgba(255,255,255,0)");
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, s, s);
-  const t = new THREE.CanvasTexture(c);
+  const t = new CanvasTexture(c);
   t.needsUpdate = true;
   return t;
 }
@@ -48,9 +48,9 @@ export function TwinkleStars({ count = DEFAULT_COUNT, size = 0.4, radius = [15, 
   const colors = useMemo(() => new Float32Array(count * 3).fill(1), [count]);
 
   const geo = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const g = new BufferGeometry();
+    g.setAttribute("position", new BufferAttribute(pos, 3));
+    g.setAttribute("color", new BufferAttribute(colors, 3));
     return g;
   }, [pos, colors]);
 
@@ -77,7 +77,7 @@ export function TwinkleStars({ count = DEFAULT_COUNT, size = 0.4, radius = [15, 
         opacity={1}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={AdditiveBlending}
       />
     </points>
   );
