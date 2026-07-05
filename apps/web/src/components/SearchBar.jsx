@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useEffect, useRef } from "react";
 
 const containerStyle = {
@@ -47,7 +48,7 @@ const kbdStyle = {
   lineHeight: 1,
 };
 
-export default function SearchBar() {
+function SearchBarInner() {
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -101,3 +102,5 @@ export default function SearchBar() {
     </div>
   );
 }
+
+export default memo(SearchBarInner);

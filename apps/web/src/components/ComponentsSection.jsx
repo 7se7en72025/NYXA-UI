@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as s from "@styles/ComponentsSection.module.scss";
 import ScrambleText from "./ScrambleText";
@@ -22,17 +22,21 @@ const circleStyle = {
   border: "1px solid rgba(154,240,244,0.2)",
 };
 
+const hiddenAnimStyle = {
+  opacity: 0,
+  transform: "translateX(60px)",
+  transition: "opacity 0.6s ease-in-out 0.8s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s",
+};
+
+const visibleAnimStyle = {
+  opacity: 1,
+  transform: "translateX(0)",
+  transition: "opacity 0.6s ease-in-out 0.8s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s",
+};
+
 export default function ComponentsSection() {
   const [index, setIndex] = useState(0);
-  const [ready, setReady] = useState(false);
   const show = useSectionVisibility(0);
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 800);
-    return () => clearTimeout(t);
-  }, []);
-
-  const visible = ready && show;
 
   const prev = useCallback(() => setIndex((i) => (i - 1 + COUNT) % COUNT), []);
   const next = useCallback(() => setIndex((i) => (i + 1) % COUNT), []);
@@ -41,14 +45,7 @@ export default function ComponentsSection() {
 
   return (
     <div className={s.wrapper}>
-      <div
-        className={s.animWrapper}
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateX(0)" : "translateX(60px)",
-          transition: "opacity 0.6s ease-in-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      >
+      <div className={s.animWrapper} style={show ? visibleAnimStyle : hiddenAnimStyle}>
         <h1 className={s.title}><ScrambleText as="span" text="COMPONENTS 4 U" /></h1>
         <div className={s.eventsWrapper}>
           <div className={s.carousel}>

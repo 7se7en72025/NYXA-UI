@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, memo } from "react";
 import SearchBar from "./SearchBar";
 import ComingSoon from "./ComingSoon";
 import ScrambleText from "./ScrambleText";
@@ -46,7 +46,7 @@ const templatesBtnStyle = { ...scrambleBtnBase, left: "21.9%", top: "3.1%", widt
 const docsBtnStyle = { ...scrambleBtnBase, left: "64.6%", top: "3.1%", width: "9.6%", height: "11.3%" };
 const githubBtnStyle = { ...scrambleBtnBase, left: "37.8%", top: "80.5%", width: "23.2%", height: "12.5%", fontSize: "8px" };
 
-export default function TopNavbar() {
+function TopNavbarInner() {
   const [ready, setReady] = useState(false);
   const [showComingSoon, setShowComingSoon] = useState(false);
 
@@ -77,15 +77,18 @@ export default function TopNavbar() {
     window.open("https://github.com/7se7en72025/NYXA-UI", "_blank");
   }, []);
 
-  const navStyle = {
+  const handleOpenCS = useCallback(() => setShowComingSoon(true), []);
+  const handleCloseCS = useCallback(() => setShowComingSoon(false), []);
+
+  const navStyle = useMemo(() => ({
     ...navbarContainerStyle,
     opacity: ready ? 1 : 0,
     animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
-  };
+  }), [ready]);
 
   return (
     <>
-      <ComingSoon show={showComingSoon} onClose={() => setShowComingSoon(false)} />
+      <ComingSoon show={showComingSoon} onClose={handleCloseCS} />
 
       <div style={navStyle}>
         <div style={navbarInnerStyle}>
@@ -95,11 +98,13 @@ export default function TopNavbar() {
             <SearchBar />
           </div>
 
-          <ScrambleText text="TEMPLATES" style={templatesBtnStyle} onClick={() => setShowComingSoon(true)} />
-          <ScrambleText text="DOCS" style={docsBtnStyle} onClick={() => setShowComingSoon(true)} />
+          <ScrambleText text="TEMPLATES" style={templatesBtnStyle} onClick={handleOpenCS} />
+          <ScrambleText text="DOCS" style={docsBtnStyle} onClick={handleOpenCS} />
           <ScrambleText text="VIEW GITHUB" style={githubBtnStyle} onClick={handleGithub} />
         </div>
       </div>
     </>
   );
 }
+
+export default memo(TopNavbarInner);

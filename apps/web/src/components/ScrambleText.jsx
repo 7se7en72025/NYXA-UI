@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const CHARS_LEN = CHARS.length;
@@ -6,6 +6,10 @@ const CHARS_LEN = CHARS.length;
 export default function ScrambleText({ text, as = "button", className, style, onClick }) {
   const ref = useRef(null);
   const intervalRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current);
+  }, []);
 
   const startScramble = useCallback(() => {
     const el = ref.current;

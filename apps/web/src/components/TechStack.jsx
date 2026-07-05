@@ -17,19 +17,12 @@ export default function TechStack() {
 
   useEffect(() => {
     setFullscreen(isFullscreen());
-    let resizeTimeout;
-    const onChange = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => setFullscreen(isFullscreen()), 100);
-    };
+    const onChange = () => setFullscreen(isFullscreen());
     document.addEventListener("fullscreenchange", onChange);
     document.addEventListener("webkitfullscreenchange", onChange);
-    window.addEventListener("resize", onChange, { passive: true });
     return () => {
-      clearTimeout(resizeTimeout);
       document.removeEventListener("fullscreenchange", onChange);
       document.removeEventListener("webkitfullscreenchange", onChange);
-      window.removeEventListener("resize", onChange);
     };
   }, []);
 

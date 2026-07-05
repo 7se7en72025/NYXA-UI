@@ -1,23 +1,32 @@
 import gsap from "gsap/gsap-core";
 
-let _bound = false;
-
 export function gsapOnRender(camera, onMove) {
   gsap.set(camera.position, { x: 0, y: 0, z: 0 });
   gsap.set(camera.rotation, { x: -Math.PI / 2, y: Math.PI / 2, z: 0 });
 
-  gsap.to(camera.rotation, {
+  let added = false;
+  const add = () => {
+    if (!added) {
+      window.addEventListener("mousemove", onMove, { passive: true });
+      added = true;
+    }
+  };
+
+  const tl = gsap.to(camera.rotation, {
     x: 0,
     y: 0,
     z: 0,
     duration: 2,
     delay: 1.5,
     ease: "power2.inOut",
-    onComplete: () => {
-      if (!_bound) {
-        window.addEventListener("mousemove", onMove, { passive: true });
-        _bound = true;
-      }
-    },
+    onComplete: add,
   });
+
+  return () => {
+    tl.kill();
+    if (added) {
+      window.removeEventListener("mousemove", onMove);
+      added = false;
+    }
+  };
 }

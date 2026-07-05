@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { memo, useState, useEffect, useRef } from "react";
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as styles from "@styles/Nav3.module.scss";
 import ScrambleText from "./ScrambleText";
 
-export default function Nav3() {
+function Nav3Inner() {
   const [animKey, setAnimKey] = useState(0);
   const show = useSectionVisibility(2);
   const prevShow = useRef(false);
@@ -49,3 +49,5 @@ export default function Nav3() {
     </div>
   );
 }
+
+export default memo(Nav3Inner);

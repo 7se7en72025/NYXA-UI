@@ -1,9 +1,20 @@
 import { useRef, useMemo, useCallback, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { Color } from "three";
+import { Color, MeshStandardMaterial } from "three";
 import { useFrame } from "@react-three/fiber";
 
 const rand = (min, max) => Math.random() * (max - min) + min;
+
+let _sharedMat = null;
+
+function getSharedMaterial(baseMaterial) {
+  if (_sharedMat) return _sharedMat;
+  _sharedMat = baseMaterial.clone();
+  _sharedMat.color = new Color("#cc7733");
+  _sharedMat.roughness = 0.7;
+  _sharedMat.metalness = 0.1;
+  return _sharedMat;
+}
 
 export function Asteroid({ ...props }) {
   const { nodes, materials } = useGLTF("/models/asteroid3.glb");
@@ -23,13 +34,7 @@ export function Asteroid({ ...props }) {
     []
   );
 
-  const mat = useMemo(() => {
-    const m = materials.Material.clone();
-    m.color = new Color("#cc7733");
-    m.roughness = 0.7;
-    m.metalness = 0.1;
-    return m;
-  }, [materials]);
+  const mat = useMemo(() => getSharedMaterial(materials.Material), [materials]);
 
   useEffect(() => {
     return () => {

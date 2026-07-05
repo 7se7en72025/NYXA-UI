@@ -42,9 +42,9 @@ let _cachedTex = null;
 
 export default function Background() {
   const bg = useLoader(TextureLoader, TextureMap);
-  bg.anisotropy = 16;
 
   const tex = useMemo(() => {
+    bg.anisotropy = 16;
     if (_cachedTex) return _cachedTex;
     _cachedTex = bg.image ? makeSeamless(bg.image) : bg;
     return _cachedTex;

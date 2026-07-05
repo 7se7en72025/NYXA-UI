@@ -1,5 +1,23 @@
 import { Component } from "react";
 
+const errorContainerStyle = {
+  width: "100vw",
+  height: "100vh",
+  background: "black",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "1rem",
+};
+
+const errorTitleStyle = {
+  color: "#9af0f4",
+  fontFamily: "Space Grotesk, sans-serif",
+  fontSize: "1.5rem",
+  textAlign: "center",
+};
+
 const btnStyle = {
   background: "transparent",
   border: "1px solid #9af0f4",
@@ -10,6 +28,10 @@ const btnStyle = {
   cursor: "pointer",
   borderRadius: "4px",
 };
+
+function reload() {
+  window.location.reload();
+}
 
 export default class ErrorBoundary extends Component {
   state = { hasError: false };
@@ -25,13 +47,9 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ width: "100vw", height: "100vh", background: "black", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem" }}>
-          <h1 style={{ color: "#9af0f4", fontFamily: "Space Grotesk, sans-serif", fontSize: "1.5rem", textAlign: "center" }}>
-            Something went wrong
-          </h1>
-          <button onClick={() => window.location.reload()} style={btnStyle}>
-            Reload Page
-          </button>
+        <div style={errorContainerStyle}>
+          <h1 style={errorTitleStyle}>Something went wrong</h1>
+          <button onClick={reload} style={btnStyle}>Reload Page</button>
         </div>
       );
     }

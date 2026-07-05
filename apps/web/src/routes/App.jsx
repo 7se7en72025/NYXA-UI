@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useCallback } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import ErrorBoundary from "@components/ErrorBoundary";
 import Experience from "@components/Landing/Experience";
@@ -19,7 +19,12 @@ const helmRStyle = { position: "fixed", top: 0, right: 0, height: "100vh", point
 
 export default function App() {
   const root = useRef(null);
-  const refs = useRef([]);
+  const sectionRefs = useRef([]);
+
+  const setRef = useRef(null);
+  if (!setRef.current) {
+    setRef.current = (i) => (el) => { sectionRefs.current[i] = el; };
+  }
 
   useEffect(() => {
     setScrollContainer(root.current);
@@ -43,10 +48,8 @@ export default function App() {
     };
   }, []);
 
-  const setRef = useCallback((i) => (el) => { refs.current[i] = el; }, []);
-
   useEffect(() => {
-    const els = refs.current.filter(Boolean);
+    const els = sectionRefs.current.filter(Boolean);
     if (!els.length) return;
 
     const obs = new IntersectionObserver(
@@ -88,7 +91,12 @@ export default function App() {
 
       <div className={sc.scrollContainer} ref={root}>
         {SECTIONS.map((name, i) => (
-          <div key={name} className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`} data-section={name} ref={setRef(i)}>
+          <div
+            key={name}
+            ref={setRef.current(i)}
+            data-section={name}
+            className={`${sc.section} ${i === 0 ? sc.homeSection : sc.contentSection}`}
+          >
             {i === 0 && <ComponentsSection />}
           </div>
         ))}

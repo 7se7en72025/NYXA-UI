@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import ScrambleText from "./ScrambleText";
 
 let _ctx = null;
@@ -16,6 +16,10 @@ function playTing() {
     gain.gain.exponentialRampToValueAtTime(0.001, _ctx.currentTime + 0.4);
     osc.start(_ctx.currentTime);
     osc.stop(_ctx.currentTime + 0.4);
+    osc.onended = () => {
+      osc.disconnect();
+      gain.disconnect();
+    };
   } catch (e) {}
 }
 
@@ -28,7 +32,6 @@ const overlayStyle = {
 };
 
 const imgWrapperStyle = { position: "relative", width: "320px" };
-
 const imgStyle = { width: "100%", height: "auto", display: "block", pointerEvents: "none" };
 
 const gotItBtnStyle = {
@@ -91,17 +94,17 @@ export default function ComingSoon({ show, onClose }) {
     }, 300);
   }, []);
 
+  const wrapperStyle = useMemo(() => ({
+    ...overlayStyle,
+    opacity: exiting ? 0 : 1,
+    transform: exiting ? "translateY(20px) scale(0.95)" : "translateY(0) scale(1)",
+    transition: "opacity 0.3s ease, transform 0.3s ease",
+  }), [exiting]);
+
   if (!visible) return null;
 
   return (
-    <div
-      style={{
-        ...overlayStyle,
-        opacity: exiting ? 0 : 1,
-        transform: exiting ? "translateY(20px) scale(0.95)" : "translateY(0) scale(1)",
-        transition: "opacity 0.3s ease, transform 0.3s ease",
-      }}
-    >
+    <div style={wrapperStyle}>
       <div style={imgWrapperStyle}>
         <img draggable={false} src="/images/fullscreensvg.svg" alt="Best viewed fullscreen" style={imgStyle} loading="lazy" />
         <ScrambleText as="div" text="GOT IT" onClick={handleClose} style={gotItBtnStyle} />
