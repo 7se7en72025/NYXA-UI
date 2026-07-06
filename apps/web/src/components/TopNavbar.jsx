@@ -20,10 +20,10 @@ const navbarImgStyle = { width: "100%", height: "100%", display: "block", pointe
 
 const searchAreaStyle = {
   position: "absolute",
-  left: "19.16%",
-  top: "24.66%",
-  width: "63.04%",
-  height: "28.77%",
+  left: "25%",
+  top: "28%",
+  width: "50%",
+  height: "20%",
   pointerEvents: "all",
 };
 
@@ -42,13 +42,14 @@ const scrambleBtnBase = {
   transition: "color 0.15s ease",
 };
 
-const templatesBtnStyle = { ...scrambleBtnBase, left: "21.9%", top: "3.1%", width: "18.7%", height: "11.3%" };
-const docsBtnStyle = { ...scrambleBtnBase, left: "64.6%", top: "3.1%", width: "9.6%", height: "11.3%" };
-const githubBtnStyle = { ...scrambleBtnBase, left: "37.8%", top: "80.5%", width: "23.2%", height: "12.5%", fontSize: "8px" };
+const templatesBtnStyle = { ...scrambleBtnBase, left: "21%", top: "6%", width: "22%", height: "18%" };
+const docsBtnStyle = { ...scrambleBtnBase, left: "60%", top: "6%", width: "14%", height: "18%" };
+const githubBtnStyle = { ...scrambleBtnBase, left: "47%", top: "57%", width: "8%", height: "12%", fontSize: "0px" };
+const exploreBtnStyle = { ...scrambleBtnBase, left: "37%", top: "79%", width: "26%", height: "14%" };
 
 function TopNavbarInner() {
   const [ready, setReady] = useState(false);
-  const [showComingSoon, setShowComingSoon] = useState(false);
+  const [csVariant, setCsVariant] = useState(null);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 500);
@@ -56,12 +57,12 @@ function TopNavbarInner() {
   }, []);
 
   const handleFullscreenChange = useCallback(() => {
-    if (!isFullscreen()) setShowComingSoon(true);
+    if (!isFullscreen()) setCsVariant("fullscreen");
   }, []);
 
   useEffect(() => {
     if (!isFullscreen()) {
-      const t = setTimeout(() => setShowComingSoon(true), 1500);
+      const t = setTimeout(() => setCsVariant("fullscreen"), 1500);
       return () => clearTimeout(t);
     }
 
@@ -77,8 +78,8 @@ function TopNavbarInner() {
     window.open("https://github.com/7se7en72025/NYXA-UI", "_blank");
   }, []);
 
-  const handleOpenCS = useCallback(() => setShowComingSoon(true), []);
-  const handleCloseCS = useCallback(() => setShowComingSoon(false), []);
+  const handleOpenCS = useCallback(() => setCsVariant("comingsoon"), []);
+  const handleCloseCS = useCallback(() => setCsVariant(null), []);
 
   const navStyle = useMemo(() => ({
     ...navbarContainerStyle,
@@ -88,7 +89,7 @@ function TopNavbarInner() {
 
   return (
     <>
-      <ComingSoon show={showComingSoon} onClose={handleCloseCS} />
+      {csVariant && <ComingSoon show={true} onClose={handleCloseCS} variant={csVariant} />}
 
       <div style={navStyle}>
         <div style={navbarInnerStyle}>
@@ -100,7 +101,8 @@ function TopNavbarInner() {
 
           <ScrambleText text="TEMPLATES" style={templatesBtnStyle} onClick={handleOpenCS} />
           <ScrambleText text="DOCS" style={docsBtnStyle} onClick={handleOpenCS} />
-          <ScrambleText text="VIEW GITHUB" style={githubBtnStyle} onClick={handleGithub} />
+          <ScrambleText text="GITHUB" style={githubBtnStyle} onClick={handleGithub} />
+          <ScrambleText text="EXPLORE BLOCKS" style={exploreBtnStyle} onClick={handleOpenCS} />
         </div>
       </div>
     </>
