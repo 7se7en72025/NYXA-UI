@@ -6,7 +6,7 @@ import TopNavbar from "@components/TopNavbar";
 import ComponentsSection from "@components/ComponentsSection";
 import LeftPanel from "@components/LeftPanel";
 import TechStack from "@components/TechStack";
-import Nav3 from "@components/Nav3";
+import ComingSoon from "@components/ComingSoon";
 import state, { setScrollContainer } from "@components/state";
 import * as sc from "@styles/ScrollSection.module.scss";
 
@@ -85,7 +85,7 @@ export default function App() {
 
       <LeftPanel />
       <TechStack />
-      <Nav3 />
+      <ComingSoon />
 
       <TopNavbar />
 

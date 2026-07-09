@@ -54,8 +54,8 @@
 <path d="M627.445 379.085H604.189V363.097C604.189 357.283 599.344 354.86 596.922 354.376H572.212L573.666 350.015H596.922C605.061 351.178 608.065 357.283 608.55 360.19C608.55 352.05 616.302 350.015 620.178 350.015H640.527L627.445 379.085Z" fill="#5FDBFF"/>
 <path d="M646.341 338.387H623.085L631.806 316.585H656.515L646.341 338.387Z" fill="#5FDBFF"/>
 <path d="M588.201 316.585L575.119 345.655H595.468C602.445 345.655 607.096 337.903 608.55 334.027C609.712 342.167 616.786 345.17 620.178 345.655H643.434L644.887 342.748H643.434H624.538C615.236 342.748 611.941 335.965 611.457 332.573V316.585H588.201Z" fill="#5FDBFF"/>
-<rect x="420" y="163" width="380" height="370" fill="url(#pattern0_62_6304)">
-<animateTransform attributeName="transform" type="rotate" from="-131.47 610 348" to="228.53 610 348" dur="10s" repeatCount="indefinite"/>
+<rect x="420.445" y="158.085" width="380" height="380" fill="url(#pattern0_62_6304)">
+<animateTransform attributeName="transform" type="rotate" from="-131.47 610.445 348.085" to="228.53 610.445 348.085" dur="10s" repeatCount="indefinite"/>
 </rect>
 <path d="M682.085 454.085L706.585 506.085H816.085" stroke="#4DE5FD" stroke-width="3"/>
 <path d="M543.585 454.085L519.085 506.085H409.585" stroke="#4DE5FD" stroke-width="3"/>
