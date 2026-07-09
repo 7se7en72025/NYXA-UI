@@ -51,7 +51,7 @@ const gotItBtnStyle = {
 const variantConfig = {
   fullscreen: {
     src: "/images/fullscreensvg.svg",
-    btn: { left: "59%", top: "53%", width: "49%", height: "11%" },
+    btn: { left: "63%", top: "79%", width: "32%", height: "15%" },
   },
   comingsoon: {
     src: "/images/comingsoonsvg.svg",
@@ -117,7 +117,7 @@ export default function ComingSoon({ show, onClose, variant = "fullscreen" }) {
     <div style={wrapperStyle}>
       <div style={imgWrapperStyle}>
         <img draggable={false} src={config.src} alt="Best viewed fullscreen" style={imgStyle} loading="lazy" />
-        <ScrambleText as="div" text="GOT IT" onClick={handleClose} style={resolvedBtnStyle} />
+        <ScrambleText as="div" text="OK THANKS" onClick={handleClose} style={resolvedBtnStyle} />
       </div>
     </div>
   );

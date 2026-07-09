@@ -56,6 +56,12 @@ export default function TechStack() {
           <path className={styles.logoPath} d="M588.202 316.585L575.12 345.655H595.469C602.446 345.655 607.097 337.903 608.551 334.027C609.713 342.166 616.787 345.17 620.179 345.655H643.435L644.888 342.748H643.435H624.539C615.237 342.748 611.942 335.965 611.458 332.573V316.585H588.202Z" />
         </svg>
 
+        <svg key={animKey} className={styles.rotatingRing} viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="95" stroke="#4DE5FD" strokeWidth="1.5" fill="none" strokeDasharray="12 8 4 8" opacity="0.5" />
+          <circle cx="100" cy="100" r="88" stroke="#4DE5FD" strokeWidth="1" fill="none" strokeDasharray="20 4" opacity="0.35" />
+          <circle cx="100" cy="100" r="82" stroke="#4DE5FD" strokeWidth="0.8" fill="none" strokeDasharray="6 12" opacity="0.25" />
+        </svg>
+
         <div className={styles.hoverZone} onMouseEnter={onEnter.current} onMouseLeave={onLeave.current} />
       </div>
 
