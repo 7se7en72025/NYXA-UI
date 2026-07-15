@@ -1,8 +1,15 @@
-import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
+import { useEffect, useMemo, useRef } from "react";
+import {
+  AdditiveBlending,
+  BufferAttribute,
+  BufferGeometry,
+  CanvasTexture,
+} from "three";
 
 const DEFAULT_COUNT = 2000;
+
+let sharedTwinkleTexture = null;
 
 function circleTexture() {
   const s = 128;
@@ -23,9 +30,23 @@ function circleTexture() {
   return t;
 }
 
-export function TwinkleStars({ count = DEFAULT_COUNT, size = 0.4, radius = [15, 90] }) {
+/**
+ * @param {object} props
+ * @param {number} [props.count] - number of stars
+ * @param {number} [props.size] - point size
+ * @param {[number, number]} [props.radius] - min/max spawn radius from origin
+ */
+export function TwinkleStars({
+  count = DEFAULT_COUNT,
+  size = 0.4,
+  radius = [15, 90],
+}) {
   const ref = useRef();
-  const tex = useMemo(circleTexture, []);
+  // shared across instances so we don't allocate a canvas per mount
+  const tex = useMemo(() => {
+    if (!sharedTwinkleTexture) sharedTwinkleTexture = circleTexture();
+    return sharedTwinkleTexture;
+  }, []);
 
   const { pos, phase, spd } = useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -53,6 +74,8 @@ export function TwinkleStars({ count = DEFAULT_COUNT, size = 0.4, radius = [15, 
     g.setAttribute("color", new BufferAttribute(colors, 3));
     return g;
   }, [pos, colors]);
+
+  useEffect(() => () => geo.dispose(), [geo]);
 
   useFrame(({ clock }) => {
     if (!ref.current) return;

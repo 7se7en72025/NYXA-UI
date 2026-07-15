@@ -3,8 +3,9 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, calc(-50% + 100px));
-  width: 64vw;
-  max-width: 973px;
+  // capped by viewport width (64vw/973px) AND by viewport height so the
+  // graphic (aspect ratio 1216:703) never overflows short/narrow windows
+  width: min(64vw, 973px, calc((100vh - 260px) * 1.7297));
   pointer-events: none;
   z-index: 10;
   opacity: 0;

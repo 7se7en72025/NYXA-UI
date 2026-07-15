@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, memo } from "react";
 import state from "@components/state";
+import { memo, useEffect, useRef, useState } from "react";
 import { subscribe } from "valtio";
 import * as s from "./ComingSoon.module.scss";
 
@@ -26,7 +26,9 @@ function ComingSoonInner() {
   return (
     <div className={`${s.container} ${show ? s.visible : ""}`}>
       <div key={animKey} className={s.glitchWrapper}>
-        <span className={s.glitch} data-text="COMING SOON">COMING SOON</span>
+        <span className={s.glitch} data-text="COMING SOON">
+          COMING SOON
+        </span>
       </div>
     </div>
   );

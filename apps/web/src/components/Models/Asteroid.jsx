@@ -1,7 +1,7 @@
-import { useRef, useMemo, useCallback, useEffect, useState } from "react";
 import { useGLTF } from "@react-three/drei";
-import { Color, MeshStandardMaterial } from "three";
 import { useFrame } from "@react-three/fiber";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Color } from "three";
 
 const rand = (min, max) => Math.random() * (max - min) + min;
 
@@ -31,7 +31,7 @@ export function Asteroid({ ...props }) {
       drift: [rand(0.003, 0.015), rand(0.003, 0.015), rand(0.003, 0.015)],
       scale: rand(0.15, 0.5),
     }),
-    []
+    [],
   );
 
   const mat = useMemo(() => getSharedMaterial(materials.Material), [materials]);
@@ -53,9 +53,12 @@ export function Asteroid({ ...props }) {
       ref.current.position.y += dir.current.y * osc.drift[1];
       ref.current.position.z += dir.current.z * osc.drift[2];
     } else {
-      ref.current.position.x = osc.amp[0] * Math.sin(t * osc.freq[0] + osc.phase[0]);
-      ref.current.position.y = osc.amp[1] * Math.cos(t * osc.freq[1] + osc.phase[1]);
-      ref.current.position.z = osc.amp[2] * Math.cos(t * osc.freq[2] + osc.phase[2]);
+      ref.current.position.x =
+        osc.amp[0] * Math.sin(t * osc.freq[0] + osc.phase[0]);
+      ref.current.position.y =
+        osc.amp[1] * Math.cos(t * osc.freq[1] + osc.phase[1]);
+      ref.current.position.z =
+        osc.amp[2] * Math.cos(t * osc.freq[2] + osc.phase[2]);
     }
   });
 
@@ -67,8 +70,16 @@ export function Asteroid({ ...props }) {
   }, []);
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: this is an R3F/Three.js <group>, not an HTML element
     <group ref={ref} {...props} dispose={null} onClick={onClick}>
-      <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={mat} scale={osc.scale} frustumCulled={false} />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cube.geometry}
+        material={mat}
+        scale={osc.scale}
+        frustumCulled={false}
+      />
     </group>
   );
 }

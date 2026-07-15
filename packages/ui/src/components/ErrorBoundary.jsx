@@ -11,6 +11,9 @@ const btnStyle = {
   borderRadius: "4px",
 };
 
+/**
+ * @extends {Component<{ children: import("react").ReactNode, fallback?: import("react").ReactNode, onError?: (error: Error, info: { componentStack: string }) => void }>}
+ */
 export class ErrorBoundary extends Component {
   state = { hasError: false };
 
@@ -19,17 +22,41 @@ export class ErrorBoundary extends Component {
   }
 
   componentDidCatch(err, info) {
-    console.error("ErrorBoundary:", err, info);
+    this.props.onError?.(err, info);
+    if (!this.props.onError) console.error("ErrorBoundary:", err, info);
   }
 
   render() {
     if (this.state.hasError) {
+      if (this.props.fallback) return this.props.fallback;
       return (
-        <div style={{ width: "100vw", height: "100vh", background: "black", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1rem" }}>
-          <h1 style={{ color: "#9af0f4", fontFamily: "Space Grotesk, sans-serif", fontSize: "1.5rem", textAlign: "center" }}>
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
+            background: "black",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "1rem",
+          }}
+        >
+          <h1
+            style={{
+              color: "#9af0f4",
+              fontFamily: "Space Grotesk, sans-serif",
+              fontSize: "1.5rem",
+              textAlign: "center",
+            }}
+          >
             Something went wrong
           </h1>
-          <button onClick={() => window.location.reload()} style={btnStyle}>
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            style={btnStyle}
+          >
             Reload Page
           </button>
         </div>

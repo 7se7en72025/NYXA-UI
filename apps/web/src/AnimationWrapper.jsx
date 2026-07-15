@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import App from "@routes/App.jsx";
 import Loader from "@components/Loader";
+import App from "@routes/App.jsx";
+import { Suspense } from "react";
 
 const fallbackStyle = {
   width: "100vw",
@@ -13,7 +13,13 @@ const fallbackStyle = {
 
 export default function AnimationWrapper() {
   return (
-    <Suspense fallback={<div style={fallbackStyle}><Loader /></div>}>
+    <Suspense
+      fallback={
+        <div style={fallbackStyle}>
+          <Loader />
+        </div>
+      }
+    >
       <App />
     </Suspense>
   );

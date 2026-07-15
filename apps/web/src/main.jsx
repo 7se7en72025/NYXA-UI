@@ -6,5 +6,5 @@ import "./index.scss";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AnimationWrapper />
-  </StrictMode>
+  </StrictMode>,
 );

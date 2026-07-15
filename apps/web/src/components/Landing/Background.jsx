@@ -1,7 +1,7 @@
-import { useMemo } from "react";
 import { Sphere } from "@react-three/drei";
-import { TextureLoader, BackSide, CanvasTexture } from "three";
 import { useLoader } from "@react-three/fiber";
+import { useMemo } from "react";
+import { BackSide, CanvasTexture, TextureLoader } from "three";
 import TextureMap from "/images/nebula-new.jpg";
 
 const SEGMENTS = 32;

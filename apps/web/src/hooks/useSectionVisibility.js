@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
 import state from "@components/state";
+import { useEffect, useRef, useState } from "react";
 import { subscribe } from "valtio";
 
 export function useSectionVisibility(sectionIndex, { delay = 0 } = {}) {
@@ -7,7 +7,9 @@ export function useSectionVisibility(sectionIndex, { delay = 0 } = {}) {
   const showRef = useRef(false);
 
   useEffect(() => {
-    const t = delay ? setTimeout(() => setShow(state.targetSection === sectionIndex), delay) : null;
+    const t = delay
+      ? setTimeout(() => setShow(state.targetSection === sectionIndex), delay)
+      : null;
     showRef.current = state.targetSection === sectionIndex;
     if (!delay) setShow(showRef.current);
 

@@ -6,7 +6,8 @@ export function gsapOnRender(camera, onMove) {
 
   let added = false;
   const add = () => {
-    if (!added) {
+    // touch/coarse-pointer devices don't have a hover mouse to parallax against
+    if (!added && !window.matchMedia("(pointer: coarse)").matches) {
       window.addEventListener("mousemove", onMove, { passive: true });
       added = true;
     }

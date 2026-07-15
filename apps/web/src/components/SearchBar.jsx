@@ -1,5 +1,4 @@
-import { memo } from "react";
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 
 const containerStyle = {
   display: "flex",
@@ -95,7 +94,7 @@ function SearchBarInner() {
         style={inputStyle}
       />
 
-      <kbd style={kbdStyle} aria-hidden="true">
+      <kbd style={kbdStyle}>
         <span>{"\u2318"}</span>
         <span>K</span>
       </kbd>

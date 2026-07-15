@@ -12,7 +12,15 @@ export default state;
 let _camera = null;
 let _scrollContainer = null;
 
-export function setCamera(c) { _camera = c; }
-export function getCamera() { return _camera; }
-export function setScrollContainer(el) { _scrollContainer = el; }
-export function getScrollContainer() { return _scrollContainer; }
+export function setCamera(c) {
+  _camera = c;
+}
+export function getCamera() {
+  return _camera;
+}
+export function setScrollContainer(el) {
+  _scrollContainer = el;
+}
+export function getScrollContainer() {
+  return _scrollContainer;
+}

@@ -9,7 +9,10 @@
       "title": "Twinkle Stars",
       "description": "A 3D twinkling star field component for React Three Fiber.",
       "files": [
-        { "path": "packages/ui/src/components/TwinkleStars.jsx", "type": "registry:ui" }
+        {
+          "path": "packages/ui/src/components/TwinkleStars.jsx",
+          "type": "registry:ui"
+        }
       ]
     },
     {
@@ -18,7 +21,10 @@
       "title": "Dust Particles",
       "description": "Floating dust particle system for React Three Fiber.",
       "files": [
-        { "path": "packages/ui/src/components/DustParticles.jsx", "type": "registry:ui" }
+        {
+          "path": "packages/ui/src/components/DustParticles.jsx",
+          "type": "registry:ui"
+        }
       ]
     },
     {
@@ -27,7 +33,10 @@
       "title": "Speed Lines",
       "description": "Warp speed line effect for React Three Fiber.",
       "files": [
-        { "path": "packages/ui/src/components/SpeedLines.jsx", "type": "registry:ui" }
+        {
+          "path": "packages/ui/src/components/SpeedLines.jsx",
+          "type": "registry:ui"
+        }
       ]
     },
     {
@@ -36,7 +45,10 @@
       "title": "Post-Processing Effects",
       "description": "Bloom and tone mapping post-processing effects.",
       "files": [
-        { "path": "packages/ui/src/components/Effects.jsx", "type": "registry:ui" }
+        {
+          "path": "packages/ui/src/components/Effects.jsx",
+          "type": "registry:ui"
+        }
       ]
     },
     {
@@ -45,7 +57,10 @@
       "title": "Error Boundary",
       "description": "A themed error boundary component with reload functionality.",
       "files": [
-        { "path": "packages/ui/src/components/ErrorBoundary.jsx", "type": "registry:ui" }
+        {
+          "path": "packages/ui/src/components/ErrorBoundary.jsx",
+          "type": "registry:ui"
+        }
       ]
     }
   ]

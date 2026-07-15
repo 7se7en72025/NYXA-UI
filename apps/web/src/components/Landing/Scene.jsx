@@ -1,12 +1,12 @@
-import { useEffect, useRef, useCallback } from "react";
+import { getOrbit, gsapOnSection } from "@components/gsapOnSections";
 import { useThree } from "@react-three/fiber";
-import { subscribe } from "valtio";
 import gsap from "gsap/gsap-core";
-import state from "../state";
+import { useCallback, useEffect, useRef } from "react";
+import { subscribe } from "valtio";
 import AlienPlanetGLTF from "../Models/AlienPlanetGLTF";
 import Asteroids from "../Models/Asteroids";
+import state from "../state";
 import { gsapOnRender } from "./gsapOnRender";
-import { gsapOnSection, getOrbit } from "@components/gsapOnSections";
 
 const PARALLAX_LIMIT = Math.PI / 16;
 
@@ -14,20 +14,33 @@ export function Scene() {
   const { camera } = useThree();
   const baseRot = useRef({ x: 0, y: 0, z: 0 });
   const cleanupRef = useRef(null);
+  const rafRef = useRef(null);
 
   const onMouseMove = useCallback(
     (e) => {
-      const nx = (window.innerWidth / 2 - e.clientX) / window.innerWidth;
-      const ny = (window.innerHeight / 2 - e.clientY) / window.innerHeight;
-      gsap.to(camera.rotation, {
-        x: baseRot.current.x + ny * PARALLAX_LIMIT,
-        y: baseRot.current.y + nx * PARALLAX_LIMIT,
-        z: 0,
-        ease: "power2.out",
-        overwrite: true,
+      if (rafRef.current) return;
+      const { clientX, clientY } = e;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        const nx = (window.innerWidth / 2 - clientX) / window.innerWidth;
+        const ny = (window.innerHeight / 2 - clientY) / window.innerHeight;
+        gsap.to(camera.rotation, {
+          x: baseRot.current.x + ny * PARALLAX_LIMIT,
+          y: baseRot.current.y + nx * PARALLAX_LIMIT,
+          z: 0,
+          ease: "power2.out",
+          overwrite: true,
+        });
       });
     },
-    [camera]
+    [camera],
+  );
+
+  useEffect(
+    () => () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    },
+    [],
   );
 
   useEffect(() => {

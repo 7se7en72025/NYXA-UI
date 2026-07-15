@@ -3,13 +3,28 @@
   top: 16%;
   bottom: 15%;
   right: 10%;
-  width: 280px;
+  width: min(280px, 76vw);
   pointer-events: all;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .wrapper {
+    right: 5%;
+    width: min(240px, 88vw);
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .eventsWrapper {
+    height: 300px;
+  }
 }
 
 .animWrapper {
@@ -98,6 +113,8 @@
 .arrow {
   width: 20%;
   height: auto;
+  border: none;
+  padding: 0;
   background: url('/images/left-arrow.svg');
   background-size: contain;
   background-repeat: no-repeat;
@@ -113,6 +130,8 @@
 .arrowRight {
   width: 20%;
   height: auto;
+  border: none;
+  padding: 0;
   background: url('/images/left-arrow.svg');
   background-size: contain;
   background-repeat: no-repeat;

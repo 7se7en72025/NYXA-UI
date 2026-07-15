@@ -1,8 +1,15 @@
-import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { BufferGeometry, BufferAttribute, CanvasTexture, AdditiveBlending } from "three";
+import { useEffect, useMemo, useRef } from "react";
+import {
+  AdditiveBlending,
+  BufferAttribute,
+  BufferGeometry,
+  CanvasTexture,
+} from "three";
 
 const DEFAULT_COUNT = 500;
+
+let sharedDustTexture = null;
 
 function circleTexture() {
   const s = 64;
@@ -21,14 +28,35 @@ function circleTexture() {
   return t;
 }
 
-export function DustParticles({ count = DEFAULT_COUNT, size = 0.15, opacity = 0.4, bounds = [[-30, 30], [-20, 20], [-30, 30]] }) {
+/**
+ * @param {object} props
+ * @param {number} [props.count] - number of dust particles
+ * @param {number} [props.size] - point size
+ * @param {number} [props.opacity] - particle opacity
+ * @param {[[number, number], [number, number], [number, number]]} [props.bounds] - [x, y, z] min/max bounds particles drift within
+ */
+export function DustParticles({
+  count = DEFAULT_COUNT,
+  size = 0.15,
+  opacity = 0.4,
+  bounds = [
+    [-30, 30],
+    [-20, 20],
+    [-30, 30],
+  ],
+}) {
   const ref = useRef();
-  const tex = useMemo(circleTexture, []);
+  // shared across instances so we don't allocate a canvas per mount
+  const tex = useMemo(() => {
+    if (!sharedDustTexture) sharedDustTexture = circleTexture();
+    return sharedDustTexture;
+  }, []);
 
   const boundsRef = useRef(bounds);
+  boundsRef.current = bounds;
 
   const { pos, vel } = useMemo(() => {
-    const b = boundsRef.current;
+    const b = bounds;
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -47,6 +75,8 @@ export function DustParticles({ count = DEFAULT_COUNT, size = 0.15, opacity = 0.
     g.setAttribute("position", new BufferAttribute(pos, 3));
     return g;
   }, [pos]);
+
+  useEffect(() => () => geo.dispose(), [geo]);
 
   useFrame(() => {
     if (!ref.current) return;

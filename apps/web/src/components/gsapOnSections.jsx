@@ -45,13 +45,34 @@ export function gsapOnSection(camera, target, onMove) {
     onComplete: () => {
       state.activeSection = target;
       state.isMoving = false;
-      if (target === 0 && !listenerAdded) {
+      if (
+        target === 0 &&
+        !listenerAdded &&
+        !window.matchMedia("(pointer: coarse)").matches
+      ) {
         window.addEventListener("mousemove", onMove, { passive: true });
         listenerAdded = true;
       }
     },
   });
 
-  tl.to(camera.position, { x: pos[0], y: pos[1], z: pos[2], duration: 2, ease: "power2.inOut", overwrite: true })
-    .to(camera.rotation, { x: rot[0], y: rot[1], z: rot[2], duration: 2, ease: "power2.inOut", overwrite: true }, "<");
+  tl.to(camera.position, {
+    x: pos[0],
+    y: pos[1],
+    z: pos[2],
+    duration: 2,
+    ease: "power2.inOut",
+    overwrite: true,
+  }).to(
+    camera.rotation,
+    {
+      x: rot[0],
+      y: rot[1],
+      z: rot[2],
+      duration: 2,
+      ease: "power2.inOut",
+      overwrite: true,
+    },
+    "<",
+  );
 }

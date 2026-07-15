@@ -1,5 +1,6 @@
-import { memo } from "react";
+import { useIsMobile } from "@hooks/useIsMobile";
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
+import { memo } from "react";
 
 const containerStyle = {
   position: "fixed",
@@ -12,7 +13,8 @@ const containerStyle = {
   maxWidth: "400px",
   opacity: 0,
   transform: "translateY(-50%) scale(1.4) translateX(-60px)",
-  transition: "opacity 0.6s ease-in-out 0.8s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s",
+  transition:
+    "opacity 0.6s ease-in-out 0.8s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s",
 };
 
 const imgStyle = { width: "100%", height: "auto" };
@@ -25,10 +27,19 @@ const visibleStyle = {
 
 function LeftPanelInner() {
   const show = useSectionVisibility(0);
+  const isMobile = useIsMobile();
+
+  if (isMobile) return null;
 
   return (
     <div style={show ? visibleStyle : containerStyle}>
-      <img draggable={false} src="/images/l1.svg" alt="" style={imgStyle} loading="lazy" />
+      <img
+        draggable={false}
+        src="/images/l1.svg"
+        alt=""
+        style={imgStyle}
+        loading="lazy"
+      />
     </div>
   );
 }

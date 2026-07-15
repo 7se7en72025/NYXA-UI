@@ -20,5 +20,11 @@
     "test": "vitest",
     "changeset": "changeset",
     "release": "changeset publish"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.0",
+    "@changesets/cli": "^2.31.0",
+    "turbo": "^2.10.5",
+    "vitest": "^2.1.0"
   }
 }

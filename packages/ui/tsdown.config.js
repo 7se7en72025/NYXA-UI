@@ -5,5 +5,13 @@ export default defineConfig({
   format: ["esm", "cjs"],
   dts: true,
   sourcemap: true,
-  external: ["react", "react-dom", "@react-three/fiber", "@react-three/drei", "three", "framer-motion", "gsap"],
+  external: [
+    "react",
+    "react-dom",
+    "@react-three/fiber",
+    "@react-three/drei",
+    "three",
+    "framer-motion",
+    "gsap",
+  ],
 });

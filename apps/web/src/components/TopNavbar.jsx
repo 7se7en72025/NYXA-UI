@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback, useMemo, memo } from "react";
-import SearchBar from "./SearchBar";
+import { isFullscreen } from "@utils/isFullscreen";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import ComingSoon from "./ComingSoon";
 import ScrambleText from "./ScrambleText";
-import { isFullscreen } from "@utils/isFullscreen";
+import SearchBar from "./SearchBar";
 
 const navbarContainerStyle = {
   position: "fixed",
@@ -15,8 +15,17 @@ const navbarContainerStyle = {
   pointerEvents: "none",
 };
 
-const navbarInnerStyle = { position: "relative", width: "100%", aspectRatio: "882 / 292" };
-const navbarImgStyle = { width: "100%", height: "100%", display: "block", pointerEvents: "none" };
+const navbarInnerStyle = {
+  position: "relative",
+  width: "100%",
+  aspectRatio: "882 / 292",
+};
+const navbarImgStyle = {
+  width: "100%",
+  height: "100%",
+  display: "block",
+  pointerEvents: "none",
+};
 
 const searchAreaStyle = {
   position: "absolute",
@@ -42,10 +51,35 @@ const scrambleBtnBase = {
   transition: "color 0.15s ease",
 };
 
-const templatesBtnStyle = { ...scrambleBtnBase, left: "21%", top: "6%", width: "22%", height: "18%" };
-const docsBtnStyle = { ...scrambleBtnBase, left: "60%", top: "6%", width: "14%", height: "18%" };
-const githubBtnStyle = { ...scrambleBtnBase, left: "47%", top: "57%", width: "8%", height: "12%", fontSize: "0px" };
-const exploreBtnStyle = { ...scrambleBtnBase, left: "37%", top: "79%", width: "26%", height: "14%" };
+const templatesBtnStyle = {
+  ...scrambleBtnBase,
+  left: "21%",
+  top: "6%",
+  width: "22%",
+  height: "18%",
+};
+const docsBtnStyle = {
+  ...scrambleBtnBase,
+  left: "60%",
+  top: "6%",
+  width: "14%",
+  height: "18%",
+};
+const githubBtnStyle = {
+  ...scrambleBtnBase,
+  left: "47%",
+  top: "57%",
+  width: "8%",
+  height: "12%",
+  fontSize: "0px",
+};
+const exploreBtnStyle = {
+  ...scrambleBtnBase,
+  left: "37%",
+  top: "79%",
+  width: "26%",
+  height: "14%",
+};
 
 function TopNavbarInner() {
   const [ready, setReady] = useState(false);
@@ -70,7 +104,10 @@ function TopNavbarInner() {
     document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
-      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        handleFullscreenChange,
+      );
     };
   }, [handleFullscreenChange]);
 
@@ -81,28 +118,56 @@ function TopNavbarInner() {
   const handleOpenCS = useCallback(() => setCsVariant("comingsoon"), []);
   const handleCloseCS = useCallback(() => setCsVariant(null), []);
 
-  const navStyle = useMemo(() => ({
-    ...navbarContainerStyle,
-    opacity: ready ? 1 : 0,
-    animation: ready ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards" : "none",
-  }), [ready]);
+  const navStyle = useMemo(
+    () => ({
+      ...navbarContainerStyle,
+      opacity: ready ? 1 : 0,
+      animation: ready
+        ? "hudEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+        : "none",
+    }),
+    [ready],
+  );
 
   return (
     <>
-      {csVariant && <ComingSoon show={true} onClose={handleCloseCS} variant={csVariant} />}
+      {csVariant && (
+        <ComingSoon show={true} onClose={handleCloseCS} variant={csVariant} />
+      )}
 
       <div style={navStyle}>
         <div style={navbarInnerStyle}>
-          <img draggable={false} src="/images/topnavbarhome.svg" alt="NYXA UI Navigation" style={navbarImgStyle} />
+          <img
+            draggable={false}
+            src="/images/topnavbarhome.svg"
+            alt="NYXA UI Navigation"
+            style={navbarImgStyle}
+          />
 
           <div style={searchAreaStyle}>
             <SearchBar />
           </div>
 
-          <ScrambleText text="TEMPLATES" style={templatesBtnStyle} onClick={handleOpenCS} />
-          <ScrambleText text="DOCS" style={docsBtnStyle} onClick={handleOpenCS} />
-          <ScrambleText text="GITHUB" style={githubBtnStyle} onClick={handleGithub} />
-          <ScrambleText text="EXPLORE BLOCKS" style={exploreBtnStyle} onClick={handleOpenCS} />
+          <ScrambleText
+            text="TEMPLATES"
+            style={templatesBtnStyle}
+            onClick={handleOpenCS}
+          />
+          <ScrambleText
+            text="DOCS"
+            style={docsBtnStyle}
+            onClick={handleOpenCS}
+          />
+          <ScrambleText
+            text="GITHUB"
+            style={githubBtnStyle}
+            onClick={handleGithub}
+          />
+          <ScrambleText
+            text="EXPLORE BLOCKS"
+            style={exploreBtnStyle}
+            onClick={handleOpenCS}
+          />
         </div>
       </div>
     </>

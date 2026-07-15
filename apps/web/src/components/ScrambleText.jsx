@@ -1,9 +1,15 @@
-import { useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const CHARS_LEN = CHARS.length;
 
-export default function ScrambleText({ text, as = "button", className, style, onClick }) {
+export default function ScrambleText({
+  text,
+  as = "button",
+  className,
+  style,
+  onClick,
+}) {
   const ref = useRef(null);
   const intervalRef = useRef(null);
 
@@ -21,7 +27,11 @@ export default function ScrambleText({ text, as = "button", className, style, on
     intervalRef.current = setInterval(() => {
       el.textContent = text
         .split("")
-        .map((char, i) => (i < iteration ? text[i] : CHARS[Math.floor(Math.random() * CHARS_LEN)]))
+        .map((_char, i) =>
+          i < iteration
+            ? text[i]
+            : CHARS[Math.floor(Math.random() * CHARS_LEN)],
+        )
         .join("");
 
       if (iteration >= text.length) {
