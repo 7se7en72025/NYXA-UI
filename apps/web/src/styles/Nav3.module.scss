@@ -1,0 +1,211 @@
+.wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.4rem, 3vh, 2.4rem);
+  padding: 14vh 6vw;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visible .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  font-size: clamp(0.65rem, 1.4vw, 0.75rem);
+  letter-spacing: 0.35em;
+  color: var(--secondary);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.title {
+  font-size: clamp(1.3rem, 3.4vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow:
+    0px 0px 27.68px rgba(136, 196, 200, 0.7),
+    0px 0px 4.471px rgba(134, 244, 232, 0.8);
+}
+
+.body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  width: 100%;
+  max-width: 820px;
+  pointer-events: all;
+}
+
+.stage {
+  position: relative;
+  width: clamp(180px, 26vw, 300px);
+  height: clamp(180px, 26vw, 300px);
+  flex-shrink: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.7s ease-out 0.1s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+// override the global `#root canvas { position: fixed; 100vw/100vh }` rule
+// (meant for the background scene) so this model stays inside its stage
+:global(#root) .stage canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.visible .stage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  width: min(340px, 100%);
+  flex-shrink: 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(79, 203, 227, 0.22);
+  border-radius: 10px;
+  background: rgba(2, 12, 16, 0.72);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease-in-out;
+}
+
+.step:hover {
+  border-color: rgba(79, 203, 227, 0.5);
+}
+
+.visible .step:nth-child(1) {
+  transition-delay: 0.15s;
+}
+.visible .step:nth-child(2) {
+  transition-delay: 0.28s;
+}
+.visible .step:nth-child(3) {
+  transition-delay: 0.41s;
+}
+
+.visible .step {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.stepIndex {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(79, 203, 227, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--secondary);
+  background: rgba(4, 20, 24, 0.6);
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+}
+
+.stepCode {
+  font-family: "Space Mono", "Space Grotesk", monospace;
+  font-size: 0.72rem;
+  color: rgba(230, 240, 240, 0.82);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stats {
+  display: flex;
+  gap: clamp(1.4rem, 4vw, 2.6rem);
+  pointer-events: all;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.55s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.55s;
+}
+
+.visible .stats {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.statNum {
+  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  font-weight: 700;
+  color: var(--secondary);
+  text-shadow: 0 0 16px rgba(79, 203, 227, 0.5);
+}
+
+.statLabel {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: rgba(215, 215, 215, 0.7);
+}
+
+@media screen and (max-width: 780px) {
+  .body {
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  .stage {
+    width: clamp(150px, 40vw, 220px);
+  }
+
+  .steps {
+    width: min(320px, 84vw);
+  }
+}

@@ -100,9 +100,13 @@
   width: 16%;
   aspect-ratio: 1;
   border-radius: 50%;
-  pointer-events: all;
+  pointer-events: none;
   cursor: pointer;
   z-index: 11;
+}
+
+.visible .hoverZone {
+  pointer-events: all;
 }
 
 .rotatingRing {

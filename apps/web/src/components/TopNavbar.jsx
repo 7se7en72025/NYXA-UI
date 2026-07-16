@@ -1,6 +1,4 @@
-import { isFullscreen } from "@utils/isFullscreen";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import ComingSoon from "./ComingSoon";
 import ScrambleText from "./ScrambleText";
 import SearchBar from "./SearchBar";
 
@@ -81,42 +79,19 @@ const exploreBtnStyle = {
   height: "14%",
 };
 
+const GITHUB_URL = "https://github.com/7se7en72025/NYXA-UI";
+
 function TopNavbarInner() {
   const [ready, setReady] = useState(false);
-  const [csVariant, setCsVariant] = useState(null);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 500);
     return () => clearTimeout(t);
   }, []);
 
-  const handleFullscreenChange = useCallback(() => {
-    if (!isFullscreen()) setCsVariant("fullscreen");
-  }, []);
-
-  useEffect(() => {
-    if (!isFullscreen()) {
-      const t = setTimeout(() => setCsVariant("fullscreen"), 1500);
-      return () => clearTimeout(t);
-    }
-
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-      document.removeEventListener(
-        "webkitfullscreenchange",
-        handleFullscreenChange,
-      );
-    };
-  }, [handleFullscreenChange]);
-
   const handleGithub = useCallback(() => {
-    window.open("https://github.com/7se7en72025/NYXA-UI", "_blank");
+    window.open(GITHUB_URL, "_blank");
   }, []);
-
-  const handleOpenCS = useCallback(() => setCsVariant("comingsoon"), []);
-  const handleCloseCS = useCallback(() => setCsVariant(null), []);
 
   const navStyle = useMemo(
     () => ({
@@ -130,47 +105,37 @@ function TopNavbarInner() {
   );
 
   return (
-    <>
-      {csVariant && (
-        <ComingSoon show={true} onClose={handleCloseCS} variant={csVariant} />
-      )}
+    <div style={navStyle}>
+      <div style={navbarInnerStyle}>
+        <img
+          draggable={false}
+          src="/images/topnavbarhome.svg"
+          alt="NYXA UI Navigation"
+          style={navbarImgStyle}
+        />
 
-      <div style={navStyle}>
-        <div style={navbarInnerStyle}>
-          <img
-            draggable={false}
-            src="/images/topnavbarhome.svg"
-            alt="NYXA UI Navigation"
-            style={navbarImgStyle}
-          />
-
-          <div style={searchAreaStyle}>
-            <SearchBar />
-          </div>
-
-          <ScrambleText
-            text="TEMPLATES"
-            style={templatesBtnStyle}
-            onClick={handleOpenCS}
-          />
-          <ScrambleText
-            text="DOCS"
-            style={docsBtnStyle}
-            onClick={handleOpenCS}
-          />
-          <ScrambleText
-            text="GITHUB"
-            style={githubBtnStyle}
-            onClick={handleGithub}
-          />
-          <ScrambleText
-            text="EXPLORE BLOCKS"
-            style={exploreBtnStyle}
-            onClick={handleOpenCS}
-          />
+        <div style={searchAreaStyle}>
+          <SearchBar />
         </div>
+
+        <ScrambleText
+          text="TEMPLATES"
+          style={templatesBtnStyle}
+          onClick={handleGithub}
+        />
+        <ScrambleText text="DOCS" style={docsBtnStyle} onClick={handleGithub} />
+        <ScrambleText
+          text="GITHUB"
+          style={githubBtnStyle}
+          onClick={handleGithub}
+        />
+        <ScrambleText
+          text="EXPLORE BLOCKS"
+          style={exploreBtnStyle}
+          onClick={handleGithub}
+        />
       </div>
-    </>
+    </div>
   );
 }
 

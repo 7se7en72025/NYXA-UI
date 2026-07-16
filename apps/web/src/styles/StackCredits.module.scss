@@ -1,0 +1,127 @@
+.wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.6rem, 4vh, 2.6rem);
+  padding: 14vh 6vw;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.6s ease-in-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.visible .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  font-size: clamp(0.65rem, 1.4vw, 0.75rem);
+  letter-spacing: 0.35em;
+  color: var(--secondary);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.title {
+  font-size: clamp(1.25rem, 3.4vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  text-shadow:
+    0px 0px 27.68px rgba(136, 196, 200, 0.7),
+    0px 0px 4.471px rgba(134, 244, 232, 0.8);
+}
+
+.orbit {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  pointer-events: all;
+}
+
+.badge {
+  padding: 0.55rem 1.2rem;
+  border: 1px solid rgba(79, 203, 227, 0.35);
+  border-radius: 999px;
+  background: rgba(2, 12, 16, 0.72);
+  backdrop-filter: blur(6px);
+  font-size: clamp(0.72rem, 1.8vw, 0.8rem);
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: var(--primary);
+  opacity: 0;
+  transform: translateY(16px) scale(0.94);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.visible .badge {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.badge:hover {
+  border-color: rgba(79, 203, 227, 0.75);
+  box-shadow: 0 0 18px rgba(79, 203, 227, 0.25);
+}
+
+@for $i from 1 through 6 {
+  .visible .badge:nth-child(#{$i}) {
+    transition-delay: #{$i * 0.09}s;
+  }
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.4rem, 5vw, 2.8rem);
+  pointer-events: all;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease-in-out 0.5s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+
+.visible .metrics {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.metricNum {
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  font-weight: 700;
+  color: var(--secondary);
+  text-shadow: 0 0 16px rgba(79, 203, 227, 0.5);
+}
+
+.metricLabel {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: rgba(230, 240, 240, 0.75);
+  text-align: center;
+}
