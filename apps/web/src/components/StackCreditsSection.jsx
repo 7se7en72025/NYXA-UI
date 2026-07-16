@@ -1,5 +1,7 @@
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as s from "@styles/StackCredits.module.scss";
+import GlassStack from "./GlassStack";
+import HudEmblem from "./HudEmblem";
 import ScrambleText from "./ScrambleText";
 
 const BADGES = ["REACT", "THREE.JS", "GSAP", "VITE", "VALTIO", "BIOME"];
@@ -16,6 +18,11 @@ export default function StackCreditsSection() {
   return (
     <div className={`${s.wrapper} ${show ? s.visible : ""}`}>
       <div className={s.header}>
+        {show && (
+          <HudEmblem tags={{ tl: "STACK", tr: "OK" }}>
+            <GlassStack />
+          </HudEmblem>
+        )}
         <span className={s.eyebrow}>POWERED BY</span>
         <h2 className={s.title}>
           <ScrambleText as="span" text="STANDING ON GIANTS" />

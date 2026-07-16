@@ -1,13 +1,12 @@
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as s from "@styles/Nav3.module.scss";
-import { Suspense } from "react";
 import Nav3Model from "./Nav3Model";
 import ScrambleText from "./ScrambleText";
 
 const STEPS = [
-  { title: "INSTALL", code: "pnpm add @nyxa/ui" },
-  { title: "IMPORT", code: "import { Button } from '@nyxa/ui'" },
-  { title: "SHIP", code: '<Button variant="nova" />' },
+  { k: "01", title: "INSTALL", code: "pnpm add @nyxa/ui" },
+  { k: "02", title: "IMPORT", code: "import { Button } from '@nyxa/ui'" },
+  { k: "03", title: "DEPLOY", code: '<Button variant="nova" />' },
 ];
 
 const STATS = [
@@ -22,28 +21,69 @@ export default function GetStartedSection() {
   return (
     <div className={`${s.wrapper} ${show ? s.visible : ""}`}>
       <div className={s.header}>
-        <span className={s.eyebrow}>LAUNCH SEQUENCE</span>
+        <span className={s.eyebrow}>
+          <span className={s.pip} />
+          <ScrambleText as="span" text="ARTIFACT SCAN // ONLINE" />
+        </span>
         <h2 className={s.title}>
           <ScrambleText as="span" text="FROM ZERO TO SHIPPED" />
         </h2>
       </div>
 
       <div className={s.body}>
-        <div className={s.stage}>
-          {show && (
-            <Suspense fallback={null}>
-              <Nav3Model />
-            </Suspense>
-          )}
+        <div className={s.scanner}>
+          <div className={s.stage}>{show && <Nav3Model />}</div>
+
+          {/* targeting reticle overlay */}
+          <svg
+            className={s.reticle}
+            viewBox="0 0 100 100"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle className={s.ringOuter} cx="50" cy="50" r="47" />
+            <circle className={s.ringInner} cx="50" cy="50" r="38" />
+
+            <path className={s.corner} d="M6 20 L6 6 L20 6" />
+            <path className={s.corner} d="M94 20 L94 6 L80 6" />
+            <path className={s.corner} d="M6 80 L6 94 L20 94" />
+            <path className={s.corner} d="M94 80 L94 94 L80 94" />
+
+            <g className={s.ticks}>
+              <line x1="50" y1="2" x2="50" y2="8" />
+              <line x1="50" y1="92" x2="50" y2="98" />
+              <line x1="2" y1="50" x2="8" y2="50" />
+              <line x1="92" y1="50" x2="98" y2="50" />
+            </g>
+
+            <line className={s.scanLine} x1="10" y1="50" x2="90" y2="50" />
+            <circle className={s.centerDot} cx="50" cy="50" r="1.1" />
+          </svg>
+
+          <span className={`${s.hudTag} ${s.hudTL}`}>
+            <ScrambleText as="span" text="ID·NYXA-07" />
+          </span>
+          <span className={`${s.hudTag} ${s.hudTR}`}>
+            <ScrambleText as="span" text="STABLE" />
+          </span>
+          <span className={`${s.hudTag} ${s.hudBL}`}>
+            <ScrambleText as="span" text="v1.0" />
+          </span>
+          <span className={`${s.hudTag} ${s.hudBR}`}>
+            <ScrambleText as="span" text="MIT" />
+          </span>
         </div>
 
-        <div className={s.steps}>
-          {STEPS.map((step, i) => (
-            <div className={s.step} key={step.title}>
-              <span className={s.stepIndex}>{i + 1}</span>
-              <div className={s.stepBody}>
-                <span className={s.stepTitle}>{step.title}</span>
-                <span className={s.stepCode}>{step.code}</span>
+        <div className={s.readouts}>
+          {STEPS.map((step) => (
+            <div className={s.readout} key={step.k}>
+              <span className={s.node} />
+              <div className={s.readoutBody}>
+                <span className={s.readoutHead}>
+                  <span className={s.readoutKey}>{step.k}</span>
+                  <span className={s.readoutTitle}>{step.title}</span>
+                </span>
+                <code className={s.readoutCode}>{step.code}</code>
               </div>
             </div>
           ))}

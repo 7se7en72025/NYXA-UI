@@ -1,7 +1,9 @@
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as s from "@styles/Join.module.scss";
 import { useCallback } from "react";
+import HudEmblem from "./HudEmblem";
 import ScrambleText from "./ScrambleText";
+import SignalBeacon from "./SignalBeacon";
 
 const LINKS = [
   { label: "GITHUB", url: "https://github.com/7se7en72025/NYXA-UI" },
@@ -18,6 +20,11 @@ export default function JoinSection() {
 
   return (
     <div className={`${s.wrapper} ${show ? s.visible : ""}`}>
+      {show && (
+        <HudEmblem tags={{ tl: "SIGNAL", tr: "LIVE" }}>
+          <SignalBeacon />
+        </HudEmblem>
+      )}
       <span className={s.eyebrow}>JOIN THE CONSTELLATION</span>
       <h2 className={s.title}>
         <ScrambleText as="span" text="BUILD YOUR NEXT UI FASTER" />

@@ -1,5 +1,7 @@
 import { useSectionVisibility } from "@hooks/useSectionVisibility";
 import * as s from "@styles/Pillars.module.scss";
+import HudEmblem from "./HudEmblem";
+import PillarCluster from "./PillarCluster";
 import ScrambleText from "./ScrambleText";
 
 const CARDS = [
@@ -31,6 +33,11 @@ export default function PillarsSection() {
   return (
     <div className={`${s.wrapper} ${show ? s.visible : ""}`}>
       <div className={s.header}>
+        {show && (
+          <HudEmblem tags={{ tl: "CORE", tr: "v1.0" }}>
+            <PillarCluster />
+          </HudEmblem>
+        )}
         <span className={s.eyebrow}>WHY NYXA</span>
         <h2 className={s.title}>
           <ScrambleText as="span" text="FOUR PILLARS, ONE SYSTEM" />
