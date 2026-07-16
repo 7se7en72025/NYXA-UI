@@ -58,6 +58,8 @@
 }
 
 .badge {
+  position: relative;
+  overflow: hidden;
   padding: 0.55rem 1.2rem;
   border: 1px solid rgba(79, 203, 227, 0.35);
   border-radius: 999px;
@@ -67,25 +69,53 @@
   letter-spacing: 1px;
   font-weight: 600;
   color: var(--primary);
+  // entry via `transform`; constant drift via `translate`/`rotate`
   opacity: 0;
-  transform: translateY(16px) scale(0.94);
-  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transform: translateY(22px) scale(0.6);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.34, 1.7, 0.5, 1),
+    border-color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+}
+
+.badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(154, 240, 244, 0.22) 50%,
+    transparent 60%
+  );
+  translate: -150% 0;
 }
 
 .visible .badge {
   opacity: 1;
   transform: translateY(0) scale(1);
+  animation: badgeDrift 5s ease-in-out infinite;
+}
+
+.visible .badge::before {
+  animation: badgeShimmer 5.5s ease-in-out infinite;
 }
 
 .badge:hover {
-  border-color: rgba(79, 203, 227, 0.75);
-  box-shadow: 0 0 18px rgba(79, 203, 227, 0.25);
+  border-color: rgba(79, 203, 227, 0.85);
+  box-shadow: 0 0 18px rgba(79, 203, 227, 0.3);
 }
 
 @for $i from 1 through 6 {
   .visible .badge:nth-child(#{$i}) {
-    transition-delay: #{$i * 0.09}s;
+    transition-delay: #{$i * 0.08}s;
+    animation-delay: #{0.6 + $i * 0.25}s;
+  }
+  .visible .badge:nth-child(#{$i})::before {
+    animation-delay: #{$i * 0.9}s;
   }
 }
 
@@ -119,9 +149,63 @@
   text-shadow: 0 0 16px rgba(79, 203, 227, 0.5);
 }
 
+.visible .metricNum {
+  animation: metricGlow 3s ease-in-out infinite;
+}
+
+.visible .metric:nth-child(2) .metricNum {
+  animation-delay: 1s;
+}
+.visible .metric:nth-child(3) .metricNum {
+  animation-delay: 2s;
+}
+
 .metricLabel {
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   color: rgba(230, 240, 240, 0.75);
   text-align: center;
+}
+
+@keyframes badgeDrift {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 0 -7px;
+    rotate: -1deg;
+  }
+}
+
+@keyframes badgeShimmer {
+  0%,
+  30% {
+    translate: -150% 0;
+  }
+  65%,
+  100% {
+    translate: 150% 0;
+  }
+}
+
+@keyframes metricGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(79, 203, 227, 0.35);
+    scale: 1;
+  }
+  50% {
+    text-shadow: 0 0 22px rgba(79, 203, 227, 0.75);
+    scale: 1.06;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visible .badge,
+  .visible .badge::before,
+  .visible .metricNum {
+    animation: none;
+  }
 }

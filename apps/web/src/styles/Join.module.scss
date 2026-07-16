@@ -43,6 +43,7 @@
 .visible .title {
   opacity: 1;
   transform: translateY(0);
+  animation: titleBreathe 4.5s ease-in-out infinite 0.8s;
 }
 
 .actions {
@@ -52,16 +53,20 @@
   gap: 1rem;
   pointer-events: all;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.6s ease-in-out 0.25s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+  transform: translateY(24px) scale(0.9);
+  transition:
+    opacity 0.6s ease-in-out 0.25s,
+    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s;
 }
 
 .visible .actions {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .primaryBtn {
+  position: relative;
+  overflow: hidden;
   padding: 0.75rem 1.6rem;
   border-radius: 8px;
   border: 1px solid rgba(79, 203, 227, 0.6);
@@ -72,6 +77,29 @@
   font-size: 0.85rem;
   color: var(--primary);
   transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.primaryBtn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  translate: -160% 0;
+}
+
+.visible .primaryBtn {
+  animation: btnGlow 3.2s ease-in-out infinite 1s;
+}
+
+.visible .primaryBtn::before {
+  animation: btnSheen 4.5s ease-in-out infinite 1.6s;
 }
 
 .primaryBtn:hover {
@@ -142,6 +170,51 @@
 
 .visible .footer {
   opacity: 1;
+}
+
+@keyframes titleBreathe {
+  0%,
+  100% {
+    text-shadow:
+      0px 0px 32px rgba(136, 196, 200, 0.6),
+      0px 0px 6px rgba(134, 244, 232, 0.7);
+  }
+  50% {
+    text-shadow:
+      0px 0px 46px rgba(136, 196, 200, 0.95),
+      0px 0px 12px rgba(134, 244, 232, 1);
+  }
+}
+
+@keyframes btnGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(79, 203, 227, 0);
+    border-color: rgba(79, 203, 227, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(79, 203, 227, 0.4);
+    border-color: rgba(79, 203, 227, 1);
+  }
+}
+
+@keyframes btnSheen {
+  0%,
+  40% {
+    translate: -160% 0;
+  }
+  70%,
+  100% {
+    translate: 160% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visible .title,
+  .visible .primaryBtn,
+  .visible .primaryBtn::before {
+    animation: none;
+  }
 }
 
 @media screen and (max-width: 560px) {

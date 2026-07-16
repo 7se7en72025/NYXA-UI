@@ -90,6 +90,8 @@
 }
 
 .step {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   gap: 0.85rem;
@@ -98,10 +100,29 @@
   border-radius: 10px;
   background: rgba(2, 12, 16, 0.72);
   backdrop-filter: blur(6px);
+  // entry via `transform`; constant drift uses `translate` (independent prop)
   opacity: 0;
-  transform: translateX(24px);
-  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+  transform: translateX(40px) scale(0.94);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.25s ease-in-out;
+}
+
+// scan line that periodically sweeps down the panel
+.step::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 42%,
+    rgba(154, 240, 244, 0.16) 50%,
+    transparent 58%
+  );
+  translate: 0 -160%;
 }
 
 .step:hover {
@@ -110,17 +131,34 @@
 
 .visible .step:nth-child(1) {
   transition-delay: 0.15s;
+  animation-delay: 0.7s;
+}
+.visible .step:nth-child(1)::before {
+  animation-delay: 1.2s;
 }
 .visible .step:nth-child(2) {
   transition-delay: 0.28s;
+  animation-delay: 1s;
+}
+.visible .step:nth-child(2)::before {
+  animation-delay: 2.6s;
 }
 .visible .step:nth-child(3) {
   transition-delay: 0.41s;
+  animation-delay: 1.3s;
+}
+.visible .step:nth-child(3)::before {
+  animation-delay: 4s;
 }
 
 .visible .step {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
+  animation: stepFloat 6.5s ease-in-out infinite;
+}
+
+.visible .step::before {
+  animation: stepScan 5.5s ease-in-out infinite;
 }
 
 .stepIndex {
@@ -136,6 +174,17 @@
   font-weight: 700;
   color: var(--secondary);
   background: rgba(4, 20, 24, 0.6);
+}
+
+.visible .stepIndex {
+  animation: indexBreathe 3.4s ease-in-out infinite;
+}
+
+.visible .step:nth-child(2) .stepIndex {
+  animation-delay: 0.7s;
+}
+.visible .step:nth-child(3) .stepIndex {
+  animation-delay: 1.4s;
 }
 
 .stepBody {
@@ -189,10 +238,77 @@
   text-shadow: 0 0 16px rgba(79, 203, 227, 0.5);
 }
 
+.visible .statNum {
+  animation: statGlow 3s ease-in-out infinite;
+}
+
+.visible .stat:nth-child(2) .statNum {
+  animation-delay: 1s;
+}
+.visible .stat:nth-child(3) .statNum {
+  animation-delay: 2s;
+}
+
 .statLabel {
   font-size: 0.62rem;
   letter-spacing: 0.15em;
   color: rgba(215, 215, 215, 0.7);
+}
+
+@keyframes stepFloat {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+@keyframes stepScan {
+  0%,
+  30% {
+    translate: 0 -160%;
+  }
+  65%,
+  100% {
+    translate: 0 160%;
+  }
+}
+
+@keyframes indexBreathe {
+  0%,
+  100% {
+    scale: 1;
+    border-color: rgba(79, 203, 227, 0.5);
+    box-shadow: 0 0 0 rgba(79, 203, 227, 0);
+  }
+  50% {
+    scale: 1.12;
+    border-color: rgba(79, 203, 227, 0.95);
+    box-shadow: 0 0 12px rgba(79, 203, 227, 0.45);
+  }
+}
+
+@keyframes statGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(79, 203, 227, 0.35);
+    scale: 1;
+  }
+  50% {
+    text-shadow: 0 0 22px rgba(79, 203, 227, 0.75);
+    scale: 1.06;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visible .step,
+  .visible .step::before,
+  .visible .stepIndex,
+  .visible .statNum {
+    animation: none;
+  }
 }
 
 @media screen and (max-width: 780px) {

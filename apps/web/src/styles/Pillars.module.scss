@@ -56,6 +56,8 @@
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   width: clamp(180px, 21vw, 210px);
   padding: 1.6rem 1.3rem;
   border: 1px solid rgba(79, 203, 227, 0.28);
@@ -67,36 +69,81 @@
   align-items: center;
   gap: 0.9rem;
   text-align: center;
+  // entry / exit — driven by `transform` so the constant float (which uses the
+  // independent `translate`/`rotate` props) can run on top without conflict
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.55s ease-out, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  transform: translateY(48px) scale(0.84);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out;
 }
 
-.visible .card:nth-child(1) {
-  transition-delay: 0.15s;
-}
-.visible .card:nth-child(2) {
-  transition-delay: 0.28s;
-}
-.visible .card:nth-child(3) {
-  transition-delay: 0.41s;
-}
-.visible .card:nth-child(4) {
-  transition-delay: 0.54s;
+// diagonal light sweep that periodically races across the card
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(154, 240, 244, 0.18) 50%,
+    transparent 62%
+  );
+  translate: -140% 0;
 }
 
 .visible .card {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  animation:
+    cardFloat 7s ease-in-out infinite,
+    cardPulse 4.5s ease-in-out infinite;
+}
+
+.visible .card::before {
+  animation: cardShimmer 6s ease-in-out infinite;
+}
+
+.visible .card:nth-child(1) {
+  transition-delay: 0.12s;
+  animation-delay: 0.7s, 0.7s;
+}
+.visible .card:nth-child(1)::before {
+  animation-delay: 1s;
+}
+.visible .card:nth-child(2) {
+  transition-delay: 0.24s;
+  animation-delay: 1.4s, 1s;
+}
+.visible .card:nth-child(2)::before {
+  animation-delay: 2.4s;
+}
+.visible .card:nth-child(3) {
+  transition-delay: 0.36s;
+  animation-delay: 2.1s, 1.3s;
+}
+.visible .card:nth-child(3)::before {
+  animation-delay: 3.8s;
+}
+.visible .card:nth-child(4) {
+  transition-delay: 0.48s;
+  animation-delay: 2.8s, 1.6s;
+}
+.visible .card:nth-child(4)::before {
+  animation-delay: 5.2s;
 }
 
 .card:hover {
-  border-color: rgba(79, 203, 227, 0.65);
-  box-shadow: 0 0 24px rgba(79, 203, 227, 0.2);
+  border-color: rgba(79, 203, 227, 0.75);
+  box-shadow: 0 0 28px rgba(79, 203, 227, 0.28);
 }
 
 .icon {
+  position: relative;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -107,6 +154,10 @@
   border: 1px solid rgba(154, 240, 244, 0.35);
   font-size: 1.3rem;
   color: var(--primary);
+}
+
+.visible .icon {
+  animation: iconBreathe 3.6s ease-in-out infinite;
 }
 
 .cardTitle {
@@ -120,6 +171,59 @@
   font-size: 0.78rem;
   line-height: 1.55;
   color: rgba(230, 240, 240, 0.88);
+}
+
+@keyframes cardFloat {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    translate: 0 -10px;
+    rotate: 0.7deg;
+  }
+}
+
+@keyframes cardPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px rgba(79, 203, 227, 0.12));
+  }
+  50% {
+    filter: drop-shadow(0 0 13px rgba(79, 203, 227, 0.42));
+  }
+}
+
+@keyframes cardShimmer {
+  0%,
+  22% {
+    translate: -140% 0;
+  }
+  60%,
+  100% {
+    translate: 140% 0;
+  }
+}
+
+@keyframes iconBreathe {
+  0%,
+  100% {
+    scale: 1;
+    border-color: rgba(154, 240, 244, 0.35);
+  }
+  50% {
+    scale: 1.1;
+    border-color: rgba(154, 240, 244, 0.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visible .card,
+  .visible .card::before,
+  .visible .icon {
+    animation: none;
+  }
 }
 
 @media screen and (max-width: 900px) {
