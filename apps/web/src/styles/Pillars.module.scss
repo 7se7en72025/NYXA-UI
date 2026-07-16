@@ -4,12 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(1.6rem, 4vh, 3rem);
-  padding: 14vh 6vw;
+  justify-content: safe center;
+  gap: clamp(1rem, 3vh, 2.2rem);
+  padding: var(--nav-safe-top) var(--section-gutter) var(--section-safe-bottom);
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
+
+/* ---------- header ---------- */
 
 .header {
   display: flex;
@@ -28,11 +31,26 @@
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: clamp(0.65rem, 1.4vw, 0.75rem);
   letter-spacing: 0.35em;
   color: var(--secondary);
   opacity: 0.9;
   font-weight: 600;
+}
+
+.pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary);
+}
+
+.visible .pip {
+  animation: pipBlink 1.6s steps(1, end) infinite;
 }
 
 .title {
@@ -45,52 +63,126 @@
     0px 0px 4.471px rgba(134, 244, 232, 0.8);
 }
 
-.cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  max-width: 940px;
+/* ---------- constellation (hub + spokes + pillars) ---------- */
+
+.constellation {
+  position: relative;
+  width: min(960px, 100%);
+  height: clamp(300px, 44vh, 440px);
   pointer-events: all;
 }
 
+.wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 0;
+}
+
+/* with non-scaling-stroke, widths/dashes are literal px, not viewBox units */
+.wire {
+  stroke: rgba(79, 203, 227, 0.5);
+  stroke-width: 1.15px;
+  stroke-dasharray: 5 5;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 3px rgba(79, 203, 227, 0.45));
+  opacity: 0;
+  transition: opacity 0.6s ease-out 0.35s;
+}
+
+.visible .wire {
+  opacity: 1;
+  animation: wireFlow 5s linear infinite;
+}
+
+.wireNode {
+  fill: var(--secondary);
+  opacity: 0;
+  filter: drop-shadow(0 0 2px var(--secondary));
+  transition: opacity 0.5s ease-out 0.55s;
+}
+
+.visible .wireNode {
+  opacity: 0.9;
+}
+
+/* central 3D hub */
+.core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 2;
+  opacity: 0;
+  scale: 0.7;
+  transition: opacity 0.7s ease-out, scale 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.core::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(79, 203, 227, 0.3) 0%,
+    rgba(79, 203, 227, 0.06) 48%,
+    transparent 72%
+  );
+  z-index: -1;
+}
+
+.visible .core {
+  opacity: 1;
+  scale: 1.4;
+}
+
+.visible .core::before {
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* ---------- pillar cards ---------- */
+
 .card {
-  position: relative;
-  overflow: hidden;
-  width: clamp(180px, 21vw, 210px);
-  padding: 1.6rem 1.3rem;
+  position: absolute;
+  left: var(--cx);
+  top: var(--cy);
+  translate: -50% -50%;
+  width: clamp(180px, 24vw, 230px);
+  padding: 1.1rem 1.15rem 1.25rem;
   border: 1px solid rgba(79, 203, 227, 0.28);
   border-radius: 12px;
-  background: rgba(2, 12, 16, 0.74);
-  backdrop-filter: blur(8px);
+  background: rgba(2, 12, 16, 0.72);
+  backdrop-filter: blur(9px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.9rem;
+  gap: 0.55rem;
   text-align: center;
-  // entry / exit — driven by `transform` so the constant float (which uses the
-  // independent `translate`/`rotate` props) can run on top without conflict
+  z-index: 3;
   opacity: 0;
-  transform: translateY(48px) scale(0.84);
+  transform: scale(0.8);
   transition:
-    opacity 0.6s ease-out,
-    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
     border-color 0.25s ease-in-out,
     box-shadow 0.25s ease-in-out;
+  transition-delay: calc(0.45s + var(--i) * 0.12s);
 }
 
-// diagonal light sweep that periodically races across the card
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 2;
+  border-radius: 12px;
   pointer-events: none;
   background: linear-gradient(
     115deg,
     transparent 38%,
-    rgba(154, 240, 244, 0.18) 50%,
+    rgba(154, 240, 244, 0.16) 50%,
     transparent 62%
   );
   translate: -140% 0;
@@ -98,62 +190,32 @@
 
 .visible .card {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  animation:
-    cardFloat 7s ease-in-out infinite,
-    cardPulse 4.5s ease-in-out infinite;
+  transform: scale(1);
 }
 
 .visible .card::before {
   animation: cardShimmer 6s ease-in-out infinite;
-}
-
-.visible .card:nth-child(1) {
-  transition-delay: 0.12s;
-  animation-delay: 0.7s, 0.7s;
-}
-.visible .card:nth-child(1)::before {
-  animation-delay: 1s;
-}
-.visible .card:nth-child(2) {
-  transition-delay: 0.24s;
-  animation-delay: 1.4s, 1s;
-}
-.visible .card:nth-child(2)::before {
-  animation-delay: 2.4s;
-}
-.visible .card:nth-child(3) {
-  transition-delay: 0.36s;
-  animation-delay: 2.1s, 1.3s;
-}
-.visible .card:nth-child(3)::before {
-  animation-delay: 3.8s;
-}
-.visible .card:nth-child(4) {
-  transition-delay: 0.48s;
-  animation-delay: 2.8s, 1.6s;
-}
-.visible .card:nth-child(4)::before {
-  animation-delay: 5.2s;
+  animation-delay: calc(1.4s + var(--i) * 0.9s);
 }
 
 .card:hover {
-  border-color: rgba(79, 203, 227, 0.75);
-  box-shadow: 0 0 28px rgba(79, 203, 227, 0.28);
+  border-color: rgba(79, 203, 227, 0.8);
+  box-shadow: 0 0 30px rgba(79, 203, 227, 0.3);
 }
 
 .icon {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle, rgba(154, 240, 244, 0.22) 0%, rgba(154, 240, 244, 0.03) 70%, transparent 100%);
   border: 1px solid rgba(154, 240, 244, 0.35);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 .visible .icon {
@@ -161,95 +223,105 @@
 }
 
 .cardTitle {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: var(--primary);
 }
 
 .cardDesc {
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: rgba(230, 240, 240, 0.88);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: rgba(230, 240, 240, 0.85);
 }
 
-@keyframes cardFloat {
-  0%,
-  100% {
-    translate: 0 0;
-    rotate: 0deg;
-  }
-  50% {
-    translate: 0 -10px;
-    rotate: 0.7deg;
+/* ---------- keyframes ---------- */
+
+@keyframes wireFlow {
+  to {
+    stroke-dashoffset: -14;
   }
 }
 
-@keyframes cardPulse {
-  0%,
-  100% {
-    filter: drop-shadow(0 0 2px rgba(79, 203, 227, 0.12));
-  }
-  50% {
-    filter: drop-shadow(0 0 13px rgba(79, 203, 227, 0.42));
-  }
+@keyframes pipBlink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; scale: 1; }
+  50% { opacity: 1; scale: 1.1; }
 }
 
 @keyframes cardShimmer {
-  0%,
-  22% {
-    translate: -140% 0;
-  }
-  60%,
-  100% {
-    translate: 140% 0;
-  }
+  0%, 22% { translate: -140% 0; }
+  60%, 100% { translate: 140% 0; }
 }
 
 @keyframes iconBreathe {
-  0%,
-  100% {
-    scale: 1;
-    border-color: rgba(154, 240, 244, 0.35);
-  }
-  50% {
-    scale: 1.1;
-    border-color: rgba(154, 240, 244, 0.7);
-  }
+  0%, 100% { scale: 1; border-color: rgba(154, 240, 244, 0.35); }
+  50% { scale: 1.1; border-color: rgba(154, 240, 244, 0.7); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .visible .card,
+  .visible .wire,
   .visible .card::before,
-  .visible .icon {
+  .visible .core::before,
+  .visible .icon,
+  .visible .pip {
     animation: none;
   }
 }
 
-@media screen and (max-width: 900px) {
+/* ---------- responsive: collapse the constellation to a stacked grid ---------- */
+
+@media screen and (max-width: 860px) {
+  .constellation {
+    width: 100%;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    place-items: stretch;
+    max-width: 560px;
+  }
+
+  .wires {
+    display: none;
+  }
+
+  .core {
+    position: static;
+    translate: none;
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 0.4rem;
+  }
+
   .card {
-    width: clamp(160px, 40vw, 220px);
+    position: static;
+    translate: none;
+    width: 100%;
   }
 }
 
-@media screen and (max-width: 560px) {
-  .cards {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.9rem;
-    max-height: 56vh;
+@media screen and (max-width: 480px) {
+  .constellation {
+    grid-template-columns: 1fr;
+    max-width: 340px;
+    max-height: 52vh;
     overflow-y: auto;
   }
 
   .card {
-    width: min(320px, 86vw);
-    padding: 1.1rem 1.2rem;
-    gap: 0.6rem;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 0.8rem;
+    padding: 0.85rem 1rem;
   }
 
-  .icon {
-    width: 42px;
-    height: 42px;
-    font-size: 1.1rem;
+  .cardDesc {
+    display: none;
   }
 }

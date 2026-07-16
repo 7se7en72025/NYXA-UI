@@ -4,11 +4,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(1.4rem, 3.4vh, 2.4rem);
-  padding: 13vh 6vw;
+  justify-content: safe center;
+  gap: clamp(1.1rem, 3vh, 2.2rem);
+  padding: var(--nav-safe-top) var(--section-gutter) var(--section-safe-bottom);
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
 
 /* ---------- header ---------- */

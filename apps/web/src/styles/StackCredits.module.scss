@@ -4,12 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: clamp(1.6rem, 4vh, 2.6rem);
-  padding: 14vh 6vw;
+  justify-content: safe center;
+  gap: clamp(1.1rem, 3vh, 2.2rem);
+  padding: var(--nav-safe-top) var(--section-gutter) var(--section-safe-bottom);
   pointer-events: none;
   z-index: 1;
+  overflow: hidden;
 }
+
+/* ---------- header ---------- */
 
 .header {
   display: flex;
@@ -28,11 +31,26 @@
 }
 
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: clamp(0.65rem, 1.4vw, 0.75rem);
   letter-spacing: 0.35em;
   color: var(--secondary);
   opacity: 0.9;
   font-weight: 600;
+}
+
+.pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow: 0 0 8px var(--secondary);
+}
+
+.visible .pip {
+  animation: pipBlink 1.6s steps(1, end) infinite;
 }
 
 .title {
@@ -45,79 +63,165 @@
     0px 0px 4.471px rgba(134, 244, 232, 0.8);
 }
 
+/* ---------- orbit (planet + ring + badges) ---------- */
+
+/* wide & short on purpose — a Saturn-style flattened ring reads distinctly
+   from nav4's near-circular hub-and-spoke constellation even though both are
+   "things placed around a center" */
 .orbit {
   position: relative;
-  width: 100%;
-  max-width: 640px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.9rem;
+  width: min(760px, 100%);
+  height: clamp(220px, 30vh, 300px);
   pointer-events: all;
 }
 
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.ringBack {
+  z-index: 1;
+}
+
+.ringFront {
+  z-index: 3;
+}
+
+.ringPath {
+  fill: none;
+  stroke: rgba(79, 203, 227, 0.45);
+  stroke-width: 1px;
+  stroke-dasharray: 4 7;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 3px rgba(79, 203, 227, 0.4));
+  opacity: 0;
+  transition: opacity 0.7s ease-out 0.3s;
+}
+
+.visible .ringPath {
+  opacity: 1;
+  animation: ringFlow 6s linear infinite;
+}
+
+.ringBack .ringPath {
+  opacity: 0;
+}
+
+.visible .ringBack .ringPath {
+  opacity: 0.55;
+}
+
+/* central 3D giant — sized as a consistent fraction of .orbit's height so it
+   always clears the ring's vertical radius */
+.planet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: clamp(150px, 21vh, 200px);
+  height: clamp(150px, 21vh, 200px);
+  z-index: 2;
+  opacity: 0;
+  scale: 0.7;
+  transition: opacity 0.8s ease-out, scale 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.planet::before {
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(45, 199, 159, 0.22) 0%,
+    rgba(79, 203, 227, 0.08) 46%,
+    transparent 72%
+  );
+  z-index: -1;
+}
+
+.visible .planet {
+  opacity: 1;
+  scale: 1;
+}
+
+.visible .planet::before {
+  animation: glowPulse 4.5s ease-in-out infinite;
+}
+
+:global(#root) .planet canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ---------- ring-riding feature pills ---------- */
+
+/* wrapper is transparent to layout on desktop so each pill positions against
+   the .orbit box; on mobile it becomes a real flex row (see media query) */
+.badges,
+.badgesBack {
+  display: contents;
+}
+
 .badge {
-  position: relative;
-  overflow: hidden;
-  padding: 0.55rem 1.2rem;
+  position: absolute;
+  left: var(--bx);
+  top: var(--by);
+  translate: -50% -50%;
+  z-index: 4;
+  padding: 0.5rem 1.05rem;
   border: 1px solid rgba(79, 203, 227, 0.35);
   border-radius: 999px;
-  background: rgba(2, 12, 16, 0.72);
+  background: rgba(2, 12, 16, 0.78);
   backdrop-filter: blur(6px);
-  font-size: clamp(0.72rem, 1.8vw, 0.8rem);
+  font-size: clamp(0.68rem, 1.6vw, 0.78rem);
   letter-spacing: 1px;
   font-weight: 600;
   color: var(--primary);
-  // entry via `transform`; constant drift via `translate`/`rotate`
+  white-space: nowrap;
   opacity: 0;
-  transform: translateY(22px) scale(0.6);
+  scale: 0.6;
   transition:
     opacity 0.5s ease-out,
-    transform 0.6s cubic-bezier(0.34, 1.7, 0.5, 1),
+    scale 0.6s cubic-bezier(0.34, 1.7, 0.5, 1),
     border-color 0.2s ease-in-out,
     box-shadow 0.2s ease-in-out;
-}
-
-.badge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(
-    110deg,
-    transparent 40%,
-    rgba(154, 240, 244, 0.22) 50%,
-    transparent 60%
-  );
-  translate: -150% 0;
+  transition-delay: calc(0.35s + var(--i) * 0.09s);
 }
 
 .visible .badge {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: badgeDrift 5s ease-in-out infinite;
-}
-
-.visible .badge::before {
-  animation: badgeShimmer 5.5s ease-in-out infinite;
+  scale: 1;
+  animation: badgeFloat 5s ease-in-out infinite;
+  animation-delay: calc(0.9s + var(--i) * 0.2s);
 }
 
 .badge:hover {
   border-color: rgba(79, 203, 227, 0.85);
-  box-shadow: 0 0 18px rgba(79, 203, 227, 0.3);
+  box-shadow: 0 0 18px rgba(79, 203, 227, 0.35);
 }
 
-@for $i from 1 through 6 {
-  .visible .badge:nth-child(#{$i}) {
-    transition-delay: #{$i * 0.08}s;
-    animation-delay: #{0.6 + $i * 0.25}s;
-  }
-  .visible .badge:nth-child(#{$i})::before {
-    animation-delay: #{$i * 0.9}s;
-  }
+/* far-side pills sit behind the planet — pulled back visually too */
+.badgeBack {
+  z-index: 1;
+  opacity: 0;
 }
+
+.visible .badgeBack {
+  opacity: 0.62;
+}
+
+.badgeBack:hover {
+  opacity: 1;
+}
+
+/* ---------- metrics ---------- */
 
 .metrics {
   display: flex;
@@ -153,12 +257,8 @@
   animation: metricGlow 3s ease-in-out infinite;
 }
 
-.visible .metric:nth-child(2) .metricNum {
-  animation-delay: 1s;
-}
-.visible .metric:nth-child(3) .metricNum {
-  animation-delay: 2s;
-}
+.visible .metric:nth-child(2) .metricNum { animation-delay: 1s; }
+.visible .metric:nth-child(3) .metricNum { animation-delay: 2s; }
 
 .metricLabel {
   font-size: 0.62rem;
@@ -167,45 +267,84 @@
   text-align: center;
 }
 
-@keyframes badgeDrift {
-  0%,
-  100% {
-    translate: 0 0;
-    rotate: 0deg;
-  }
-  50% {
-    translate: 0 -7px;
-    rotate: -1deg;
-  }
+/* ---------- keyframes ---------- */
+
+@keyframes ringFlow {
+  to { stroke-dashoffset: -16; }
 }
 
-@keyframes badgeShimmer {
-  0%,
-  30% {
-    translate: -150% 0;
-  }
-  65%,
-  100% {
-    translate: 150% 0;
-  }
+@keyframes badgeFloat {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -6px; }
+}
+
+@keyframes pipBlink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; scale: 1; }
+  50% { opacity: 1; scale: 1.08; }
 }
 
 @keyframes metricGlow {
-  0%,
-  100% {
-    text-shadow: 0 0 10px rgba(79, 203, 227, 0.35);
-    scale: 1;
-  }
-  50% {
-    text-shadow: 0 0 22px rgba(79, 203, 227, 0.75);
-    scale: 1.06;
-  }
+  0%, 100% { text-shadow: 0 0 10px rgba(79, 203, 227, 0.35); scale: 1; }
+  50% { text-shadow: 0 0 22px rgba(79, 203, 227, 0.75); scale: 1.06; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .visible .ringPath,
   .visible .badge,
-  .visible .badge::before,
+  .visible .planet::before,
+  .visible .pip,
   .visible .metricNum {
     animation: none;
+  }
+}
+
+/* ---------- responsive: drop the orbit, stack planet over a badge row ---------- */
+
+@media screen and (max-width: 780px) {
+  .orbit {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .ring { display: none; }
+
+  .planet {
+    position: static;
+    translate: none;
+    width: clamp(180px, 46vw, 240px);
+    height: clamp(180px, 46vw, 240px);
+  }
+
+  .badges,
+  .badgesBack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.7rem;
+    max-width: 460px;
+  }
+
+  .badge {
+    position: static;
+    translate: none;
+    animation: none !important;
+  }
+
+  /* no front/back distinction once everything stacks in flow */
+  .badgeBack {
+    opacity: 0;
+  }
+
+  .visible .badgeBack {
+    opacity: 1;
   }
 }

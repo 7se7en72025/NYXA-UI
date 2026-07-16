@@ -26,6 +26,14 @@ html {
 :root {
   --primary: #9af0f4;
   --secondary: #4fcbe3;
+
+  /* Height of the fixed TopNavbar scales with WIDTH, not height:
+     img = min(100vw, 706px) * 0.9, aspect 882/292 -> h = width * 0.298.
+     This safe-area guarantees section content always clears the navbar
+     (and its "EXPLORE BLOCKS" pill) at every viewport size. */
+  --nav-safe-top: calc(min(100vw, 706px) * 0.3 + 34px);
+  --section-safe-bottom: clamp(2.2rem, 6vh, 4rem);
+  --section-gutter: clamp(1.25rem, 5vw, 4rem);
 }
 
 body {

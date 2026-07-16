@@ -1,31 +1,19 @@
-import { Edges, Float, Sparkles, useGLTF } from "@react-three/drei";
+import { Environment, Float, Lightformer, Sparkles, useGLTF } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useLayoutEffect, useMemo, useRef } from "react";
-import { Box3, Color, Vector3 } from "three";
+import { Suspense, useLayoutEffect, useRef } from "react";
+import { Box3, Vector3 } from "three";
 
-const TARGET_SIZE = 3.0; // fit the model into this world-space box
+const TARGET_SIZE = 2.6;
+const DRACO = "/draco/";
 
-function makeHoloMaterial(base) {
-  const mat = base.clone();
-  mat.color = new Color("#08222b");
-  mat.emissive = new Color("#0e5f74");
-  mat.emissiveIntensity = 0.55;
-  mat.roughness = 0.32;
-  mat.metalness = 0.7;
-  mat.transparent = true;
-  mat.opacity = 0.94;
-  return mat;
-}
-
+// CC0 "DragonAttenuation" (Khronos glTF sample assets) — a KHR_materials_
+// transmission + volume dragon that reads as a glowing amber glass relic
+// under the scanner reticle.
 function Artifact() {
-  const { nodes, materials } = useGLTF("/models/asteroid3.glb");
+  const { nodes } = useGLTF("/models/dragon_attenuation.glb", DRACO);
   const spin = useRef();
   const inner = useRef();
 
-  const mat = useMemo(() => makeHoloMaterial(materials.Material), [materials]);
-  const geometry = nodes.Cube.geometry;
-
-  // auto-center + auto-scale so the artifact always sits perfectly framed
   useLayoutEffect(() => {
     const el = inner.current;
     if (!el) return;
@@ -43,22 +31,18 @@ function Artifact() {
 
   useFrame((_, dt) => {
     if (!spin.current) return;
-    spin.current.rotation.y += dt * 0.35;
-    spin.current.rotation.x += dt * 0.12;
+    spin.current.rotation.y += dt * 0.3;
   });
 
   return (
-    <Float speed={1.3} rotationIntensity={0.4} floatIntensity={0.7}>
+    <Float speed={1.2} rotationIntensity={0.35} floatIntensity={0.6}>
       <group ref={spin} dispose={null}>
         <mesh
           ref={inner}
-          geometry={geometry}
-          material={mat}
+          geometry={nodes.Dragon.geometry}
+          material={nodes.Dragon.material}
           frustumCulled={false}
-        >
-          {/* glowing wireframe overlay — the "holographic scan" look */}
-          <Edges threshold={14} color="#7cecff" />
-        </mesh>
+        />
       </group>
     </Float>
   );
@@ -78,14 +62,20 @@ export default function Nav3Model() {
       }}
     >
       <Suspense fallback={null}>
-        <ambientLight intensity={0.7} />
-        <directionalLight
-          position={[4, 5, 6]}
-          intensity={2.6}
-          color="#c9f7ff"
-        />
-        <pointLight position={[-3, 2, 3]} intensity={2.2} color="#4de5fd" />
-        <pointLight position={[0, -2, 4]} intensity={1.3} color="#2dc79f" />
+        {/* procedural light rig — the transmission material needs an
+            environment to refract through; no external HDRI fetch */}
+        <Environment resolution={128}>
+          <group rotation={[0, Math.PI / 2, 0]}>
+            <Lightformer intensity={4} color="#4de5fd" position={[-3, 2, -3]} scale={[4, 4, 1]} />
+            <Lightformer intensity={3} color="#e6a34a" position={[3, -1, -2]} scale={[3, 3, 1]} />
+            <Lightformer intensity={2.5} color="#9af0f4" position={[0, 3, 3]} scale={[5, 2, 1]} />
+          </group>
+        </Environment>
+
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[4, 5, 6]} intensity={1.8} color="#c9f7ff" />
+        <pointLight position={[-3, 2, 3]} intensity={1.6} color="#e6a34a" />
+        <pointLight position={[0, -2, 4]} intensity={1.2} color="#4de5fd" />
         <Artifact />
         <Sparkles
           count={45}
@@ -100,4 +90,4 @@ export default function Nav3Model() {
   );
 }
 
-useGLTF.preload("/models/asteroid3.glb");
+useGLTF.preload("/models/dragon_attenuation.glb", DRACO);

@@ -1,16 +1,60 @@
-import { Edges, Float } from "@react-three/drei";
+import { Edges, Environment, Float, Lightformer, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
+import { Box3, Color, Vector3 } from "three";
 
 const SHARDS = [0, 1, 2, 3].map((i) => ({
-  radius: 1.55,
+  radius: 1.6,
   speed: 0.42 + i * 0.09,
   offset: (i / 4) * Math.PI * 2,
-  yAmp: 0.32 + i * 0.06,
+  yAmp: 0.34 + i * 0.06,
 }));
 
-// four shards (the "pillars") orbiting a shared core — a small system,
-// not a single solid
+const CORE_SIZE = 1.15;
+const DRACO = "/draco/";
+
+// CC0 "IridescenceSuzanne" (Khronos glTF sample assets) — an alien,
+// oil-slick iridescent head standing in for the constellation's shared core.
+function IridescentCore() {
+  const { nodes } = useGLTF("/models/iridescence_suzanne.glb", DRACO);
+  const inner = useRef();
+
+  // brand-tinted clone so the core reads cyan at emblem scale instead of flat
+  // white, while keeping the transmission/iridescence physical properties
+  const mat = useMemo(() => {
+    const m = nodes.Suzanne3.material.clone();
+    m.emissive = new Color("#0e5f74");
+    m.emissiveIntensity = 0.5;
+    return m;
+  }, [nodes]);
+
+  useLayoutEffect(() => {
+    const el = inner.current;
+    if (!el) return;
+    el.scale.setScalar(1);
+    el.position.set(0, 0, 0);
+    const box = new Box3().setFromObject(el);
+    const size = new Vector3();
+    const center = new Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+    const scale = CORE_SIZE / Math.max(size.x, size.y, size.z);
+    el.scale.setScalar(scale);
+    el.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+  }, []);
+
+  return (
+    <mesh
+      ref={inner}
+      geometry={nodes.Suzanne3.geometry}
+      material={mat}
+      frustumCulled={false}
+    />
+  );
+}
+
+// four shards (the "pillars") orbiting a shared iridescent core — a small
+// system, not a single solid
 export default function PillarCluster() {
   const group = useRef();
   const shardRefs = useRef([]);
@@ -35,20 +79,18 @@ export default function PillarCluster() {
 
   return (
     <group ref={group}>
+      {/* procedural reflections for the iridescent + metal shard materials */}
+      <Environment resolution={96}>
+        <group rotation={[0, Math.PI / 2, 0]}>
+          <Lightformer intensity={7} color="#9af0f4" position={[-2, 1, -3]} scale={[3, 3, 1]} />
+          <Lightformer intensity={6} color="#c86bff" position={[2, -1, -2]} scale={[3, 3, 1]} />
+          <Lightformer intensity={5} color="#ff8fd6" position={[0, 2, 2]} scale={[4, 2, 1]} />
+          <Lightformer intensity={4} color="#ffe08a" position={[0, -2, -1]} scale={[4, 2, 1]} />
+        </group>
+      </Environment>
+
       <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.4}>
-        <mesh>
-          <icosahedronGeometry args={[0.56, 0]} />
-          <meshStandardMaterial
-            color="#08222b"
-            emissive="#0e5f74"
-            emissiveIntensity={0.7}
-            roughness={0.3}
-            metalness={0.75}
-            transparent
-            opacity={0.92}
-          />
-          <Edges threshold={12} color="#7cecff" />
-        </mesh>
+        <IridescentCore />
       </Float>
 
       {cfgs.map((c, i) => (
@@ -67,3 +109,5 @@ export default function PillarCluster() {
     </group>
   );
 }
+
+useGLTF.preload("/models/iridescence_suzanne.glb", DRACO);
