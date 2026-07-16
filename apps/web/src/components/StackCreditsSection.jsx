@@ -15,26 +15,6 @@ const FEATURES = [
   "NO LOCK-IN",
 ];
 
-// a flattened Saturn-style ring (the .orbit box itself is wide & short — see
-// the stylesheet), not a full orbit around every side — this is the one
-// deliberate structural break from nav4's radial hub-and-spoke layout, so the
-// two "things arranged around a center" sections don't read as the same idea
-// twice. Pills — and the ring line itself — on the far arc tuck behind the
-// planet; the near arc passes in front of it.
-const RX = 47;
-const RY = 40;
-const ORBIT = FEATURES.map((label, i) => {
-  const a = (i / FEATURES.length) * Math.PI * 2;
-  const x = 50 + RX * Math.cos(a);
-  const y = 50 + RY * Math.sin(a);
-  return { label, x, y, back: Math.sin(a) < 0 };
-});
-
-// far (upper) and near (lower) semi-ellipse arcs, split so each can render on
-// its own side of the planet's z-index
-const RING_BACK_D = `M ${50 - RX},50 A ${RX},${RY} 0 0 1 ${50 + RX},50`;
-const RING_FRONT_D = `M ${50 + RX},50 A ${RX},${RY} 0 0 1 ${50 - RX},50`;
-
 const METRICS = [
   { num: "60fps", label: "SMOOTH BY DEFAULT" },
   { num: "<10kb", label: "PER COMPONENT" },
@@ -56,59 +36,72 @@ export default function StackCreditsSection() {
         </h2>
       </div>
 
-      <div className={s.orbit}>
-        {/* far side — ring arc + pills tucked behind the planet */}
-        <svg
-          className={`${s.ring} ${s.ringBack}`}
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path className={s.ringPath} d={RING_BACK_D} />
-        </svg>
-        <div className={s.badgesBack}>
-          {ORBIT.filter((b) => b.back).map((b, i) => (
-            <span
-              className={`${s.badge} ${s.badgeBack}`}
-              key={b.label}
-              style={{ "--bx": `${b.x}%`, "--by": `${b.y}%`, "--i": i }}
-            >
-              {b.label}
-            </span>
-          ))}
+      {/* the console panel — a solid glass "holder" so the readout stays
+          legible over the nebula instead of floating loose on it */}
+      <div className={s.console}>
+        <span className={s.cornerTL} />
+        <span className={s.cornerTR} />
+        <span className={s.cornerBL} />
+        <span className={s.cornerBR} />
+
+        <div className={s.consoleBar}>
+          <span className={s.barLabel}>
+            <span className={s.pip} />
+            <ScrambleText as="span" text="OSS://MANIFEST" />
+          </span>
+          <span className={s.barStatus}>
+            <ScrambleText as="span" text="VERIFIED" />
+          </span>
         </div>
 
-        <div className={s.planet}>{show && <GiantPlanet />}</div>
-
-        {/* near side — ring arc + pills passing in front of the planet */}
-        <svg
-          className={`${s.ring} ${s.ringFront}`}
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <path className={s.ringPath} d={RING_FRONT_D} />
-        </svg>
-        <div className={s.badges}>
-          {ORBIT.filter((b) => !b.back).map((b, i) => (
-            <span
-              className={s.badge}
-              key={b.label}
-              style={{ "--bx": `${b.x}%`, "--by": `${b.y}%`, "--i": i }}
+        <div className={s.consoleBody}>
+          <div className={s.viewport}>
+            <div className={s.planet}>{show && <GiantPlanet />}</div>
+            <svg
+              className={s.reticle}
+              viewBox="0 0 100 100"
+              fill="none"
+              aria-hidden="true"
             >
-              {b.label}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className={s.metrics}>
-        {METRICS.map((m) => (
-          <div className={s.metric} key={m.label}>
-            <span className={s.metricNum}>{m.num}</span>
-            <span className={s.metricLabel}>{m.label}</span>
+              <circle className={s.reticleRing} cx="50" cy="50" r="46" />
+              <line className={s.reticleTick} x1="50" y1="1" x2="50" y2="7" />
+              <line className={s.reticleTick} x1="50" y1="93" x2="50" y2="99" />
+              <line className={s.reticleTick} x1="1" y1="50" x2="7" y2="50" />
+              <line className={s.reticleTick} x1="93" y1="50" x2="99" y2="50" />
+            </svg>
           </div>
-        ))}
+
+          <ul className={s.features}>
+            {FEATURES.map((f, i) => (
+              <li className={s.feature} key={f} style={{ "--i": i }}>
+                <svg
+                  className={s.check}
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3.5 8.5 L6.5 11.5 L12.5 4.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span>{f}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className={s.consoleFooter}>
+          {METRICS.map((m) => (
+            <div className={s.metric} key={m.label}>
+              <span className={s.metricNum}>{m.num}</span>
+              <span className={s.metricLabel}>{m.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

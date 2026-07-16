@@ -61,17 +61,20 @@
     0px 0px 4.471px rgba(134, 244, 232, 0.8);
 }
 
-/* ---------- body layout ---------- */
+/* ---------- panel + body layout ---------- */
+
+.panel {
+  width: min(880px, 100%);
+}
 
 .body {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: clamp(1.8rem, 5vw, 4.5rem);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   width: 100%;
-  max-width: 880px;
-  pointer-events: all;
+  padding: clamp(1.2rem, 3vh, 1.9rem) clamp(1.3rem, 3vw, 2rem);
 }
 
 /* ---------- scanner (3D + reticle) ---------- */
